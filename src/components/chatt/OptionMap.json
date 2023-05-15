@@ -1,0 +1,21 @@
+{
+  "Content type ?": {
+    "options": ["Documentary", "Movie", "Series", "Short film"],
+    "disabled": true
+  },
+  "Genre ?": {
+    "options": [
+      "Action/Adventure",
+      "Comedy",
+      "Love story",
+      "Horror/Thriller",
+      "Science Fiction"
+    ],
+    "disabled": true
+  },
+  "Temporality ?": { "options": ["Nowadays", "Past"], "disabled": true },
+  "Do you have a one minute pitch idea in short ?": {
+    "options": ["YES", "NO"],
+    "disabled": true
+  }
+}
