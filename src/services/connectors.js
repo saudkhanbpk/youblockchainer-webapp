@@ -5,93 +5,86 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import { getUserBrand } from "./brandsApi";
 // import axios from "axios";
 
-export const fetchAccount = async (user, setUser, account, setAccount, token, setToken, setUserBrand) => {
-    const web3 = window.web3
-    let use, tokenAcc, userBrand
-    // console.log(web3, web3.eth.sign)
+export const fetchAccount = async (
+    user,
+    setUser,
+    account,
+    setAccount,
+    token,
+    setToken,
+    setUserBrand
+) => {
     try {
+        const web3 = window.web3;
+
+        // Add Polygon testnet (Mumbai) chain
         await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [
                 {
-                    chainId: '0x13881', // Chain ID for Polygon testnet (Mumbai)
+                    chainId: '0x13881',
                     chainName: 'Polygon Testnet',
                     nativeCurrency: {
                         name: 'Matic',
                         symbol: 'MATIC',
                         decimals: 18,
                     },
-                    rpcUrls: ['https://rpc-mumbai.maticvigil.com/'], // RPC endpoint for Polygon testnet (Mumbai)
-                    blockExplorerUrls: ['https://mumbai.polygonscan.com/'], // Block explorer URL for Polygon testnet (Mumbai)
-                    iconUrls: ['https://polygon.technology/images/mumbai_logo.png'], // Icon URL for Polygon testnet (Mumbai)
+                    rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
+                    blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+                    iconUrls: ['https://polygon.technology/images/mumbai_logo.png'],
                 },
             ],
         });
-    } catch (error) {
-        console.log(error);
-    }
-    // console.log(user, account, "fetchdata")
-    try {
+
+        // Switch to Polygon testnet (Mumbai) chain
         await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: '0x13881' }],
         });
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        setAccount(accounts[0]);
-        try {
-            const signature = await web3.eth.personal.sign(
-                `Purpose:\nSign to verify wallet ownership.\n\nWallet address:\n${accounts[0]}\n\nHash:\n${Web3.utils.keccak256(
-                    accounts[0],
-                )}`,
-                accounts[0],
-            );
-            if (signature) {
-                // console.log(signature)
-                // const res2 = await UserServices.getUserById(signature);
-                await fetch(`http://app.myreeldream.ai/api/v1/user/login?signature=${signature}&address=${accounts[0]}`)
-                    .then(r => {
-                        return r.json()
-                    })
-                    .then(async result => {
-                        console.log(signature);
-                        console.log(result)
-                        use = result.user
-                        tokenAcc = result.token
-                        localStorage.setItem("ybUser", JSON.stringify(result.user))
-                        localStorage.setItem("ybToken", result.token)
-                        await getUserBrand(result.user._id)
-                            .then((res) => {
-                                userBrand = res.data
-                                console.log(res.data)
-                                localStorage.setItem("ybBrand", JSON.stringify(res.data.length ? res.data[0] : null))
-                                setUserBrand(res.data.length ? res.data[0] : null)
-                            }).catch((e) => {
-                                console.log(e)
-                            })
-                        setUser(result.user)
-                        setToken(result.token)
-                    })
-                    .catch((e) => console.log(e))
-                // setUser(res2.data.user)
-                // console.log(res2.headers)
-            }
-            // console.log(signature);
-            return { account: accounts[0], user: use, token: tokenAcc, brand: userBrand };
-        } catch (error) {
-            console.log(error)
-        }
-        // console.log(user)
-    } catch (err) {
-        console.log(err.message)
-    }
-}
 
-const provider = new WalletConnectProvider({
-    rpc: {
-        80001: 'https://rpc-mumbai.matic.today',
-    },
-}
-);
+        // Request MetaMask accounts
+        const accounts = await window.ethereum.request({
+            method: 'eth_requestAccounts',
+        });
+        setAccount(accounts[0]);
+
+        // Sign message and fetch user data
+        const signature = await web3.eth.personal.sign(
+            `Purpose:\nSign to verify wallet ownership.\n\nWallet address:\n${accounts[0]}\n\nHash:\n${Web3.utils.keccak256(
+                accounts[0]
+            )}`,
+            accounts[0]
+        );
+
+        const response = await fetch(
+            `http://app.myreeldream.ai/api/v1/user/login?signature=${signature}&address=${accounts[0]}`
+        );
+
+        const result = await response.json();
+
+        if (response.ok) {
+            const { user, token } = result;
+
+            localStorage.setItem('ybUser', JSON.stringify(user));
+            localStorage.setItem('ybToken', token);
+
+            const brandResponse = await getUserBrand(user._id);
+            const userBrand = brandResponse.data;
+            localStorage.setItem(
+                'ybBrand',
+                JSON.stringify(userBrand.length ? userBrand[0] : null)
+            );
+
+            setUser(user);
+            setToken(token);
+            setUserBrand(userBrand.length ? userBrand[0] : null);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
 
 export const connectMetaMask = async (user, setUser, account, setAccount, token, setToken, setUserBrand) => {
 

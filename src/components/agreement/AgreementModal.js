@@ -39,7 +39,14 @@ export default function AgreementModal({ open, handleClose, user, expert }) {
 
     const clicker = async () => {
         setLoading(true);
+        if (startsAt < moment().format('YYYY-MM-DD')) {
+            setLoading(false);
+            return alert('"Enter valid date');
+
+        }
         if (!startsAt || name.length === 0) {
+            setLoading(false);
+
             return alert('"Name" and "Starts At" field cannot be empty');
         }
         await createAgreement(
@@ -63,6 +70,7 @@ export default function AgreementModal({ open, handleClose, user, expert }) {
 
         setLoading(false);
     };
+    console.log(startsAt)
 
 
     return (

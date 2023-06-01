@@ -42,7 +42,7 @@ function ModalOneContent({ activeStep, setActiveStep }) {
                     <Grid item md={12} sm={12} xs={12} sx={style.gridItem}>
                         <Button onClick={() => {
                             try {
-                                activate(Injected)
+                                // activate(Injected)
                                 connectMetaMask(user, setUser, account, setAccount, token, setToken, setUserBrand)
                             } catch (e) {
                                 console.log(e)

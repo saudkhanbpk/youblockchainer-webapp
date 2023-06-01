@@ -8,6 +8,7 @@ import AgreementCard from '../card/AgreementCard'
 import { createRoom } from '../../services/ChatApi'
 import AgreementModal from '../agreement/AgreementModal'
 import EmptyState from '../loadingoremptystate/EmptyState'
+import Loading from '../loader/Loading'
 
 export default function DetailsExpert() {
     const params = useParams()
@@ -19,16 +20,19 @@ export default function DetailsExpert() {
     const token = localStorage.getItem('ybToken')
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
+    const [load, setLoad] = useState(false)
     const user = JSON.parse(localStorage.getItem('ybUser'))
     console.log(token)
 
     useEffect(() => {
+        setLoad(true)
         const func = async () => {
             const id = params.id
             const res = await getExpertById(id)
             setDetails(res.data)
             setExpAgreements(res.data.agreements.filter((agg) => agg.user1 === res.data._id))
             console.log(res.data, id)
+            setLoad(false)
         }
         func()
     }, [])
@@ -43,7 +47,7 @@ export default function DetailsExpert() {
 
     return (
         <>
-            {details &&
+            {load ? <Loading /> : details &&
                 <>
                     <Grid container columnSpacing={4} sx={{ borderBottom: '2px solid #E9E9E9', paddingBottom: '2%' }}>
                         <Grid item md={1.5}>
@@ -82,9 +86,9 @@ export default function DetailsExpert() {
                             <p style={{ ...ptag, paddingTop: '2%' }}>{details.bio}</p>
                             <Typography sx={{ ...bold_name, paddingTop: '5%', color: '#3770FF' }}>All agreements</Typography>
 
-                            {expAgreements.length !== 0 ? <Grid container rowSpacing={3}>
+                            {details.agreements.length !== 0 ? <Grid container rowSpacing={3}>
                                 {
-                                    expAgreements.map((agreement) => {
+                                    details.agreements.map((agreement) => {
                                         return <Grid item md={12}>
                                             <AgreementCard agreement={agreement} />
                                         </Grid>

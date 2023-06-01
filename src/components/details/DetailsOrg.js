@@ -8,6 +8,7 @@ import { createRoom } from '../../services/ChatApi'
 import { getBrandById } from '../../services/brandsApi'
 import SortIcon from '@mui/icons-material/Sort';
 import EmptyState from '../loadingoremptystate/EmptyState'
+import Loading from '../loader/Loading'
 
 const style = {
     margin: { marginTop: '3%' },
@@ -24,12 +25,14 @@ export default function DetailsOrg() {
     const [details, setDetails] = useState(null)
     const [allDetails, setAllDetails] = useState(null)
     const [connectLoad, setConnectLoad] = useState(false)
+    const [load, setLoad] = useState(false)
     const [orgAgreements, setOrgAgreements] = useState([])
     const token = localStorage.getItem('ybToken')
     const user = JSON.parse(localStorage.getItem('ybUser'))
     console.log(token)
 
     useEffect(() => {
+        setLoad(true)
         const func = async () => {
             const id = params.id
             const res = await getBrandById(id)
@@ -37,6 +40,7 @@ export default function DetailsOrg() {
             setDetails(res.data.manager)
             setOrgAgreements(res.data.manager.agreements.filter((agr) => agr.user1 === res.data.manager._id))
             console.log(res.data, id)
+            setLoad(false)
         }
         func()
     }, [])
@@ -50,7 +54,7 @@ export default function DetailsOrg() {
 
     return (
         <>
-            {details && allDetails &&
+            {load ? <Loading /> : details && allDetails &&
                 <>
                     <Grid container columnSpacing={4} sx={{ borderBottom: '2px solid #E9E9E9', paddingBottom: '2%' }}>
                         <Grid item md={1.5}>
@@ -90,9 +94,9 @@ export default function DetailsOrg() {
 
                             <Grid container rowSpacing={3}>
 
-                                {orgAgreements.length !== 0 ? <Grid container rowSpacing={3}>
+                                {details.agreements.length !== 0 ? <Grid container rowSpacing={3}>
                                     {
-                                        orgAgreements.map((agreement) => {
+                                        details.agreements.map((agreement) => {
                                             return <Grid item md={12}>
                                                 <AgreementCard agreement={agreement} />
                                             </Grid>

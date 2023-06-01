@@ -7,6 +7,7 @@ import { Web3ReactProvider } from '@web3-react/core';
 
 
 function getLibrary(provider) {
+  console.log(provider)
   return new Web3ReactProvider(provider);
 }
 

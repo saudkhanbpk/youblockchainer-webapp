@@ -8,7 +8,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import { AppBar, Avatar, Button, CardMedia, Grid, IconButton, Toolbar } from '@mui/material';
+import { AppBar, Avatar, Button, CardMedia, Grid, IconButton, Toolbar, Tooltip } from '@mui/material';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -126,55 +126,57 @@ export default function SideDrawer(props) {
                     </Box>
                     <Box>
                         <List>
-                            <ListItem disablePadding onClick={() => navigate('/')} sx={{ display: 'block', marginTop: '20%' }}>
-                                <ListItemButton sx={listItemBtn}>
-                                    <ListItemIcon sx={listItemIco}>
-                                        <Icon icon="material-symbols:home-rounded" color={url === '' ? '#3770FF' : '#6A707F'} width='26' height='26' />
-                                    </ListItemIcon>
-                                </ListItemButton>
-                            </ListItem>
-                            <ListItem disablePadding onClick={() => navigate('/chat')} sx={{ display: 'block', marginTop: '20%' }}>
-                                <ListItemButton sx={listItemBtn}>
-                                    <ListItemIcon sx={{ ...listItemIco, marginLeft: '2px' }}>
-                                        <Icon color={url.includes('chat') ? '#3770FF' : '#6A707F'} icon="mdi:message" width='20' height='20' />
-                                    </ListItemIcon>
-                                </ListItemButton>
-                            </ListItem>
-                            <ListItem disablePadding onClick={() => navigate('/experts')} sx={{ display: 'block', marginTop: '20%' }}>
-                                <ListItemButton sx={listItemBtn}>
-                                    <ListItemIcon sx={listItemIco}>
-                                        <Icon color={url.includes('expert') ? '#3770FF' : '#6A707F'} icon="mdi:user-search" width='24' height='24' />
-                                    </ListItemIcon>
-                                </ListItemButton>
-                            </ListItem>
-                            <ListItem disablePadding onClick={() => navigate('/myorganization')} sx={{ display: 'block', marginTop: '20%' }}>
-                                <ListItemButton sx={listItemBtn}>
-                                    <ListItemIcon sx={listItemIco}>
-                                        <Icon color={url === 'myorganization' ? '#3770FF' : '#6A707F'} icon="mingcute:building-2-fill" width='24' height='24' />
-                                    </ListItemIcon>
-                                </ListItemButton>
-                            </ListItem>
+                            <Tooltip title="Dashboard">
+                                <ListItem disablePadding onClick={() => navigate('/')} sx={{ display: 'block', marginTop: '20%' }}>
+                                    <ListItemButton sx={listItemBtn}>
+                                        <ListItemIcon sx={listItemIco}>
+                                            <Icon icon="material-symbols:home-rounded" color={url === '' ? '#3770FF' : '#6A707F'} width='26' height='26' />
+                                        </ListItemIcon>
+                                    </ListItemButton>
+                                </ListItem>
+                            </Tooltip>
+                            <Tooltip title="Chat">
 
-                            <ListItem disablePadding onClick={() => navigate('/organizations')} sx={{ display: 'block', marginTop: '20%' }}>
-                                <ListItemButton sx={listItemBtn}>
-                                    <ListItemIcon sx={listItemIco}>
-                                        <Icon color={url.includes('organizations') ? '#3770FF' : '#6A707F'} icon="mdi:briefcase-search" width='24' height='24' />
-                                    </ListItemIcon>
-                                </ListItemButton>
-                            </ListItem>
+                                <ListItem disablePadding onClick={() => navigate('/chat')} sx={{ display: 'block', marginTop: '20%' }}>
+                                    <ListItemButton sx={listItemBtn}>
+                                        <ListItemIcon sx={{ ...listItemIco, marginLeft: '2px' }}>
+                                            <Icon color={url.includes('chat') ? '#3770FF' : '#6A707F'} icon="mdi:message" width='20' height='20' />
+                                        </ListItemIcon>
+                                    </ListItemButton>
+                                </ListItem>
+                            </Tooltip>
+                            <Tooltip title="Find experts">
+                                <ListItem disablePadding onClick={() => navigate('/experts')} sx={{ display: 'block', marginTop: '20%' }}>
+                                    <ListItemButton sx={listItemBtn}>
+                                        <ListItemIcon sx={listItemIco}>
+                                            <Icon color={url.includes('expert') ? '#3770FF' : '#6A707F'} icon="mdi:user-search" width='24' height='24' />
+                                        </ListItemIcon>
+                                    </ListItemButton>
+                                </ListItem>
+                            </Tooltip>
+                            <Tooltip title="My organization">
 
+                                <ListItem disablePadding onClick={() => navigate('/myorganization')} sx={{ display: 'block', marginTop: '20%' }}>
+                                    <ListItemButton sx={listItemBtn}>
+                                        <ListItemIcon sx={listItemIco}>
+                                            <Icon color={url === 'myorganization' ? '#3770FF' : '#6A707F'} icon="mingcute:building-2-fill" width='24' height='24' />
+                                        </ListItemIcon>
+                                    </ListItemButton>
+                                </ListItem>
+                            </Tooltip>
+                            <Tooltip title="Find organizations">
+                                <ListItem disablePadding onClick={() => navigate('/organizations')} sx={{ display: 'block', marginTop: '20%' }}>
+                                    <ListItemButton sx={listItemBtn}>
+                                        <ListItemIcon sx={listItemIco}>
+                                            <Icon color={url.includes('organizations') ? '#3770FF' : '#6A707F'} icon="mdi:briefcase-search" width='24' height='24' />
+                                        </ListItemIcon>
+                                    </ListItemButton>
+                                </ListItem>
+                            </Tooltip>
                         </List>
                     </Box>
                     <Box>
-                        <List>
-                            <ListItem disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton sx={listItemBtn}>
-                                    <ListItemIcon sx={listItemIco}>
-                                        <InboxIcon />
-                                    </ListItemIcon>
-                                </ListItemButton>
-                            </ListItem>
-                        </List>
+
                     </Box>
                 </Box>
             </Drawer>
