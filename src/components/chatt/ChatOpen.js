@@ -9,10 +9,7 @@ export default function ChatOpen() {
         <>
             <CardContent sx={{ ...card, ...df_jc_ac_fdc, height: '98%', borderTopLeftRadius: '0', borderBottomLeftRadius: '0' }}>
                 <CardMedia component='img' image={chatop} sx={{ width: '50vh', height: '50vh' }} />
-                <div style={df_jc_ac}>
-                    <Icon style={{ color: '#6A707F' }} icon="ic:round-lock" />
-                    <p style={ptag}>End-to-end encrypted</p>
-                </div>
+
             </CardContent>
         </>
     )

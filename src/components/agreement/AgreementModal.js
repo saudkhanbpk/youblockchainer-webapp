@@ -1,6 +1,6 @@
 import { Box, Button, CircularProgress, Modal, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import { bold_name, btn_connect, circularprog } from '../../theme/CssMy';
+import { bold_name, btn_connect, circularprog, ptag } from '../../theme/CssMy';
 import moment from 'moment';
 import Web3 from 'web3';
 import Forwarder from '../../abis/Forwarder.json';
@@ -9,6 +9,8 @@ import AskGPT from '../../abis/AskGPT.json';
 import { contractAddress, forwarderAddress, rpcConfig } from '../../Constants';
 import { createAgreement } from '../../services/agreement';
 import { executeMetaTx } from '../../services/helper';
+import { useContext } from 'react';
+import { ybcontext } from '../../context/MainContext';
 
 
 const style = {
@@ -28,6 +30,7 @@ const style = {
 export default function AgreementModal({ open, handleClose, user, expert }) {
     const [name, setName] = useState('')
     const [startsAt, setStartsAt] = useState('')
+    const { setUser } = useContext(ybcontext)
     let provider = window.ethereum;
     const web3 = new Web3(provider);
     let contract1 = new web3.eth.Contract(Forwarder, forwarderAddress);
@@ -39,25 +42,25 @@ export default function AgreementModal({ open, handleClose, user, expert }) {
         if (!startsAt || name.length === 0) {
             return alert('"Name" and "Starts At" field cannot be empty');
         }
-        if (
-            await createAgreement(
-                user,
-                expert,
-                name,
-                moment(startsAt).unix(),
-                moment().unix(),
-                contract2,
-                executeMetaTx,
-                web3,
-                contract1,
-            )
-        ) {
+        await createAgreement(
+            user,
+            expert,
+            name,
+            moment(startsAt).unix(),
+            moment().unix(),
+            contract2,
+            executeMetaTx,
+            web3,
+            contract1,
+        ).then((res) => {
             // setShowAgreement(null);
             setName('')
             setStartsAt('')
+            setUser(res)
             handleClose()
             console.log('agreement created')
-        }
+        }).catch((e) => console.log(e))
+
         setLoading(false);
     };
 
@@ -74,7 +77,8 @@ export default function AgreementModal({ open, handleClose, user, expert }) {
                     Enter agreement details
                 </Typography>
                 <TextField value={name} onChange={(e) => setName(e.target.value)} sx={{ width: '100%', marginTop: '5%' }} placeholder='Agreement name' />
-                <TextField required value={startsAt} sx={{ width: '100%', marginTop: '5%' }} InputProps={{ inputProps: { min: moment().format('YYYY-MM-DD') } }} type="date" name='startsAt' id='startsAt' onChange={(e) => setStartsAt(e.target.value)} />
+                <p style={{ ...ptag, marginTop: '5%' }}>Start Date</p>
+                <TextField required value={startsAt} sx={{ width: '100%' }} InputProps={{ inputProps: { min: moment().format('YYYY-MM-DD') } }} type="date" name='startsAt' id='startsAt' onChange={(e) => setStartsAt(e.target.value)} />
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '5%' }}>
                     {loading ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={clicker} sx={btn_connect} >Done</Button>}
                 </Box>

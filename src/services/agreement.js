@@ -60,7 +60,7 @@ export const createAgreement = async (
             user1: me._id,
             user2: expert._id,
         });
-        let apiRes = await httpcommon.post(`/user/agreement/`, {
+        let apiRes = (await httpcommon.post(`/user/agreement/`, {
             name: nameofAgreement,
             startsAt,
             user1: me._id,
@@ -70,9 +70,13 @@ export const createAgreement = async (
             headers: {
                 Authorization: localStorage.getItem('ybToken')
             }
-        });
+        })).data;
+        let user = JSON.parse(localStorage.getItem('ybUser'))
+        let newagree = [...user.agreements, apiRes]
+        user.agreements = newagree
+        localStorage.setItem('ybUser', JSON.stringify(user))
         console.log('---Agreement Created in DB', apiRes);
-        return true;
+        return user;
     } catch (error) {
         console.log(error.message);
         return false;

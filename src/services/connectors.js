@@ -10,7 +10,28 @@ export const fetchAccount = async (user, setUser, account, setAccount, token, se
     let use, tokenAcc, userBrand
     // console.log(web3, web3.eth.sign)
     try {
-        // console.log(user, account, "fetchdata")
+        await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+                {
+                    chainId: '0x13881', // Chain ID for Polygon testnet (Mumbai)
+                    chainName: 'Polygon Testnet',
+                    nativeCurrency: {
+                        name: 'Matic',
+                        symbol: 'MATIC',
+                        decimals: 18,
+                    },
+                    rpcUrls: ['https://rpc-mumbai.maticvigil.com/'], // RPC endpoint for Polygon testnet (Mumbai)
+                    blockExplorerUrls: ['https://mumbai.polygonscan.com/'], // Block explorer URL for Polygon testnet (Mumbai)
+                    iconUrls: ['https://polygon.technology/images/mumbai_logo.png'], // Icon URL for Polygon testnet (Mumbai)
+                },
+            ],
+        });
+    } catch (error) {
+        console.log(error);
+    }
+    // console.log(user, account, "fetchdata")
+    try {
         await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: '0x13881' }],

@@ -64,7 +64,7 @@ export default function DetailsOrg() {
                             </div>
                         </Grid>
                         <Grid item md={1.5} sx={df_jc_ac} />
-                        {details._id !== user._id && <Grid item md={1.5} sx={df_jc_ac}>
+                        {user && details._id !== user._id && <Grid item md={1.5} sx={df_jc_ac}>
                             {connectLoad ? <CircularProgress size={30} sx={circularprog} /> : <Button sx={btn_connect} onClick={() => connect()}>Connect</Button>}
                         </Grid>}
                     </Grid>

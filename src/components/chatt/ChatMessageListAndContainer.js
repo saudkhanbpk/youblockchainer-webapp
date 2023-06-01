@@ -71,7 +71,7 @@ export default function ChatMessageListAndContainer() {
                                         <strong style={{ fontFamily: 'Poppins' }}>
                                             {room.p2.username}
                                         </strong>
-                                        <p style={ptag}>{JSON.parse(localStorage.getItem(room._id)).length !== 0 ? JSON.parse(localStorage.getItem(room._id))?.[0]?.direction === 'outgoing' ?
+                                        <p style={ptag}>{JSON.parse(localStorage.getItem(room._id))?.[0] ? JSON.parse(localStorage.getItem(room._id))?.[0]?.direction === 'outgoing' ?
                                             `You : ${JSON.parse(localStorage.getItem(room._id))?.[0].message}` :
                                             `${room.p2.username} : ${JSON.parse(localStorage.getItem(room._id))?.[0]?.message}` : 'Say Hi'}</p>
                                     </Box>

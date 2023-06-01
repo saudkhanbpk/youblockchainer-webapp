@@ -14,6 +14,7 @@ import html2pdf from 'html2pdf.js'
 import { updateMe } from '../../services/userServices';
 import { uploadImg } from '../../services/ipfsServicesApi';
 import shorthash from 'shorthash';
+import { useNavigate } from 'react-router';
 
 
 export default function Chat2() {
@@ -29,6 +30,7 @@ export default function Chat2() {
     const [disableTF, setDisableTF] = useState(false)
     const [current, setCurrent] = useState(undefined)
     const [finalScript, setFinalScript] = useState('')
+    const navigate = useNavigate()
     const [generating, setGenerating] = useState(false)
     const topics = [
         'Opening Image',
@@ -60,7 +62,7 @@ export default function Chat2() {
         setMessages((prev) => [...prev, {
             message: reply,
             direction: 'incoming',
-            mbold: 'Title',
+            mbold: 'Title, character profiles and outline',
             image: logo,
             time: new Date()
         }])
@@ -170,6 +172,8 @@ export default function Chat2() {
             case 'Do you have a one minute pitch idea in short ?':
                 // setHasPitchIdea(option);
                 option === "YES" ? setEnableTF(true) : setHasPitchIdea(false)
+                option === "Search on web" && window.open('http://myreeldream.ai/', '_blank')
+
                 option === "NO" && setDisableTF(true)
                 option === "NO" && setMessages((prev) => [...prev, {
                     message: `Do you have a one minute pitch idea in short ?`,
@@ -323,7 +327,7 @@ export default function Chat2() {
             {
                 generating && <>
                     <Button sx={{ ...btn, marginRight: '10px', marginBottom: '10px' }} onClick={() => saveAndDownload()}>
-                        Save and download
+                        Download
                     </Button>
                     <Button sx={{ ...btn, marginRight: '10px', marginBottom: '10px' }} onClick={() => saveAndDownload()}>
                         Save
