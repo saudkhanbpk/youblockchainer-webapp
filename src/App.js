@@ -4,7 +4,7 @@ import { ybcontext } from './context/MainContext';
 import MainRouter from './router/MainRouter';
 import Loading from './components/loader/Loading';
 import SideDrawer from './components/sidebar/SideDrawer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -20,6 +20,18 @@ function App() {
     userBrand, setUserBrand,
     open, setOpen
   }
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("ybUser")))
+    setToken(localStorage.getItem("ybToken"))
+    setUserBrand(JSON.parse(localStorage.getItem("ybBrand")))
+  }, [account])
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("ybUser")))
+    setToken(localStorage.getItem("ybToken"))
+    setUserBrand(JSON.parse(localStorage.getItem("ybBrand")))
+  }, [])
 
   return (
     <>

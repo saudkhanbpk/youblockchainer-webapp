@@ -17,6 +17,8 @@ body{
   background-color: white !important;
   box-shadow: 4px 1px 2px rgba(94, 99, 116, 0.05) !important;
 border-radius: 5px !important;
+margin-top: 2% !important;
+
 }
 
 
@@ -24,11 +26,24 @@ border-radius: 5px !important;
   background-color: white !important;
   box-shadow: 0px 1px 2px rgba(94, 99, 116, 0.05) !important;
   border-radius: 5px !important;
+  margin-top: 2% !important;
 }
 
 .cs-message-list, .cs-typing-indicator,.cs-message-list{
   background-color: #F6F6F6 !important;
 }
 
+.cs-message-input{
+  border-radius: 10px !important;
+  border-top: none !important;
+}
 
+.cs-conversation-header, .cs-conversation-header__user-name{
+  background-color: white !important;
+  border-bottom: none !important;
+}
 
+.rti--container{
+  height: 2.2375em !important;
+  border-radius: 5px !important;
+}

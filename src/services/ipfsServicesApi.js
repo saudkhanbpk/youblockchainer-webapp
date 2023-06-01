@@ -1,0 +1,18 @@
+import httpcommon from "../httpcommon";
+
+
+export const uploadImg = (data) => {
+    return httpcommon.post(`/ipfs/img`, data, {
+        headers: {
+            Authorization: localStorage.getItem('ybToken')
+        }
+    });
+};
+
+export const uploadJson = (data) => {
+    return httpcommon.post(`/ipfs/json`, data, {
+        headers: {
+            Authorization: localStorage.getItem('ybToken')
+        }
+    });
+};

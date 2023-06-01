@@ -8,14 +8,15 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import { AppBar, Button, CardMedia, Grid, Toolbar } from '@mui/material';
+import { AppBar, Avatar, Button, CardMedia, Grid, IconButton, Toolbar } from '@mui/material';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { btn, df_jfe_ac } from '../../theme/CssMy'
+import { btn, circularImage, df_jc_ac, df_jfe_ac } from '../../theme/CssMy'
 import { useContext } from 'react';
 import { ybcontext } from '../../context/MainContext';
 import LoginModal from '../modal/LoginModal';
+import logo from '../../images/logo.png'
 
 const drawerWidth = 240;
 
@@ -90,25 +91,38 @@ const gridcon = {
 export default function SideDrawer(props) {
     const { children } = props
     const url = window.location.href.split('/')[3]
-    const { user } = useContext(ybcontext)
+    const { user, setUser, setToken, open, setOpen } = useContext(ybcontext)
     const navigate = useNavigate()
     console.log(url)
-    const { open, setOpen } = useContext(ybcontext)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
-    console.log(open)
+    console.log(user)
 
     return (
         <Box sx={{ display: 'flex' }}>
             <AppBar sx={{ marginLeft: '50px', backgroundColor: 'white', color: '#3770FF', boxShadow: '0px 1px 26px rgba(94, 99, 116, 0.05)' }}>
                 <Toolbar sx={df_jfe_ac}>
-                    <Button onClick={() => setOpen(true)} sx={btn}>Connect account</Button>
+                    {user && user?.walletAddress &&
+                        <IconButton onClick={() => navigate('/profile')} sx={{ padding: '0', margin: '0', ...gridItem }} edge="end" aria-label="account of current user" aria-haspopup="true" color="inherit">
+                            <Avatar sx={{ backgroundColor: '#7382986c' }}> {user.walletAddress.substring(user.walletAddress.length - 3)} </Avatar>
+                        </IconButton>
+                    }
+                    {
+                        user ? <Button onClick={() => {
+                            setUser(null)
+                            setToken(null)
+                            localStorage.setItem('ybUser', null)
+                            localStorage.setItem('ybToken', null)
+                            localStorage.setItem('ybBrand', null)
+                        }} sx={btn}>Disconnect wallet</Button>
+                            : <Button onClick={() => setOpen(true)} sx={btn}>Connect wallet</Button>
+                    }
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" >
                 <Box sx={gridcon}>
-                    <Box sx={gridItem}>
-                        <CardMedia sx={imgStyle} component='img' image='https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg' />
+                    <Box sx={{ ...df_jc_ac, marginTop: '5%' }}>
+                        <CardMedia component='img' image={logo} sx={{ borderRadius: '50px', width: '75%' }} />
                     </Box>
                     <Box>
                         <List>
@@ -122,14 +136,14 @@ export default function SideDrawer(props) {
                             <ListItem disablePadding onClick={() => navigate('/chat')} sx={{ display: 'block', marginTop: '20%' }}>
                                 <ListItemButton sx={listItemBtn}>
                                     <ListItemIcon sx={{ ...listItemIco, marginLeft: '2px' }}>
-                                        <Icon color={url === 'chat' ? '#3770FF' : '#6A707F'} icon="mdi:message" width='20' height='20' />
+                                        <Icon color={url.includes('chat') ? '#3770FF' : '#6A707F'} icon="mdi:message" width='20' height='20' />
                                     </ListItemIcon>
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding onClick={() => navigate('/experts')} sx={{ display: 'block', marginTop: '20%' }}>
                                 <ListItemButton sx={listItemBtn}>
                                     <ListItemIcon sx={listItemIco}>
-                                        <Icon color={url === 'experts' ? '#3770FF' : '#6A707F'} icon="mdi:user-search" width='24' height='24' />
+                                        <Icon color={url.includes('expert') ? '#3770FF' : '#6A707F'} icon="mdi:user-search" width='24' height='24' />
                                     </ListItemIcon>
                                 </ListItemButton>
                             </ListItem>
@@ -144,10 +158,11 @@ export default function SideDrawer(props) {
                             <ListItem disablePadding onClick={() => navigate('/organizations')} sx={{ display: 'block', marginTop: '20%' }}>
                                 <ListItemButton sx={listItemBtn}>
                                     <ListItemIcon sx={listItemIco}>
-                                        <Icon color={url === 'organizations' ? '#3770FF' : '#6A707F'} icon="mdi:briefcase-search" width='24' height='24' />
+                                        <Icon color={url.includes('organizations') ? '#3770FF' : '#6A707F'} icon="mdi:briefcase-search" width='24' height='24' />
                                     </ListItemIcon>
                                 </ListItemButton>
                             </ListItem>
+
                         </List>
                     </Box>
                     <Box>

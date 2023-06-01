@@ -2,6 +2,7 @@ import Web3 from "web3";
 // import UserServices from "./UserServices";
 // import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import { getUserBrand } from "./brandsApi";
 // import axios from "axios";
 
 export const fetchAccount = async (user, setUser, account, setAccount, token, setToken, setUserBrand) => {
@@ -26,7 +27,7 @@ export const fetchAccount = async (user, setUser, account, setAccount, token, se
             if (signature) {
                 // console.log(signature)
                 // const res2 = await UserServices.getUserById(signature);
-                await fetch(`http://13.51.252.66/api/v1/user/login?signature=${signature}&address=${accounts[0]}`)
+                await fetch(`http://app.myreeldream.ai/api/v1/user/login?signature=${signature}&address=${accounts[0]}`)
                     .then(r => {
                         return r.json()
                     })
@@ -37,15 +38,15 @@ export const fetchAccount = async (user, setUser, account, setAccount, token, se
                         tokenAcc = result.token
                         localStorage.setItem("ybUser", JSON.stringify(result.user))
                         localStorage.setItem("ybToken", result.token)
-                        // await BrandServices.getUserBrand(result.user.walletAddress)
-                        //     .then((res) => {
-                        //         userBrand = res.data
-                        //         // console.log(res.data ? res.data[0] : null, 'userBrand')
-                        //         localStorage.setItem("ybBrand", JSON.stringify(res.data ? res.data[0] : null))
-                        //         setUserBrand(res.data)
-                        //     }).catch((e) => {
-                        //         console.log(e)
-                        //     })
+                        await getUserBrand(result.user._id)
+                            .then((res) => {
+                                userBrand = res.data
+                                console.log(res.data)
+                                localStorage.setItem("ybBrand", JSON.stringify(res.data.length ? res.data[0] : null))
+                                setUserBrand(res.data.length ? res.data[0] : null)
+                            }).catch((e) => {
+                                console.log(e)
+                            })
                         setUser(result.user)
                         setToken(result.token)
                     })

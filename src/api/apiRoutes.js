@@ -5,6 +5,8 @@ const USER = {
     GET_PAGINATED_USERS: '/user/users/paginated',
     SEARCH_USERS: '/user/users/search',
     TOGGLE_FOLLOW: '/user/toggleFollow/',
+    META_TX: '/user/metatx',
+
 };
 
 const IPFS = {
