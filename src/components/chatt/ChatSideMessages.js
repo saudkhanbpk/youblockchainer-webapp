@@ -21,7 +21,7 @@ export default function ChatSideMessages({ chat, messages2, setMessages }) {
     const { messages, send, status } = useWebSockets({
         roomId: id,
         enabled: chat ? true : false,
-        sender: user._id,
+        sender: (JSON.parse(localStorage.getItem('ybUser')))._id,
         expert: chat?.p2
     });
 

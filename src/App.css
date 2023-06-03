@@ -46,4 +46,9 @@ margin-top: 2% !important;
 .rti--container{
   height: 2.2375em !important;
   border-radius: 5px !important;
+  background-color: transparent !important;
+}
+
+.rti--input{
+  background-color: transparent !important;
 }

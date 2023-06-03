@@ -12,7 +12,7 @@ export const askGPT = async prompt => {
 
 export const getAllRooms = async (token) => {
     try {
-        let res = await httpcommon.get(ENDPOINTS.GET_ALL_ROOMS, {
+        let res = await httpcommon.get(`/chat`, {
             headers: {
                 Authorization: token
             }
