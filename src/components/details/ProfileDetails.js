@@ -33,11 +33,11 @@ export default function ProfileDetails() {
     const [twitter, setTwitter] = useState('')
     const [facebook, setFacebook] = useState('')
     const [load, setLoad] = useState(false)
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(JSON.parse(localStorage.getItem('ybUser'))?.isExpert)
     const user = JSON.parse(localStorage.getItem('ybUser'))
     console.log(token)
     const { edit, setEdit } = useContext(ybcontext)
-    const [img, setImg] = useState((JSON.parse(localStorage.getItem('ybUser')))?.profileImage)
+    const [img, setImg] = useState((JSON.parse(localStorage.getItem('ybUser')))?.profileImage ? (JSON.parse(localStorage.getItem('ybUser')))?.profileImage : '')
     const [json, setJson] = useState({
         username: (JSON.parse(localStorage.getItem('ybUser'))).username,
         email: (JSON.parse(localStorage.getItem('ybUser'))).email,
@@ -61,6 +61,7 @@ export default function ProfileDetails() {
             }
         ]
     })
+
 
     const handleChange = (e) => {
         const name = e.target.name;
