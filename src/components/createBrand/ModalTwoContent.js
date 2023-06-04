@@ -90,6 +90,7 @@ function ModalTwoContent({ setActiveStep, activeStep, open, setOpen }) {
                     onChange={async (e) => {
                         e.preventDefault()
                         let form2Data = new FormData()
+                        console.log(e.target.files[0])
                         form2Data.append('files', e.target.files[0]);
                         // const headers = { 'content-type': 'multipart/form-data' }
                         const res = await uploadImg(form2Data, token)
