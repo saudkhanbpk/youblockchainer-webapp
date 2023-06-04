@@ -52,3 +52,11 @@ margin-top: 2% !important;
 .rti--input{
   background-color: transparent !important;
 }
+
+iframe{
+  overflow: hidden !important;
+}
+
+.Mui-selected{
+  color: '#3770FF' !important;
+}
