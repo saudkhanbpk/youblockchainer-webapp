@@ -12,13 +12,16 @@ function App() {
   const [token, setToken] = useState(null)
   const [userBrand, setUserBrand] = useState(null)
   const [open, setOpen] = useState(false)
+  const [edit, setEdit] = useState(false)
+
 
   const context = {
     user, setUser,
     account, setAccount,
     token, setToken,
     userBrand, setUserBrand,
-    open, setOpen
+    open, setOpen,
+    edit, setEdit
   }
 
   useEffect(() => {

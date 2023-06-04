@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { getExpertById, updateMe } from '../../services/userServices'
 import { Box, CardMedia, Chip, CircularProgress, Fab, Grid, Stack, TextField, Typography } from '@mui/material'
@@ -13,6 +13,7 @@ import { uploadImg } from '../../services/ipfsServicesApi'
 import { TagsInput } from 'react-tag-input-component'
 import HorizontalScroll from 'react-scroll-horizontal'
 import BasicTabs from './TabsUser'
+import { ybcontext } from '../../context/MainContext'
 
 const fabStyle = {
     position: 'fixed',
@@ -25,7 +26,6 @@ export default function ProfileDetails() {
     const [details, setDetails] = useState(null)
     const [expAgreements, setExpAgreements] = useState([])
     const [chips, setChips] = useState([])
-    const [edit, setEdit] = useState(false)
     const token = localStorage.getItem('ybToken')
     const [isShownP, setIsShownP] = useState(true)
     const [instagram, setInstagram] = useState('')
@@ -34,6 +34,7 @@ export default function ProfileDetails() {
     const [load, setLoad] = useState(false)
     const user = JSON.parse(localStorage.getItem('ybUser'))
     console.log(token)
+    const { edit, setEdit } = useContext(ybcontext)
     const [img, setImg] = useState((JSON.parse(localStorage.getItem('ybUser')))?.profileImage)
     const [json, setJson] = useState({
         username: '',
@@ -130,7 +131,7 @@ export default function ProfileDetails() {
                     <Grid container columnSpacing={4} sx={{ borderBottom: '2px solid #E9E9E9', paddingBottom: '2%' }}>
                         <Grid item md={1.5}>
                             {/* <CardMedia component='img' image={details.profileImage ? details.profileImage : userImg} sx={circularImage} /> */}
-                            <Box sx={{ display: { md: 'flex', sm: 'flex', xs: 'none' }, width: '100%', height: '100%', objectFit: 'cover', backgroundImage: `url("${img ? img : details.profileImage}")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+                            <Box sx={{ display: { md: 'flex', sm: 'flex', xs: 'none' }, width: '100px', height: '100px', objectFit: 'cover', backgroundImage: `url("${img ? img : details.profileImage}")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
                                 <ImageUploader
                                     style={{ borderRadius: '10%', width: '100%', height: '100%', objectFit: 'cover', backgroundColor: 'transparent' }}
                                     onFileAdded={(img) => getImageFileObject(img, setImg)}

@@ -20,7 +20,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
     const navigate = useNavigate()
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
-    const { user, setUser, account, setAccount } = useContext(ybcontext)
+    const { user, setUser, account, setAccount, edit, setEdit } = useContext(ybcontext)
     const { deactivate } = useWeb3React()
     const isStepOptional = (step) => {
         return step === 2;
@@ -108,7 +108,11 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                     )}
 
 
-                    <Button onClick={() => navigate('/')}>
+                    <Button onClick={() => {
+                        setEdit(true)
+                        setOpen(false)
+                        navigate('/profile')
+                    }}>
                         {activeStep === steps.length - 1 ? 'Complete Your Profile' : ''}
                     </Button>
                 </Box>
