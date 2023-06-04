@@ -9,6 +9,8 @@ import { getBrandById } from '../../services/brandsApi'
 import SortIcon from '@mui/icons-material/Sort';
 import EmptyState from '../loadingoremptystate/EmptyState'
 import Loading from '../loader/Loading'
+import successHandler from '../toasts/successHandler'
+import errorHandler from '../toasts/errorHandler'
 
 const style = {
     margin: { marginTop: '3%' },
@@ -35,12 +37,17 @@ export default function DetailsOrg() {
         setLoad(true)
         const func = async () => {
             const id = params.id
-            const res = await getBrandById(id)
-            setAllDetails(res.data)
-            setDetails(res.data.manager)
-            setOrgAgreements(res.data.manager.agreements.filter((agr) => agr.user1 === res.data.manager._id))
-            console.log(res.data, id)
-            setLoad(false)
+            await getBrandById(id)
+                .then((res) => {
+                    setAllDetails(res.data)
+                    setDetails(res.data.manager)
+                    setOrgAgreements(res.data.manager.agreements.filter((agr) => agr.user1 === res.data.manager._id))
+                    console.log(res.data, id)
+                    setLoad(false)
+                    successHandler('Connection successful')
+                }).catch((e) => {
+                    errorHandler('Something went wrong')
+                })
         }
         func()
     }, [])
@@ -63,8 +70,8 @@ export default function DetailsOrg() {
                         <Grid item md={7.5} sx={df_jfs_ac_fdc}>
                             <Typography variant='h4' sx={bold_name}>{allDetails.name}</Typography>
                             <div style={df_jfe_ac}>
-                                <Icon color='#3770FF' icon="mdi:arrow-top-bold-hexagon-outline" />
-                                <p style={{ ...ptag, color: '#3770FF' }}>Top rated</p>
+                                {/* <Icon color='#3770FF' icon="mdi:arrow-top-bold-hexagon-outline" />
+                                <p style={{ ...ptag, color: '#3770FF' }}>Top rated</p> */}
                             </div>
                         </Grid>
                         <Grid item md={1.5} sx={df_jc_ac} />

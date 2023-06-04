@@ -11,6 +11,8 @@ import { createAgreement } from '../../services/agreement';
 import { executeMetaTx } from '../../services/helper';
 import { useContext } from 'react';
 import { ybcontext } from '../../context/MainContext';
+import successHandler from '../toasts/successHandler';
+import errorHandler from '../toasts/errorHandler';
 
 
 const style = {
@@ -41,13 +43,13 @@ export default function AgreementModal({ open, handleClose, user, expert }) {
         setLoading(true);
         if (startsAt < moment().format('YYYY-MM-DD')) {
             setLoading(false);
-            return alert('"Enter valid date');
+            return errorHandler('"Enter valid date');
 
         }
         if (!startsAt || name.length === 0) {
             setLoading(false);
 
-            return alert('"Name" and "Starts At" field cannot be empty');
+            return errorHandler('"Name" and "Starts At" field cannot be empty');
         }
         await createAgreement(
             user,
@@ -65,8 +67,8 @@ export default function AgreementModal({ open, handleClose, user, expert }) {
             setStartsAt('')
             setUser(res)
             handleClose()
-            console.log('agreement created')
-        }).catch((e) => console.log(e))
+            successHandler('Agreement created successfully')
+        }).catch((e) => errorHandler('Something went wrong'))
 
         setLoading(false);
     };

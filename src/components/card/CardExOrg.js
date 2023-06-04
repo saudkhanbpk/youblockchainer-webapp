@@ -22,8 +22,8 @@ export default function CardExOrg({ exp, org }) {
                         <p style={ptag}>{exp?.description.length > 15 ? `${exp?.description.slice(0, 20)}...` : exp?.description}</p>}
                 </Grid>
                 <Grid item xs={4} sx={df_jfe_ac}>
-                    <Icon color='#3770FF' icon="mdi:arrow-top-bold-hexagon-outline" />
-                    <p style={{ ...ptag, color: '#3770FF' }}>Top rated</p>
+                    {/* <Icon color='#3770FF' icon="mdi:arrow-top-bold-hexagon-outline" />
+                    <p style={{ ...ptag, color: '#3770FF' }}>Top rated</p> */}
                 </Grid>
             </Grid>
             <Grid container sx={{ marginTop: '7%' }}>

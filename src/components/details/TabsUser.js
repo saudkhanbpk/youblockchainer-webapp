@@ -13,6 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { saveAs } from 'file-saver';
 import { updateMe } from '../../services/userServices';
 import { ybcontext } from '../../context/MainContext';
+import successHandler from '../toasts/successHandler';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -78,6 +79,7 @@ export default function BasicTabs({ details, setDetails }) {
                                             localStorage.setItem('ybUser', JSON.stringify(res2.data))
                                             setUser(res2.data)
                                             setDetails(res2.data)
+                                            successHandler('Script deleted successfully')
                                         }} sx={{ zIndex: 1000, cursor: 'pointer', position: 'absolute', padding: '4px', marginLeft: '30px', fontSize: '20px', backgroundColor: 'rgba(164, 163, 164, 0.4)', boxShadow: 'inset 19.2333px -19.2333px 19.2333px rgba(124, 124, 124, 0.1), inset -19.2333px 19.2333px 19.2333px rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(19.2333px)', color: 'white', borderRadius: '50%' }} />
                                         <iframe
                                             src={`${scri}#toolbar=0&navpanes=0`}

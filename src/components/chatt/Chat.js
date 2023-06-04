@@ -1,4 +1,4 @@
-import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
+import { ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
 import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { Avatar, Button, CircularProgress } from '@mui/material';
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -9,14 +9,14 @@ import moment from 'moment-timezone';
 import userImg from '../../images/user.png'
 import logo from '../../images/chatbot.png'
 import { FountainParser } from "screenplay-js";
-import jsPDF from 'jspdf';
 import html2pdf from 'html2pdf.js'
 import { updateMe } from '../../services/userServices';
-import { uploadImg, uploadPics } from '../../services/ipfsServicesApi';
+import { uploadImg } from '../../services/ipfsServicesApi';
 import shorthash from 'shorthash';
 import { useNavigate } from 'react-router';
-import { PDFDocument, PDFCompressionQuality } from 'pdf-lib';
 import { ybcontext } from '../../context/MainContext';
+import successHandler from '../toasts/successHandler'
+import errorHandler from '../toasts/errorHandler'
 
 
 export default function Chat2() {
@@ -313,8 +313,9 @@ export default function Chat2() {
             localStorage.setItem('ybUser', JSON.stringify(res2.data))
             setUser(res2.data)
             setSaveLoad(false)
+            successHandler('Script saved successfully')
         } catch (error) {
-            console.error('Error generating or uploading PDF:', error);
+            errorHandler('Error generating or uploading PDF');
         }
     }
 

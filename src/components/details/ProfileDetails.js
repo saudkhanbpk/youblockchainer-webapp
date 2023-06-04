@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { getExpertById, updateMe } from '../../services/userServices'
-import { Box, CardMedia, Chip, CircularProgress, Fab, Grid, Stack, TextField, Typography } from '@mui/material'
+import { Box, CardMedia, Chip, CircularProgress, Fab, Grid, Stack, Switch, TextField, Typography } from '@mui/material'
 import { bold_name, circularImage, circularprog, df_jc_ac, df_jfs_ac, df_jfs_ac_fdc, ptag } from '../../theme/CssMy'
 import { Icon } from '@iconify/react'
 import AgreementCard from '../card/AgreementCard'
@@ -14,6 +14,7 @@ import { TagsInput } from 'react-tag-input-component'
 import HorizontalScroll from 'react-scroll-horizontal'
 import BasicTabs from './TabsUser'
 import { ybcontext } from '../../context/MainContext'
+import successHandler from '../toasts/successHandler'
 
 const fabStyle = {
     position: 'fixed',
@@ -25,21 +26,23 @@ const fabStyle = {
 export default function ProfileDetails() {
     const [details, setDetails] = useState(null)
     const [expAgreements, setExpAgreements] = useState([])
-    const [chips, setChips] = useState([])
+    const [chips, setChips] = useState((JSON.parse(localStorage.getItem('ybUser')))?.skills ? (JSON.parse(localStorage.getItem('ybUser')))?.skills : [])
     const token = localStorage.getItem('ybToken')
     const [isShownP, setIsShownP] = useState(true)
     const [instagram, setInstagram] = useState('')
     const [twitter, setTwitter] = useState('')
     const [facebook, setFacebook] = useState('')
     const [load, setLoad] = useState(false)
+    const [checked, setChecked] = useState(false)
     const user = JSON.parse(localStorage.getItem('ybUser'))
     console.log(token)
     const { edit, setEdit } = useContext(ybcontext)
     const [img, setImg] = useState((JSON.parse(localStorage.getItem('ybUser')))?.profileImage)
     const [json, setJson] = useState({
-        username: '',
+        username: (JSON.parse(localStorage.getItem('ybUser'))).username,
         email: (JSON.parse(localStorage.getItem('ybUser'))).email,
         skills: chips,
+        isExpert: checked,
         profileImage: img,
         bio: (JSON.parse(localStorage.getItem('ybUser')))?.bio,
         descriptorTitle: (JSON.parse(localStorage.getItem('ybUser')))?.descriptorTitle,
@@ -92,6 +95,7 @@ export default function ProfileDetails() {
             ...json,
             profileImage: img,
             skills: chips,
+            isExpert: checked,
             socialHandles: [
                 {
                     name: 'instagram',
@@ -107,7 +111,7 @@ export default function ProfileDetails() {
                 }
             ]
         })
-    }, [chips, instagram, facebook, twitter, img])
+    }, [chips, instagram, facebook, twitter, img, checked])
 
     const save = async () => {
         setLoad(true)
@@ -118,6 +122,7 @@ export default function ProfileDetails() {
                 setDetails(res.data)
                 setEdit(false)
                 setLoad(false)
+                successHandler('Profile updated successfully')
             })
     }
 
@@ -140,10 +145,15 @@ export default function ProfileDetails() {
                         </Grid>
                         <Grid item md={7.5} sx={df_jfs_ac_fdc}>
                             <Typography variant='h4' sx={bold_name}>{details.username}</Typography>
-                            {/* <div style={df_jfe_ac}>
-                                <Icon color='#3770FF' icon="mdi:arrow-top-bold-hexagon-outline" />
-                                <p style={{ ...ptag, color: '#3770FF' }}>Top rated</p>
-                            </div> */}
+
+                        </Grid>
+                        <Grid item md={3} sx={df_jc_ac}>
+                            <p style={ptag}>I'm not an Expert</p>
+                            <Switch
+                                checked={checked}
+                                onChange={() => setChecked(!checked)}
+                            />
+                            <p style={ptag}>I'm an Expert</p>
                         </Grid>
                     </Grid>
                     <Box sx={{ marginTop: '2%' }}>

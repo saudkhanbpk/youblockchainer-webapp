@@ -33,7 +33,7 @@ export default function AgreementCard({ agreement }) {
                     </Grid>
                     <Grid item md={9} sx={df_jfs_ac_fdc}>
                         <Typography variant='p' sx={{ ...ptag, fontWeight: '700', fontSize: '1rem', color: 'black' }}> {agreement.name}</Typography>
-                        <p style={ptag}>{moment(agreement.createdAt).subtract(1, "month").format('MMMM DD, YY')} - {agreement?.endsAt ? moment(agreement.endsAt).subtract(1, "month").format('MMMM DD, YY') : 'Present'}</p>
+                        <p style={ptag}>{moment.unix(agreement.startsAt).format('MMMM DD, YY')} - {agreement?.endsAt ? moment.unix(agreement.endsAt).format('MMMM DD, YY') : 'Present'}</p>
                         <Rating value={agreement.ratingForU1} readOnly size="small" />
                     </Grid>
                 </Grid>

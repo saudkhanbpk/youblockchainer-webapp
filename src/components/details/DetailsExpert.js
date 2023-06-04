@@ -9,6 +9,8 @@ import { createRoom } from '../../services/ChatApi'
 import AgreementModal from '../agreement/AgreementModal'
 import EmptyState from '../loadingoremptystate/EmptyState'
 import Loading from '../loader/Loading'
+import successHandler from '../toasts/successHandler'
+import errorHandler from '../toasts/errorHandler'
 
 export default function DetailsExpert() {
     const params = useParams()
@@ -39,10 +41,15 @@ export default function DetailsExpert() {
 
     const connect = async () => {
         setConnectLoad(true)
-        let res = await createRoom(id, token)
-        console.log(res, 'roomchat')
-        navigate(`/chat/${res.data._id}`)
-        setConnectLoad(false)
+        await createRoom(id, token)
+            .then((res) => {
+                console.log(res, 'roomchat')
+                navigate(`/chat/${res.data._id}`)
+                setConnectLoad(false)
+                successHandler('Connection successful')
+            }).catch((e) => {
+                errorHandler('Something went wrong')
+            })
     }
 
     return (
@@ -56,8 +63,8 @@ export default function DetailsExpert() {
                         <Grid item md={7.5} sx={df_jfs_ac_fdc}>
                             <Typography variant='h4' sx={bold_name}>{details.username}</Typography>
                             <div style={df_jfe_ac}>
-                                <Icon color='#3770FF' icon="mdi:arrow-top-bold-hexagon-outline" />
-                                <p style={{ ...ptag, color: '#3770FF' }}>Top rated</p>
+                                {/* <Icon color='#3770FF' icon="mdi:arrow-top-bold-hexagon-outline" />
+                                <p style={{ ...ptag, color: '#3770FF' }}>Top rated</p> */}
                             </div>
                         </Grid>
                         {user && details._id !== user._id && <>
