@@ -10,7 +10,7 @@ import { Avatar, Button, Typography } from '@mui/material';
 import AgreementModal from '../agreement/AgreementModal';
 
 
-export default function ChatSideMessages({ chat, messages2, setMessages }) {
+export default function ChatSideMessages({ chat, messages2, setMessages, creator }) {
     const inputRef = useRef();
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
@@ -22,7 +22,7 @@ export default function ChatSideMessages({ chat, messages2, setMessages }) {
         roomId: id,
         enabled: chat ? true : false,
         sender: (JSON.parse(localStorage.getItem('ybUser')))._id,
-        expert: chat?.p2
+        expert: creator ? chat?.p2 : chat?.p1
     });
 
     const handleSend = message => {
@@ -41,11 +41,11 @@ export default function ChatSideMessages({ chat, messages2, setMessages }) {
         <>
             {messages && <ChatContainer style={{ height: '78vh', paddingBottom: '2%', backgroundColor: 'transparent' }}>
                 <ConversationHeader>
-                    <ConversationHeader.Content userName={chat.p2.username} >
+                    <ConversationHeader.Content userName={creator ? chat.p2.username : chat.p1.username} >
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div style={{ ...df_jfs_ac, width: '80%' }}>
-                                <Avatar src={chat.p2.profileImage} />
-                                <Typography sx={{ ...bold_name, marginLeft: '2%' }} variant='p'>{chat.p2.username}</Typography>
+                                <Avatar src={creator ? chat.p2.profileImage : chat.p1.profileImage} />
+                                <Typography sx={{ ...bold_name, marginLeft: '2%' }} variant='p'>{creator ? chat.p2.username : chat.p1.username}</Typography>
                             </div>
                             <Button onClick={() => setOpen(true)} sx={{ ...btn_hire, width: '20%' }}>Hire</Button>
                         </div>

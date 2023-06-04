@@ -21,6 +21,7 @@ export default function ChatMessageListAndContainer() {
     const token = localStorage.getItem('ybToken')
     const [search, setSearch] = useState('')
     const [imgLoad, setImgLoad] = useState(false)
+    const [creator, setCreator] = useState(false)
     console.log(id)
 
 
@@ -55,6 +56,10 @@ export default function ChatMessageListAndContainer() {
         console.log(res)
     }, [search])
 
+    useEffect(() => {
+        chat?.p1?._id === (JSON.parse(localStorage.getItem('ybUser')))._id && setCreator(true)
+    }, [id])
+
     return <Grid container sx={{ height: '82vh', width: '100%' }}>
         <Grid item md={3} sx={{ backgroundColor: 'white', padding: '1%', borderRadius: '10px 0 0 10px' }}>
             <ConversationList>
@@ -66,14 +71,14 @@ export default function ChatMessageListAndContainer() {
                         return <Conversation style={id === room._id ? { backgroundColor: '#F6F6F6', borderRadius: '10px' } : { width: '100%' }} key={index} onClick={() => navigate(`/chat/${room._id}`)}>
                             <Conversation.Content>
                                 <Box sx={imgLoad ? { display: 'flex', height: '100%', alignItems: 'center' } : { display: 'none' }}>
-                                    <Avatar src={room.p2.profileImage ? room.p2.profileImage : userImg} onLoad={() => setImgLoad(true)} style={{ marginRight: '5%' }} name={room.p2.username} />
+                                    <Avatar src={creator ? room.p2.profileImage ? room.p2.profileImage : userImg : room.p1.profileImage ? room.p1.profileImage : userImg} onLoad={() => setImgLoad(true)} style={{ marginRight: '5%' }} name={room.p2.username} />
                                     <Box>
                                         <strong style={{ fontFamily: 'Poppins' }}>
-                                            {room.p2.username}
+                                            {creator ? room.p2.username : room.p1.username}
                                         </strong>
                                         <p style={ptag}>{JSON.parse(localStorage.getItem(room._id))?.[0] ? JSON.parse(localStorage.getItem(room._id))?.[0]?.direction === 'outgoing' ?
-                                            `You : ${JSON.parse(localStorage.getItem(room._id))?.[0].message}` :
-                                            `${room.p2.username} : ${JSON.parse(localStorage.getItem(room._id))?.[0]?.message}` : 'Say Hi'}</p>
+                                            `You : ${JSON.parse(localStorage.getItem(room._id))?.[JSON.parse(localStorage.getItem(room._id)).length - 1].message}` :
+                                            `${creator ? room.p2.username : room.p1.username} : ${JSON.parse(localStorage.getItem(room._id))?.[JSON.parse(localStorage.getItem(room._id)).length - 1]?.message}` : 'Say Hi'}</p>
                                     </Box>
                                 </Box>
                                 {!imgLoad && <Box sx={{ display: 'flex', width: '100%', alignItems: 'center' }}>
@@ -96,7 +101,7 @@ export default function ChatMessageListAndContainer() {
             </ConversationList>
         </Grid>
         <Grid item md={9} sx={{ borderRadius: '0 10px 10px 0' }}>
-            {id && chat ? <ChatSideMessages chat={chat} messages2={messages} setMessages={setMessages} /> : <ChatOpen />}
+            {id && chat ? <ChatSideMessages chat={chat} messages2={messages} setMessages={setMessages} creator={creator} /> : <ChatOpen />}
         </Grid>
     </Grid >
 }
