@@ -11,6 +11,8 @@ import ImageUploader from 'react-image-upload'
 import 'react-image-upload/dist/index.css'
 import { uploadImg } from '../../services/ipfsServicesApi'
 import { TagsInput } from 'react-tag-input-component'
+import HorizontalScroll from 'react-scroll-horizontal'
+import BasicTabs from './TabsUser'
 
 const fabStyle = {
     position: 'fixed',
@@ -128,10 +130,9 @@ export default function ProfileDetails() {
                     <Grid container columnSpacing={4} sx={{ borderBottom: '2px solid #E9E9E9', paddingBottom: '2%' }}>
                         <Grid item md={1.5}>
                             {/* <CardMedia component='img' image={details.profileImage ? details.profileImage : userImg} sx={circularImage} /> */}
-                            <Box onMouseEnter={() => setIsShownP(true)}
-                                onMouseLeave={() => setIsShownP(false)} sx={{ display: { md: 'flex', sm: 'flex', xs: 'none' } }}>
+                            <Box sx={{ display: { md: 'flex', sm: 'flex', xs: 'none' }, width: '100%', height: '100%', objectFit: 'cover', backgroundImage: `url("${img ? img : details.profileImage}")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
                                 <ImageUploader
-                                    style={{ borderRadius: '10%', width: '100%', height: '100%', objectFit: 'cover' }}
+                                    style={{ borderRadius: '10%', width: '100%', height: '100%', objectFit: 'cover', backgroundColor: 'transparent' }}
                                     onFileAdded={(img) => getImageFileObject(img, setImg)}
                                     onFileRemoved={(img) => runAfterImageDelete(img)} />
                             </Box>
@@ -248,17 +249,10 @@ export default function ProfileDetails() {
                         <Grid item md={8} sx={{ paddingTop: '2%' }}>
                             <Typography variant='h6' sx={{ ...bold_name }}>{details.descriptorTitle}</Typography>
                             <p style={{ ...ptag, paddingTop: '2%', paddingBottom: '5%' }}>{details.bio}</p>
-                            <Typography sx={{ ...bold_name, color: '#3770FF', paddingBottom: '2%', }}>All agreements</Typography>
 
-                            {expAgreements.length !== 0 ? <Grid container rowSpacing={3}>
-                                {
-                                    expAgreements.map((agreement) => {
-                                        return <Grid item md={12}>
-                                            <AgreementCard agreement={agreement} />
-                                        </Grid>
-                                    })
-                                }
-                            </Grid> : <EmptyState text='Nothing to show' size='20rem' />}
+
+
+                            <BasicTabs details={details} setDetails={setDetails} />
                         </Grid>
                     </Grid>
                 </>
