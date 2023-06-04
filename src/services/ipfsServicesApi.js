@@ -2,6 +2,7 @@ import httpcommon from "../httpcommon";
 
 
 export const uploadImg = (data) => {
+    console.log(data)
     return httpcommon.post(`/ipfs/img`, data, {
         headers: {
             Authorization: localStorage.getItem('ybToken')
@@ -15,7 +16,13 @@ export const uploadPics = async imgs => {
         imgs.forEach(element => {
             data.append('files', element);
         });
-        let urls = await httpcommon.post(`/ipfs/img`, data);
+        console.log(data)
+        let urls = await httpcommon.post(`/ipfs/img`, data, {
+            headers: {
+                Authorization: localStorage.getItem('ybToken'),
+                "Content-type": "multipart/form-data"
+            }
+        });
         // console.log(urls);
         return urls.urls;
     } catch (error) {
