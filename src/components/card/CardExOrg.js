@@ -39,7 +39,7 @@ export default function CardExOrg({ exp, org }) {
                     </Stack>
                 </Grid>
                 <Grid item xs={4} sx={df_jfe_ac}>
-                    <Chip label="$50.02" size="small" sx={{ backgroundColor: '#3770FF', color: 'white' }} />
+                    <Chip label="$50.02/h" size="small" sx={{ backgroundColor: '#3770FF', color: 'white' }} />
                 </Grid>
             </Grid>
         </CardContent>
