@@ -13,17 +13,24 @@ import Web3 from 'web3';
 import ModalThreeContent from './ModalThreeContent';
 import { useNavigate } from 'react-router';
 import { ybcontext } from '../../context/MainContext';
+import ModalVideoContent from './ModalVideoContent';
+import { uploadImg } from '../../services/ipfsServicesApi';
+import { updateMe } from '../../services/userServices';
+import { CircularProgress } from '@mui/material';
+import { circularprog } from '../../theme/CssMy';
 
-const steps = ['Connect your wallet', 'Add your email', 'Complete your profile'];
+const steps = ['Connect your wallet', 'Create 30s video intro', 'Add your email', 'Complete your profile'];
 
 export default function HorizontalLinearStepper({ open, setOpen }) {
     const navigate = useNavigate()
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
     const { user, setUser, account, setAccount, edit, setEdit } = useContext(ybcontext)
+    const [video, setVideo] = React.useState(null)
+    const [load, setLoad] = React.useState(false)
     const { deactivate } = useWeb3React()
     const isStepOptional = (step) => {
-        return step === 2;
+        return step === 3;
     };
 
     const isStepSkipped = (step) => {
@@ -54,6 +61,21 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
         setActiveStep(0);
     };
 
+    const videoUplaod = async () => {
+        setLoad(true)
+        let form2Data = new FormData();
+        form2Data.append('files', video, video.name);
+        console.log(form2Data);
+        let res = await uploadImg(form2Data);
+        console.log('---Uploaded PDF', res.data.urls);
+        let res2 = await updateMe({ videoIntro: res.data.urls[0] })
+        localStorage.setItem('ybUser', JSON.stringify(res2.data))
+        setUser(res2.data)
+        setActiveStep(activeStep + 1)
+        setVideo(null)
+        setLoad(false)
+    }
+
     return (
         <Box sx={{ width: '100%' }}>
             <Stepper activeStep={activeStep}>
@@ -77,7 +99,10 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
             </Stepper>
             <React.Fragment>
                 {
-                    activeStep === 0 ? <ModalOneContent setActiveStep={setActiveStep} activeStep={activeStep} /> : activeStep === 1 ? <ModalTwoContent setActiveStep={setActiveStep} activeStep={activeStep} /> : <ModalThreeContent />
+                    activeStep === 0 ? <ModalOneContent setActiveStep={setActiveStep} activeStep={activeStep} />
+                        : activeStep === 1 ? <ModalVideoContent setActiveStep={setActiveStep} activeStep={activeStep} video={video} setVideo={setVideo} />
+                            : activeStep === 2 ? <ModalTwoContent setActiveStep={setActiveStep} activeStep={activeStep} />
+                                : <ModalThreeContent />
                 }
                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                     {
@@ -101,13 +126,15 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                         {activeStep === 0 && 'Back'}
                     </Button>
                     <Box sx={{ flex: '1 1 auto' }} />
-                    {isStepOptional(activeStep) && (
-                        <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                            Skip
-                        </Button>
-                    )}
+
+                    <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                        {isStepOptional(activeStep) && 'Skip'}
+                    </Button>
 
 
+                    {
+                        load ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={() => videoUplaod()} disabled={!video} >{activeStep === 1 && 'Upload'}</Button>
+                    }
                     <Button onClick={() => {
                         setEdit(true)
                         setOpen(false)

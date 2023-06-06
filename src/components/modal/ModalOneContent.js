@@ -26,10 +26,12 @@ function ModalOneContent({ activeStep, setActiveStep }) {
     });
     useEffect(() => {
         if (user !== null && user?.walletAddress) {
-            if (!(user.email) || user.email === '' || user.email === null || user.email === undefined) {
+            if (!(user.videoIntro) || user.videoIntro === '' || user.videoIntro === null || user.videoIntro === undefined) {
                 setActiveStep(activeStep + 1);
-            } else {
+            } else if (!(user.email) || user.email === '' || user.email === null || user.email === undefined) {
                 setActiveStep(activeStep + 2);
+            } else {
+                setActiveStep(activeStep + 3);
             }
         }
     }, [user])

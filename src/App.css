@@ -60,3 +60,81 @@ iframe{
 .Mui-selected{
   color: '#3770FF' !important;
 }
+
+ .iuwJTF{
+  background-color: transparent !important;
+}
+
+.fOCJfr {
+  background: transparent !important;
+  color: #3770FF !important;
+  border-radius: 50px !important;
+  height: 40px;
+  padding: 0px 18px;
+  border: 2px solid #3770FF !important;
+  margin: 0px !important;
+  font-size: 14px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  font-family: 'Poppins' !important;
+}
+
+.fOCJfr:hover{
+  background-color: #3770FF !important;
+  color: white !important;
+}
+
+.hiDjLR{
+  position:inherit !important;
+}
+
+.record-button__RecWrapper-sc-1n5amwk-1{
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1%;
+}
+
+.render-actions__ActionsWrapper-dp6lnv-0{
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+}
+
+.UqtrK{
+  height: 50px !important;
+  width:50px !important;
+}
+
+.cBsNfk{
+  height: 34px !important;
+  width:34px !important;
+}
+
+.cJDMfn{
+  margin-bottom: 0 !important;
+}
+
+.hjXGLh{
+  height: 50px !important;
+  width:50px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.hiDjLR{
+  bottom: 0 !important;
+}
+
+.ftNHGd{
+  height: 25px !important;
+  width:25px !important;
+  margin:0 !important;
+}
+

@@ -33,6 +33,7 @@ export default function ProfileDetails() {
     const [twitter, setTwitter] = useState('')
     const [facebook, setFacebook] = useState('')
     const [load, setLoad] = useState(false)
+    const [checkvis, setCheckVis] = useState(JSON.parse(localStorage.getItem('ybUser'))?.videoVisibility)
     const [checked, setChecked] = useState(JSON.parse(localStorage.getItem('ybUser'))?.isExpert)
     const user = JSON.parse(localStorage.getItem('ybUser'))
     console.log(token)
@@ -42,6 +43,7 @@ export default function ProfileDetails() {
         username: (JSON.parse(localStorage.getItem('ybUser'))).username,
         email: (JSON.parse(localStorage.getItem('ybUser'))).email,
         skills: chips,
+        videoVisibility: checkvis,
         isExpert: checked,
         profileImage: img,
         bio: (JSON.parse(localStorage.getItem('ybUser')))?.bio,
@@ -96,6 +98,7 @@ export default function ProfileDetails() {
             ...json,
             profileImage: img,
             skills: chips,
+            videoVisibility: checkvis,
             isExpert: checked,
             socialHandles: [
                 {
@@ -112,7 +115,7 @@ export default function ProfileDetails() {
                 }
             ]
         })
-    }, [chips, instagram, facebook, twitter, img, checked])
+    }, [chips, instagram, facebook, twitter, img, checked, checkvis])
 
     const save = async () => {
         setLoad(true)
@@ -197,6 +200,27 @@ export default function ProfileDetails() {
                             <TextField name='descriptorTitle' value={json.descriptorTitle} onChange={handleChange} placeholder={!json?.descriptorTitle && 'Describe yourself'} sx={{ width: '100%' }} />
                         </Grid>
                     </Grid>
+                    <Grid container sx={{ marginTop: '2%' }}>
+                        <Grid item md={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }} >
+                            <p>Introductory video</p>
+                            <Box sx={{ ...df_jfs_ac, height: '100%' }}>
+                                <p style={ptag}>Hide</p>
+                                <Switch
+                                    checked={checkvis}
+                                    onChange={() => setCheckVis(!checkvis)}
+                                />
+                                <p style={ptag}>Show</p>
+                            </Box>
+                        </Grid>
+                        <Grid item md={10}>
+                            <iframe
+                                src={details?.videoIntro}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title="Embedded youtube"
+                            />
+                        </Grid>
+                    </Grid>
                     <Grid container sx={{ marginTop: '2%', paddingBottom: '2%', borderBottom: '2px solid #E9E9E9' }}>
                         <Grid item md={2}>
                             <p style={{ ...df_jfs_ac, height: '100%' }}>Bio</p>
@@ -257,6 +281,17 @@ export default function ProfileDetails() {
                                     })
                                 }
                             </Stack></> : <Typography variant='h6' sx={ptag}>Add skills to your profile</Typography>}
+                            {
+                                details?.videoVisibility ? <>
+                                    <Typography variant='h6' sx={{ ...bold_name, marginTop: '8%' }}>Introductory video</Typography>
+                                    <iframe
+                                        src={details?.videoIntro}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        title="Embedded youtube"
+                                    />
+                                </> : <div></div>
+                            }
                         </Grid>
                         <Grid item md={8} sx={{ paddingTop: '2%' }}>
                             <Typography variant='h6' sx={{ ...bold_name }}>{details.descriptorTitle}</Typography>

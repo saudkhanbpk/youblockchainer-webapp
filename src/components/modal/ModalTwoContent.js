@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { Formik, Form, yupToFormErrors } from "formik";
 import TextField from './TextField/TextField'
 import { useContext } from 'react';
-import { CardMedia, Grid } from '@mui/material';
+import { CardMedia, Checkbox, Grid } from '@mui/material';
 import './modal.css'
 import logo from '../../images/logo.png'
 import { useState } from 'react';
@@ -14,6 +14,7 @@ import { Box, height } from '@mui/system';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { updateMe } from '../../services/userServices';
 import { ybcontext } from '../../context/MainContext';
+import { df_jc_ac, df_jfs_ac, ptag } from '../../theme/CssMy';
 
 const INITIAL_FORM_STATE = {
     email: "",
@@ -43,11 +44,12 @@ const btn = {
 function ModalTwoContent({ setActiveStep, activeStep }) {
     const { user, setUser, account, setAccount, token } = useContext(ybcontext)
     const [check, setCheck] = useState(false)
+    const [yes, setYes] = useState(false)
 
 
     const handleSubmit = async (values) => {
         // console.log(token)
-        await updateMe({ email: values.email }, token)
+        await updateMe({ email: values.email, videoVisibility: yes }, token)
             .then((res) => {
                 // console.log(res.data);
                 localStorage.setItem("ybUser", JSON.stringify(res.data))
@@ -86,8 +88,16 @@ function ModalTwoContent({ setActiveStep, activeStep }) {
                                     </svg> : <CheckCircleIcon sx={{ width: '100%', height: '100%', color: '#D6D6D6' }} />
                                 }
                             </Button>
+
                         </Grid>
                     </Grid>
+                    <Box sx={df_jfs_ac}>
+                        <Checkbox
+                            checked={yes}
+                            onChange={() => setYes(!yes)}
+                        />
+                        <p style={ptag}>Make your introduction video visible on your profile page</p>
+                    </Box>
                 </Form>
             </Formik>
         </Grid>

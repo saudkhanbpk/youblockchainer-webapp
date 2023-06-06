@@ -27,15 +27,31 @@ function App() {
   }
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("ybUser")))
-    setToken(localStorage.getItem("ybToken"))
-    setUserBrand(JSON.parse(localStorage.getItem("ybBrand")))
+    if (JSON.parse(localStorage.getItem('ybUser'))?.email && JSON.parse(localStorage.getItem('ybUser'))?.videoIntro) {
+      setUser(JSON.parse(localStorage.getItem("ybUser")))
+      setToken(localStorage.getItem("ybToken"))
+      setUserBrand(JSON.parse(localStorage.getItem("ybBrand")))
+    } else {
+      localStorage.setItem('ybUser', null)
+      localStorage.setItem('ybToken', null)
+
+      setUser(null)
+      setToken(null)
+    }
   }, [account])
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("ybUser")))
-    setToken(localStorage.getItem("ybToken"))
-    setUserBrand(JSON.parse(localStorage.getItem("ybBrand")))
+    if (JSON.parse(localStorage.getItem('ybUser'))?.email && JSON.parse(localStorage.getItem('ybUser'))?.videoIntro) {
+      setUser(JSON.parse(localStorage.getItem("ybUser")))
+      setToken(localStorage.getItem("ybToken"))
+      setUserBrand(JSON.parse(localStorage.getItem("ybBrand")))
+    } else {
+      localStorage.setItem('ybUser', null)
+      localStorage.setItem('ybToken', null)
+
+      setUser(null)
+      setToken(null)
+    }
   }, [])
 
   return (
