@@ -46,6 +46,7 @@ export default function DetailsOrg() {
                     setLoad(false)
                     successHandler('Connection successful')
                 }).catch((e) => {
+                    setLoad(false)
                     errorHandler('Something went wrong')
                 })
         }

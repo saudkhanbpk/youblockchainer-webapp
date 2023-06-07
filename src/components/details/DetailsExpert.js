@@ -48,6 +48,7 @@ export default function DetailsExpert() {
                 setConnectLoad(false)
                 successHandler('Connection successful')
             }).catch((e) => {
+                setConnectLoad(false)
                 errorHandler('Something went wrong')
             })
     }
@@ -104,7 +105,7 @@ export default function DetailsExpert() {
                             </Grid> : <EmptyState text='Nothing to show' size='20rem' />}
                         </Grid>
                     </Grid>
-                    <AgreementModal open={open} handleClose={handleClose} user={user} expert={details} />
+                    <AgreementModal open={open} handleClose={handleClose} user={user} expert={details} setDetails={setDetails} add={true} />
                 </>
             }
         </>

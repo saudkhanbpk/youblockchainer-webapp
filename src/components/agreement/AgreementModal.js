@@ -29,7 +29,7 @@ const style = {
 };
 
 
-export default function AgreementModal({ open, handleClose, user, expert }) {
+export default function AgreementModal({ open, handleClose, user, expert, setDetails, add }) {
     const [name, setName] = useState('')
     const [startsAt, setStartsAt] = useState('')
     const { setUser } = useContext(ybcontext)
@@ -61,16 +61,22 @@ export default function AgreementModal({ open, handleClose, user, expert }) {
             executeMetaTx,
             web3,
             contract1,
+            setDetails,
+            add
         ).then((res) => {
             // setShowAgreement(null);
             setName('')
             setStartsAt('')
+            console.log(res)
             setUser(res)
             handleClose()
             successHandler('Agreement created successfully')
-        }).catch((e) => errorHandler('Something went wrong'))
+            setLoading(false);
+        }).catch((e) => {
+            errorHandler('Something went wrong')
+            setLoading(false);
+        })
 
-        setLoading(false);
     };
     console.log(startsAt)
 
