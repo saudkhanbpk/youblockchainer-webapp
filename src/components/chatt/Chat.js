@@ -4,7 +4,7 @@ import { Avatar, Button, CircularProgress } from '@mui/material';
 import { useContext, useEffect, useRef, useState } from 'react';
 import OptionMap from './OptionMap.json';
 import { askGPT } from '../../services/ChatApi';
-import { btn, circularprog, ptag } from '../../theme/CssMy';
+import { bold_name, btn, circularprog, df_jc_ac, df_jc_ac_fdc, ptag } from '../../theme/CssMy';
 import moment from 'moment-timezone';
 import userImg from '../../images/user.png'
 import logo from '../../images/chatbot.png'
@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router';
 import { ybcontext } from '../../context/MainContext';
 import successHandler from '../toasts/successHandler'
 import errorHandler from '../toasts/errorHandler'
+import { Icon } from '@iconify/react';
 
 
 export default function Chat2() {
@@ -315,7 +316,12 @@ export default function Chat2() {
             setSaveLoad(false)
             successHandler('Script saved successfully')
         } catch (error) {
-            errorHandler('Error generating or uploading PDF');
+            setSaveLoad(false)
+            if (!user) {
+                errorHandler('Login to save the script');
+            } else {
+                errorHandler('Error generating or uploading PDF');
+            }
         }
     }
 
@@ -327,7 +333,47 @@ export default function Chat2() {
         }}>
             <ChatContainer >
                 <MessageList style={{ paddingBottom: '3%' }} scrollBehavior="smooth" typingIndicator={current && <TypingIndicator style={{ backgroundColor: 'transparent' }} content={`Generating ${current}`} />} >
-                    {messages.map((m, i) => <div style={{ display: 'flex' }}>
+                    {messages.length === 0 ? <div style={{ ...df_jc_ac, height: '100%', gap: '6%', padding: '0 10%' }}>
+                        <div style={{ ...df_jc_ac_fdc, width: '25vw' }}>
+                            <Icon icon="ph:sun-bold" />
+                            <h5 style={bold_name}>Examples</h5>
+                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Explain quantum computing in simple terms" →</p>
+                            </div>
+                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Got any creative ideas for a 10 year old’s birthday?" →</p>
+                            </div>
+                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"How do I make an HTTP request in Javascript?" →</p>
+                            </div>
+                        </div>
+                        <div style={{ ...df_jc_ac_fdc, width: '25vw' }}>
+                            <Icon icon="ant-design:thunderbolt-outlined" />
+                            <h5 style={bold_name}>Capabilities</h5>
+                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Remembers what user said earlier in the conversation</p>
+                            </div>
+                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Allows user to provide follow-up corrections</p>
+                            </div>
+                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Trained to decline inappropriate requests</p>
+                            </div>
+                        </div>
+                        <div style={{ ...df_jc_ac_fdc, width: '25vw' }}>
+                            <Icon icon="ph:warning" />
+                            <h5 style={bold_name}>Limitations</h5>
+                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>May occasionally generate incorrect information</p>
+                            </div>
+                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>May occasionally produce harmful instructions or biased content</p>
+                            </div>
+                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Limited knowledge of world and events after 2021</p>
+                            </div>
+                        </div>
+                    </div> : messages.map((m, i) => <div style={{ display: 'flex' }}>
                         {m.direction === 'incoming' && <Avatar src={m.image} style={{ width: '30px', height: '30px', marginRight: '1%', marginTop: '2%' }} />}
                         <Message key={i} model={m}  >
                             <Message.CustomContent >
