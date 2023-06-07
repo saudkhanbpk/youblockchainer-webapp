@@ -22,16 +22,15 @@ export const fetchAccount = async (
             method: 'wallet_addEthereumChain',
             params: [
                 {
-                    chainId: '0x13881',
-                    chainName: 'Polygon Testnet',
+                    chainId: '0x14a33',
+                    chainName: 'Goerli Testnet',
                     nativeCurrency: {
-                        name: 'Matic',
-                        symbol: 'MATIC',
+                        name: 'Ether',
+                        symbol: 'ETH',
                         decimals: 18,
                     },
-                    rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
-                    blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
-                    iconUrls: ['https://polygon.technology/images/mumbai_logo.png'],
+                    rpcUrls: ['https://goerli.base.org'],
+                    blockExplorerUrls: ['https://goerli.etherscan.io/'],
                 },
             ],
         });
@@ -39,7 +38,7 @@ export const fetchAccount = async (
         // Switch to Polygon testnet (Mumbai) chain
         await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0x13881' }],
+            params: [{ chainId: '0x14a33' }],
         });
 
         // Request MetaMask accounts

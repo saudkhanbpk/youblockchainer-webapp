@@ -32,7 +32,9 @@ export const createAgreement = async (
     mainContract,
     executeMetaTx,
     web3,
-    contract1
+    contract1,
+    setDetails,
+    add
 ) => {
     try {
         let obj = {
@@ -76,6 +78,7 @@ export const createAgreement = async (
         user.agreements = newagree
         localStorage.setItem('ybUser', JSON.stringify(user))
         console.log('---Agreement Created in DB', apiRes);
+        add && setDetails({ ...expert, agreements: [...expert?.agreements, apiRes] })
         return user;
     } catch (error) {
         console.log(error.message);
