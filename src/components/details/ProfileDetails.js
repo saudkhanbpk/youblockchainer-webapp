@@ -33,7 +33,6 @@ export default function ProfileDetails() {
     const [twitter, setTwitter] = useState('')
     const [facebook, setFacebook] = useState('')
     const [load, setLoad] = useState(false)
-    const [checkvis, setCheckVis] = useState(JSON.parse(localStorage.getItem('ybUser'))?.videoVisibility)
     const [checked, setChecked] = useState(JSON.parse(localStorage.getItem('ybUser'))?.isExpert)
     const user = JSON.parse(localStorage.getItem('ybUser'))
     console.log(token)
@@ -43,7 +42,6 @@ export default function ProfileDetails() {
         username: (JSON.parse(localStorage.getItem('ybUser'))).username,
         email: (JSON.parse(localStorage.getItem('ybUser'))).email,
         skills: chips,
-        videoVisibility: checkvis,
         isExpert: checked,
         profileImage: img,
         bio: (JSON.parse(localStorage.getItem('ybUser')))?.bio,
@@ -98,7 +96,6 @@ export default function ProfileDetails() {
             ...json,
             profileImage: img,
             skills: chips,
-            videoVisibility: checkvis,
             isExpert: checked,
             socialHandles: [
                 {
@@ -115,7 +112,7 @@ export default function ProfileDetails() {
                 }
             ]
         })
-    }, [chips, instagram, facebook, twitter, img, checked, checkvis])
+    }, [chips, instagram, facebook, twitter, img, checked])
 
     const save = async () => {
         setLoad(true)
@@ -200,7 +197,7 @@ export default function ProfileDetails() {
                             <TextField name='descriptorTitle' value={json.descriptorTitle} onChange={handleChange} placeholder={!json?.descriptorTitle && 'Describe yourself'} sx={{ width: '100%' }} />
                         </Grid>
                     </Grid>
-                    <Grid container sx={{ marginTop: '2%' }}>
+                    {/* <Grid container sx={{ marginTop: '2%' }}>
                         <Grid item md={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }} >
                             <p>Introductory video</p>
                             <Box sx={{ ...df_jfs_ac, height: '100%' }}>
@@ -220,7 +217,7 @@ export default function ProfileDetails() {
                                 title="Embedded youtube"
                             />
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                     <Grid container sx={{ marginTop: '2%', paddingBottom: '2%', borderBottom: '2px solid #E9E9E9' }}>
                         <Grid item md={2}>
                             <p style={{ ...df_jfs_ac, height: '100%' }}>Bio</p>
