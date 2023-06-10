@@ -82,7 +82,7 @@ export default function DetailsOrg() {
                         </Grid>}
                     </Grid>
                     <Grid container columnSpacing={4} >
-                        <Grid item md={4} xs={12} sx={{ borderRight: '2px solid #E9E9E9', margin: '0', paddingTop: '2%' }}>
+                        <Grid item md={4} xs={12} sx={{ borderRight: { sm: '2px solid #E9E9E9', xs: 'none' }, margin: '0', paddingTop: '2%' }}>
                             <Typography variant='h6' sx={bold_name}>Skills</Typography>
                             <Stack direction='row' sx={{ paddingTop: '2%' }} spacing={1} useFlexGap flexWrap="wrap">
                                 {
@@ -106,7 +106,7 @@ export default function DetailsOrg() {
                                 {details.agreements.length !== 0 ? <Grid container rowSpacing={3}>
                                     {
                                         details.agreements.map((agreement) => {
-                                            return <Grid item md={12}>
+                                            return <Grid md={12} item md={12}>
                                                 <AgreementCard agreement={agreement} />
                                             </Grid>
                                         })
