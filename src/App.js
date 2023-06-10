@@ -69,9 +69,6 @@ function App() {
           pauseOnHover
         />
         <Router>
-          {/* {
-            loadOnAccChange ? <Loading /> : <MainRouter />
-          } */}
           <SideDrawer>
             <MainRouter />
           </SideDrawer>

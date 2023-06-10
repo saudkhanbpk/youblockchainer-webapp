@@ -13,7 +13,10 @@
     ],
     "disabled": true
   },
-  "Temporality ?": { "options": ["Nowadays", "Past"], "disabled": true },
+  "Temporality ?": {
+    "options": ["Nowadays", "Past", "Near future"],
+    "disabled": true
+  },
   "Do you have a one minute pitch idea in short ?": {
     "options": ["YES", "NO", "Search on web"],
     "disabled": true

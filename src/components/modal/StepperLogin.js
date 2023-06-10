@@ -17,7 +17,8 @@ import ModalVideoContent from './ModalVideoContent';
 import { uploadImg } from '../../services/ipfsServicesApi';
 import { updateMe } from '../../services/userServices';
 import { CircularProgress } from '@mui/material';
-import { circularprog } from '../../theme/CssMy';
+import { btn_connect, circularprog } from '../../theme/CssMy';
+import { useState } from 'react';
 
 const steps = ['Connect your wallet', 'Create 30s video intro', 'Add your email', 'Complete your profile'];
 
@@ -28,6 +29,8 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
     const { user, setUser, account, setAccount, edit, setEdit } = useContext(ybcontext)
     const [video, setVideo] = React.useState(null)
     const [load, setLoad] = React.useState(false)
+    const [yes, setYes] = useState(false)
+
     const { deactivate } = useWeb3React()
     const isStepOptional = (step) => {
         return step === 3;
@@ -61,6 +64,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
         setActiveStep(0);
     };
 
+
     const videoUplaod = async () => {
         setLoad(true)
         let form2Data = new FormData();
@@ -68,7 +72,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
         console.log(form2Data);
         let res = await uploadImg(form2Data);
         console.log('---Uploaded PDF', res.data.urls);
-        let res2 = await updateMe({ videoIntro: res.data.urls[0] })
+        let res2 = await updateMe({ videoIntro: res.data.urls[0], videoVisibility: yes })
         localStorage.setItem('ybUser', JSON.stringify(res2.data))
         setUser(res2.data)
         setActiveStep(activeStep + 1)
@@ -100,7 +104,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
             <React.Fragment>
                 {
                     activeStep === 0 ? <ModalOneContent setActiveStep={setActiveStep} activeStep={activeStep} />
-                        : activeStep === 1 ? <ModalVideoContent setActiveStep={setActiveStep} activeStep={activeStep} video={video} setVideo={setVideo} />
+                        : activeStep === 1 ? <ModalVideoContent setActiveStep={setActiveStep} activeStep={activeStep} video={video} setVideo={setVideo} yes={yes} setYes={setYes} />
                             : activeStep === 2 ? <ModalTwoContent setActiveStep={setActiveStep} activeStep={activeStep} />
                                 : <ModalThreeContent />
                 }
@@ -121,7 +125,9 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                             Disconnect wallet
                         </Button> : ""
                     }
-
+                    {activeStep === 0 && <Button onClick={() => window.open('https://metamask.io/', '_blank')} sx={{ ...btn_connect, width: 'auto' }}>
+                        {activeStep === 0 ? "Don't have an account" : ''}
+                    </Button>}
                     <Button onClick={handleSkip}>
                         {activeStep === 0 && 'Back'}
                     </Button>
@@ -133,7 +139,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
 
 
                     {
-                        load ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={() => videoUplaod()} disabled={!video} >{activeStep === 1 && 'Upload'}</Button>
+                        activeStep === 1 && load ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={() => videoUplaod()} disabled={!video} >{activeStep === 1 && 'Upload'}</Button>
                     }
                     <Button onClick={() => {
                         setEdit(true)

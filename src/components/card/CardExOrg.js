@@ -4,6 +4,7 @@ import { card, df_jfe_ac, ptag, text } from '../../theme/CssMy'
 import { Icon } from '@iconify/react'
 import { useNavigate } from 'react-router'
 import { useState } from 'react'
+import userImg from '../../images/user.png'
 
 export default function CardExOrg({ exp, org }) {
     const navigate = useNavigate()
@@ -13,7 +14,7 @@ export default function CardExOrg({ exp, org }) {
         <CardContent sx={{ ...card, cursor: 'pointer' }} onClick={() => !org ? navigate(`/experts-details/${exp._id}`) : navigate(`/organizations-details/${exp._id}`)}>
             <Grid container>
                 <Grid item md={12}>
-                    <CardMedia onLoad={() => setImgLoad(true)} sx={imgLoad ? { height: { md: '30vh', sm: '20vh' }, borderRadius: '2.5%' } : { display: 'none' }} component='img' image={!org ? exp?.profileImage : exp?.img} />
+                    <CardMedia onLoad={() => setImgLoad(true)} sx={imgLoad ? { height: { md: '30vh', sm: '20vh' }, borderRadius: '2.5%' } : { display: 'none' }} component='img' image={!org ? exp?.profileImage ? exp?.profileImage : userImg : exp?.img ? exp?.img : userImg} />
                     {!imgLoad && <Skeleton animation="wave" sx={{ height: { md: '30vh', sm: '20vh' }, borderRadius: '2.5%' }} variant="rectangular" />}
                 </Grid>
                 <Grid item xs={8}>

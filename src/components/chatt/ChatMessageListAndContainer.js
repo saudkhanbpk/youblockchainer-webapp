@@ -68,17 +68,18 @@ export default function ChatMessageListAndContainer() {
                 }} />
                 {
                     rooms.map((room, index) => {
+                        console.log(room, creator, creator ? room.p2.profileImage ? room.p2.profileImage : userImg : room.p1.profileImage ? room.p1.profileImage : userImg)
                         return <Conversation style={id === room._id ? { backgroundColor: '#F6F6F6', borderRadius: '10px' } : { width: '100%' }} key={index} onClick={() => navigate(`/chat/${room._id}`)}>
                             <Conversation.Content>
                                 <Box sx={imgLoad ? { display: 'flex', height: '100%', alignItems: 'center' } : { display: 'none' }}>
-                                    <Avatar src={creator ? room.p2.profileImage ? room.p2.profileImage : userImg : room.p1.profileImage ? room.p1.profileImage : userImg} onLoad={() => setImgLoad(true)} style={{ marginRight: '5%' }} name={room.p2.username} />
+                                    <Avatar src={JSON.parse(localStorage.getItem('ybUser'))._id === room.p1._id ? room.p2.profileImage ? room.p2.profileImage : userImg : room.p1.profileImage ? room.p1.profileImage : userImg} onLoad={() => setImgLoad(true)} style={{ marginRight: '5%' }} name={room.p2.username} />
                                     <Box>
                                         <strong style={{ fontFamily: 'Poppins' }}>
-                                            {creator ? room.p2.username : room.p1.username}
+                                            {JSON.parse(localStorage.getItem('ybUser'))._id === room.p1._id ? room.p2.username : room.p1.username}
                                         </strong>
                                         <p style={ptag}>{JSON.parse(localStorage.getItem(room._id))?.[0] ? JSON.parse(localStorage.getItem(room._id))?.[0]?.direction === 'outgoing' ?
                                             `You : ${JSON.parse(localStorage.getItem(room._id))?.[JSON.parse(localStorage.getItem(room._id)).length - 1].message}` :
-                                            `${creator ? room.p2.username : room.p1.username} : ${JSON.parse(localStorage.getItem(room._id))?.[JSON.parse(localStorage.getItem(room._id)).length - 1]?.message}` : 'Say Hi'}</p>
+                                            `${JSON.parse(localStorage.getItem('ybUser'))._id === room.p1._id ? room.p2.username : room.p1.username} : ${JSON.parse(localStorage.getItem(room._id))?.[JSON.parse(localStorage.getItem(room._id)).length - 1]?.message}` : 'Say Hi'}</p>
                                     </Box>
                                 </Box>
                                 {!imgLoad && <Box sx={{ display: 'flex', width: '100%', alignItems: 'center' }}>
@@ -101,7 +102,7 @@ export default function ChatMessageListAndContainer() {
             </ConversationList>
         </Grid>
         <Grid item md={9} sx={{ borderRadius: '0 10px 10px 0' }}>
-            {id && chat ? <ChatSideMessages chat={chat} messages2={messages} setMessages={setMessages} creator={creator} /> : <ChatOpen />}
+            {id && chat ? <ChatSideMessages chat={chat} messages2={messages} setMessages={setMessages} creator={JSON.parse(localStorage.getItem('ybUser'))._id === chat.p1._id} /> : <ChatOpen />}
         </Grid>
     </Grid >
 }

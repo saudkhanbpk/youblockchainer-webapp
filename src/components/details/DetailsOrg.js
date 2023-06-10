@@ -37,27 +37,28 @@ export default function DetailsOrg() {
         setLoad(true)
         const func = async () => {
             const id = params.id
-            await getBrandById(id)
-                .then((res) => {
-                    setAllDetails(res.data)
-                    setDetails(res.data.manager)
-                    setOrgAgreements(res.data.manager.agreements.filter((agr) => agr.user1 === res.data.manager._id))
-                    console.log(res.data, id)
-                    setLoad(false)
-                    successHandler('Connection successful')
-                }).catch((e) => {
-                    setLoad(false)
-                    errorHandler('Something went wrong')
-                })
+            let res = await getBrandById(id)
+
+            setAllDetails(res.data)
+            setDetails(res.data.manager)
+            setOrgAgreements(res.data.manager.agreements.filter((agr) => agr.user1 === res.data.manager._id))
+            console.log(res.data, id)
+            setLoad(false)
+
         }
         func()
     }, [])
 
     const connect = async () => {
         setConnectLoad(true)
-        let res = await createRoom(details._id, token)
-        navigate(`/chat/${res.data._id}`)
-        setConnectLoad(false)
+        await createRoom(details._id, token).then((res) => {
+            navigate(`/chat/${res.data._id}`)
+            setConnectLoad(false)
+            successHandler('Connection successful')
+        }).catch((e) => {
+            setLoad(false)
+            errorHandler('Something went wrong')
+        })
     }
 
     return (
@@ -80,8 +81,8 @@ export default function DetailsOrg() {
                             {connectLoad ? <CircularProgress size={30} sx={circularprog} /> : <Button sx={btn_connect} onClick={() => connect()}>Connect</Button>}
                         </Grid>}
                     </Grid>
-                    <Grid container columnSpacing={4}>
-                        <Grid item md={4} sx={{ borderRight: '2px solid #E9E9E9', margin: '0', paddingTop: '2%' }}>
+                    <Grid container columnSpacing={4} >
+                        <Grid item md={4} xs={12} sx={{ borderRight: '2px solid #E9E9E9', margin: '0', paddingTop: '2%' }}>
                             <Typography variant='h6' sx={bold_name}>Skills</Typography>
                             <Stack direction='row' sx={{ paddingTop: '2%' }} spacing={1} useFlexGap flexWrap="wrap">
                                 {
@@ -92,15 +93,15 @@ export default function DetailsOrg() {
                                 }
                             </Stack>
                         </Grid>
-                        <Grid item md={8} sx={{ paddingTop: '2%' }}>
+                        <Grid item md={8} xs={12} sx={{ paddingTop: '2%' }}>
                             <Grid sx={{ display: 'flex', alignItems: 'center' }}>
                                 <SortIcon style={{ ...style.icon }} />
                                 <p style={{ ...ptag, fontWeight: 'bold' }}>Description</p>
                             </Grid>
                             <p style={{ ...ptag, }}>{allDetails.description}</p>
-                            <Typography sx={{ ...bold_name, paddingTop: '5%', color: '#3770FF' }}>All agreements</Typography>
 
                             <Grid container rowSpacing={3}>
+                                <Typography sx={{ ...bold_name, paddingTop: '5%', color: '#3770FF' }}>All agreements</Typography>
 
                                 {details.agreements.length !== 0 ? <Grid container rowSpacing={3}>
                                     {

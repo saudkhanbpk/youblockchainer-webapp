@@ -41,7 +41,7 @@ export default function SearchExperts() {
             <Grid container spacing={3}>
                 {
                     showExperts.map((exp, index) => {
-                        return <Grid key={index} item md={3} sm={4} xs={2}>
+                        return <Grid key={index} item md={3} sm={4} xs={12}>
                             <CardExOrg exp={exp} />
                         </Grid>
                     })

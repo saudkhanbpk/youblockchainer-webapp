@@ -1,12 +1,16 @@
-import { Typography } from '@mui/material'
+import { Box, Checkbox, Typography } from '@mui/material'
 import React from 'react'
 import VideoRecorder from 'react-video-recorder'
-import { ptag } from '../../theme/CssMy'
+import { df_jfs_ac, ptag } from '../../theme/CssMy'
 import shorthash from 'shorthash';
+import { updateMe } from '../../services/userServices';
 
 
-export default function ModalVideoContent({ video, setVideo }) {
-    return (
+export default function ModalVideoContent({ video, setVideo, yes, setYes }) {
+
+
+    return (<>
+
         <div style={{ height: '400px' }}>
             <VideoRecorder
                 // chunkSize={250}
@@ -32,5 +36,13 @@ export default function ModalVideoContent({ video, setVideo }) {
                 </></div>}
             />
         </div>
+        <Box sx={{ ...df_jfs_ac }}>
+            <Checkbox
+                checked={yes}
+                onChange={() => setYes(!yes)}
+            />
+            <p style={ptag}>Make your introduction video visible on your profile page</p>
+        </Box>
+    </>
     )
 }

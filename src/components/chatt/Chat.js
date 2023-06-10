@@ -1,6 +1,6 @@
 import { ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
 import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
-import { Avatar, Button, CircularProgress } from '@mui/material';
+import { Avatar, Button, CircularProgress, Grid } from '@mui/material';
 import { useContext, useEffect, useRef, useState } from 'react';
 import OptionMap from './OptionMap.json';
 import { askGPT } from '../../services/ChatApi';
@@ -333,46 +333,51 @@ export default function Chat2() {
         }}>
             <ChatContainer >
                 <MessageList style={{ paddingBottom: '3%' }} scrollBehavior="smooth" typingIndicator={current && <TypingIndicator style={{ backgroundColor: 'transparent' }} content={`Generating ${current}`} />} >
-                    {messages.length === 0 ? <div style={{ ...df_jc_ac, height: '100%', gap: '6%', padding: '0 10%' }}>
-                        <div style={{ ...df_jc_ac_fdc, width: '25vw' }}>
-                            <Icon icon="ph:sun-bold" />
-                            <h5 style={bold_name}>Examples</h5>
-                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Explain quantum computing in simple terms" →</p>
-                            </div>
-                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Got any creative ideas for a 10 year old’s birthday?" →</p>
-                            </div>
-                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"How do I make an HTTP request in Javascript?" →</p>
-                            </div>
-                        </div>
-                        <div style={{ ...df_jc_ac_fdc, width: '25vw' }}>
-                            <Icon icon="ant-design:thunderbolt-outlined" />
-                            <h5 style={bold_name}>Capabilities</h5>
-                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Remembers what user said earlier in the conversation</p>
-                            </div>
-                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Allows user to provide follow-up corrections</p>
-                            </div>
-                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Trained to decline inappropriate requests</p>
-                            </div>
-                        </div>
-                        <div style={{ ...df_jc_ac_fdc, width: '25vw' }}>
-                            <Icon icon="ph:warning" />
-                            <h5 style={bold_name}>Limitations</h5>
-                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>May occasionally generate incorrect information</p>
-                            </div>
-                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>May occasionally produce harmful instructions or biased content</p>
-                            </div>
-                            <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Limited knowledge of world and events after 2021</p>
-                            </div>
-                        </div>
+                    {messages.length === 0 ? <div className='chat-mycont' style={{ ...df_jc_ac, height: '100%', gap: '6%', padding: '0 10%' }}>
+                        <Grid container spacing={{ md: 3, xs: 0 }}>
+                            <Grid item md={4} sx={{ ...df_jc_ac_fdc, marginTop: { md: '0', xs: '15%' } }}>
+                                <Icon icon="ph:sun-bold" />
+                                <h5 style={bold_name}>Examples</h5>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Explain quantum computing in simple terms" →</p>
+                                </div>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Got any creative ideas for a 10 year old’s birthday?" →</p>
+                                </div>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"How do I make an HTTP request in Javascript?" →</p>
+                                </div>
+
+                            </Grid>
+                            <Grid item md={4} sx={{ ...df_jc_ac_fdc, marginTop: { md: '0', xs: '15%' } }}>
+                                <Icon icon="ant-design:thunderbolt-outlined" />
+                                <h5 style={bold_name}>Capabilities</h5>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Remembers what user said earlier in the conversation</p>
+                                </div>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Allows user to provide follow-up corrections</p>
+                                </div>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Trained to decline inappropriate requests</p>
+                                </div>
+
+                            </Grid>
+                            <Grid item md={4} sx={{ ...df_jc_ac_fdc, marginTop: { md: '0', xs: '15%' } }}>
+                                <Icon icon="ph:warning" />
+                                <h5 style={bold_name}>Limitations</h5>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>May occasionally generate incorrect information</p>
+                                </div>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>May occasionally produce harmful instructions or biased content</p>
+                                </div>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Limited knowledge of world and events after 2021</p>
+                                </div>
+
+                            </Grid>
+                        </Grid>
                     </div> : messages.map((m, i) => <div style={{ display: 'flex' }}>
                         {m.direction === 'incoming' && <Avatar src={m.image} style={{ width: '30px', height: '30px', marginRight: '1%', marginTop: '2%' }} />}
                         <Message key={i} model={m}  >

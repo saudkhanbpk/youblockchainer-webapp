@@ -44,12 +44,11 @@ const btn = {
 function ModalTwoContent({ setActiveStep, activeStep }) {
     const { user, setUser, account, setAccount, token } = useContext(ybcontext)
     const [check, setCheck] = useState(false)
-    const [yes, setYes] = useState(false)
 
 
     const handleSubmit = async (values) => {
         // console.log(token)
-        await updateMe({ email: values.email, videoVisibility: yes }, token)
+        await updateMe({ email: values.email }, token)
             .then((res) => {
                 // console.log(res.data);
                 localStorage.setItem("ybUser", JSON.stringify(res.data))
@@ -91,13 +90,6 @@ function ModalTwoContent({ setActiveStep, activeStep }) {
 
                         </Grid>
                     </Grid>
-                    <Box sx={df_jfs_ac}>
-                        <Checkbox
-                            checked={yes}
-                            onChange={() => setYes(!yes)}
-                        />
-                        <p style={ptag}>Make your introduction video visible on your profile page</p>
-                    </Box>
                 </Form>
             </Formik>
         </Grid>
