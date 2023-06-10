@@ -37,7 +37,7 @@ export default function SearchOrg() {
         <>
             <TextField value={search} sx={textField} InputProps={{
                 endAdornment: <InputAdornment position="end"><Icon icon="ic:round-search" width={22} height={22} /></InputAdornment>,
-            }} placeholder='Search Experts By Name or Skills' onChange={(e) => setSearch(e.target.value)} />
+            }} placeholder='Search Organizations By Name or Skills' onChange={(e) => setSearch(e.target.value)} />
             <Grid container spacing={3}>
                 {
                     showOrgs.map((exp, index) => {
