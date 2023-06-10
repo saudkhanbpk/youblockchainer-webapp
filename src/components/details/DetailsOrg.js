@@ -106,7 +106,7 @@ export default function DetailsOrg() {
                                 {details.agreements.length !== 0 ? <Grid container rowSpacing={3}>
                                     {
                                         details.agreements.map((agreement) => {
-                                            return <Grid md={12} item md={12}>
+                                            return <Grid md={12} item>
                                                 <AgreementCard agreement={agreement} />
                                             </Grid>
                                         })
