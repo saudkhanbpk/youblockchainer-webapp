@@ -100,10 +100,10 @@ export default function DetailsOrg() {
                             </Grid>
                             <p style={{ ...ptag, }}>{allDetails.description}</p>
 
-                            <Grid container rowSpacing={3}>
+                            <Grid xs={12} container rowSpacing={3}>
                                 <Typography sx={{ ...bold_name, paddingTop: '5%', color: '#3770FF' }}>All agreements</Typography>
 
-                                {details.agreements.length !== 0 ? <Grid container rowSpacing={3}>
+                                {details.agreements.length !== 0 ? <Grid container rowSpacing={{ md: 0.8, xs: 3 }}>
                                     {
                                         details.agreements.map((agreement) => {
                                             return <Grid md={12} item>
