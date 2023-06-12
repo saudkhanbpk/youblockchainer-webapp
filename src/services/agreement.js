@@ -53,33 +53,35 @@ export const createAgreement = async (
             .encodeABI();
         console.log('---Abi encoded');
         let res = await executeMetaTx(data, contractAddress, me, contract1);
-        // if (!res) throw Error('Meta Tx Failed :(');
-        console.log('---Meta Tx successful');
-        console.log(JSON.stringify(res));
-        console.log('To DB: ', {
-            name: nameofAgreement,
-            startsAt,
-            user1: me._id,
-            user2: expert._id,
-        });
-        let apiRes = (await httpcommon.post(`/user/agreement/`, {
-            name: nameofAgreement,
-            startsAt,
-            user1: me._id,
-            user2: expert._id,
-            agreementUri: uri,
-        }, {
-            headers: {
-                Authorization: localStorage.getItem('ybToken')
-            }
-        })).data;
-        let user = JSON.parse(localStorage.getItem('ybUser'))
-        let newagree = [...user.agreements, apiRes]
-        user.agreements = newagree
-        localStorage.setItem('ybUser', JSON.stringify(user))
-        console.log('---Agreement Created in DB', apiRes);
-        add && setDetails({ ...expert, agreements: [...expert?.agreements, apiRes] })
-        return user;
+        if (!res) throw Error('Meta Tx Failed :(')
+        else{
+            console.log('---Meta Tx successful');
+            console.log(JSON.stringify(res));
+            console.log('To DB: ', {
+                name: nameofAgreement,
+                startsAt,
+                user1: me._id,
+                user2: expert._id,
+            });
+            let apiRes = (await httpcommon.post(`/user/agreement/`, {
+                name: nameofAgreement,
+                startsAt,
+                user1: me._id,
+                user2: expert._id,
+                agreementUri: uri,
+            }, {
+                headers: {
+                    Authorization: localStorage.getItem('ybToken')
+                }
+            })).data;
+            let user = JSON.parse(localStorage.getItem('ybUser'))
+            let newagree = [...user.agreements, apiRes]
+            user.agreements = newagree
+            localStorage.setItem('ybUser', JSON.stringify(user))
+            console.log('---Agreement Created in DB', apiRes);
+            add && setDetails({ ...expert, agreements: [...expert?.agreements, apiRes] })
+            return user;
+        }
     } catch (error) {
         console.log(error.message);
         return false;

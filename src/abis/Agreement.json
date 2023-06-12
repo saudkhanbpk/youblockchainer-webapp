@@ -381,6 +381,11 @@
       {
         "components": [
           {
+            "internalType": "uint256",
+            "name": "milestoneId",
+            "type": "uint256"
+          },
+          {
             "internalType": "string",
             "name": "name",
             "type": "string"
@@ -472,6 +477,11 @@
     ],
     "name": "milestones",
     "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "milestoneId",
+        "type": "uint256"
+      },
       {
         "internalType": "string",
         "name": "name",
