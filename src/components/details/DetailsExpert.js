@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { getExpertById } from '../../services/userServices'
-import { Box, Button, CardContent, CardMedia, Chip, CircularProgress, Grid, Stack, Typography } from '@mui/material'
+import { Box, Button, CardContent, CardMedia, Chip, CircularProgress, Grid, Stack, Tooltip, Typography } from '@mui/material'
 import { bold_name, btn, btn_connect, btn_hire, circularImage, circularprog, df_jc_ac, df_jfe_ac, df_jfs_ac, df_jfs_ac_fdc, ptag } from '../../theme/CssMy'
 import userImg from '../../images/user.png'
 import AgreementCard from '../card/AgreementCard'
@@ -73,7 +73,13 @@ export default function DetailsExpert() {
                                 {connectLoad ? <CircularProgress size={30} sx={circularprog} /> : <Button sx={btn_connect} onClick={() => connect()}>Connect</Button>}
                             </Grid>
                             <Grid item md={1.5} sx={df_jc_ac}>
-                                <Button sx={btn_hire} onClick={() => setOpen(true)}>Hire</Button>
+                            <Tooltip title="Coming Soon">
+                                <Button 
+                                sx={{...btn_hire, cursor:'none'}} 
+
+                                // onClick={() => setOpen(true)}
+                                >Hire</Button>
+                            </Tooltip>
                             </Grid>
                         </>}
                     </Grid>
