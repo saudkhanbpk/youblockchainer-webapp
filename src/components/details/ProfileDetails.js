@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { getExpertById, updateMe } from '../../services/userServices'
 import { Box, CardMedia, Chip, CircularProgress, Fab, Grid, Stack, Switch, TextField, Typography } from '@mui/material'
-import { bold_name, circularImage, circularprog, df_jc_ac, df_jfs_ac, df_jfs_ac_fdc, ptag } from '../../theme/CssMy'
+import { bold_name, circularImage, circularprog, df_jc_ac, df_jc_ac_fdc, df_jfs_ac, df_jfs_ac_fdc, ptag } from '../../theme/CssMy'
 import { Icon } from '@iconify/react'
 import AgreementCard from '../card/AgreementCard'
 import EmptyState from '../loadingoremptystate/EmptyState'
@@ -34,6 +34,8 @@ export default function ProfileDetails() {
     const [facebook, setFacebook] = useState('')
     const [load, setLoad] = useState(false)
     const [checked, setChecked] = useState(JSON.parse(localStorage.getItem('ybUser'))?.isExpert)
+    const [act, setAct] = useState(JSON.parse(localStorage.getItem('ybUser'))?.isActor)
+
     const user = JSON.parse(localStorage.getItem('ybUser'))
     console.log(token)
     const { edit, setEdit } = useContext(ybcontext)
@@ -43,6 +45,8 @@ export default function ProfileDetails() {
         email: (JSON.parse(localStorage.getItem('ybUser'))).email,
         skills: chips,
         isExpert: checked,
+        isActor: act,
+        age:0,
         profileImage: img,
         bio: (JSON.parse(localStorage.getItem('ybUser')))?.bio,
         descriptorTitle: (JSON.parse(localStorage.getItem('ybUser')))?.descriptorTitle,
@@ -96,6 +100,7 @@ export default function ProfileDetails() {
             ...json,
             profileImage: img,
             skills: chips,
+            isActor:act,
             isExpert: checked,
             socialHandles: [
                 {
@@ -112,7 +117,7 @@ export default function ProfileDetails() {
                 }
             ]
         })
-    }, [chips, instagram, facebook, twitter, img, checked])
+    }, [chips, instagram, facebook, twitter, img, checked, act])
 
     const save = async () => {
         setLoad(true)
@@ -148,13 +153,23 @@ export default function ProfileDetails() {
                             <Typography variant='h4' sx={bold_name}>{details.username}</Typography>
 
                         </Grid>
-                        <Grid item md={3} sx={df_jc_ac}>
+                        <Grid item md={3} sx={df_jc_ac_fdc}>
+                        <div style={df_jc_ac}>
                             <p style={ptag}>I'm not an Expert</p>
                             <Switch
                                 checked={checked}
                                 onChange={() => setChecked(!checked)}
                             />
                             <p style={ptag}>I'm an Expert</p>
+                        </div>
+                        <div style={df_jc_ac}>
+                            <p style={ptag}>I'm not an actor</p>
+                            <Switch
+                                checked={act}
+                                onChange={() => setAct(!act)}
+                            />
+                            <p style={ptag}>I'm an actor</p>
+                        </div>
                         </Grid>
                     </Grid>
                     <Box sx={{ marginTop: '2%' }}>
@@ -168,6 +183,16 @@ export default function ProfileDetails() {
                             <TextField value={json.username} name='username' onChange={handleChange} placeholder={details.username} sx={{ width: '100%' }} />
                         </Grid>
                     </Grid>
+                    <Grid container sx={{ marginTop: '2%' }}>
+                        <Grid item md={2} >
+                            <p style={{ ...df_jfs_ac, height: '100%' }}>Age</p>
+                        </Grid>
+                        <Grid item md={10}>
+                            <TextField type='number' value={json.age} name='age' onChange={handleChange} placeholder={details.age} sx={{ width: '100%' }} />
+                        </Grid>
+                    </Grid>
+                    
+                    
                     <Grid container sx={{ marginTop: '2%' }}>
                         <Grid item md={2}>
                             <p style={{ ...df_jfs_ac, height: '100%' }}>Email</p>

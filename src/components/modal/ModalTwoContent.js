@@ -18,10 +18,12 @@ import { df_jc_ac, df_jfs_ac, ptag } from '../../theme/CssMy';
 
 const INITIAL_FORM_STATE = {
     email: "",
+    country:''
 };
 
 const FORM_VALIDATION = Yup.object().shape({
     email: Yup.string().email("Invalid Email").required("Required"),
+    country: Yup.string()
 });
 
 const style = {
@@ -45,10 +47,9 @@ function ModalTwoContent({ setActiveStep, activeStep }) {
     const { user, setUser, account, setAccount, token } = useContext(ybcontext)
     const [check, setCheck] = useState(false)
 
-
     const handleSubmit = async (values) => {
         // console.log(token)
-        await updateMe({ email: values.email }, token)
+        await updateMe({ email: values.email, country:values.country }, token)
             .then((res) => {
                 // console.log(res.data);
                 localStorage.setItem("ybUser", JSON.stringify(res.data))
@@ -79,6 +80,7 @@ function ModalTwoContent({ setActiveStep, activeStep }) {
                     <Grid container sx={{ width: '100%' }}>
                         <Grid item md={11} sm={11} xs={11}>
                             <TextField name='email' placeholder={user.email ? user.email : 'Email'} />
+                            <TextField name='country' placeholder={'Enter your country'} />
                         </Grid>
                         <Grid item md={1} sm={1} xs={1}>
                             <Button sx={btn} type='submit'>

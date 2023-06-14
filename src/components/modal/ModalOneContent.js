@@ -17,9 +17,9 @@ const style = {
     gridContainer: { margin: '5% 0' },
 }
 
-function ModalOneContent({ activeStep, setActiveStep }) {
+function ModalOneContent({ activeStep, setActiveStep, onboarding }) {
     const { activate } = useWeb3React();
-    const { user, setUser, account, setAccount, token, setToken, setUserBrand } = useContext(ybcontext)
+    const { user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3 } = useContext(ybcontext)
 
     const Injected = new InjectedConnector({
         supportedChainIds: [1, 3, 4, 5, 42]
@@ -40,12 +40,16 @@ function ModalOneContent({ activeStep, setActiveStep }) {
     return (
         <>
             <Grid container sx={style.gridContainer}>
-                <Grid item container md={12}>
+                {onboarding ? <iframe
+                    title="MetaMask Download"
+                    src="https://metamask.io/download.html"
+                    style={{ display: 'block', height:'60vh', width:'100%' }}
+                /> : <Grid item container md={12}>
                     <Grid item md={12} sm={12} xs={12} sx={style.gridItem}>
                         <Button onClick={() => {
                             try {
                                 // activate(Injected)
-                                connectMetaMask(user, setUser, account, setAccount, token, setToken, setUserBrand)
+                                connectMetaMask(user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3)
                             } catch (e) {
                                 console.log(e)
                             }
@@ -55,7 +59,7 @@ function ModalOneContent({ activeStep, setActiveStep }) {
                             <p style={style.ptag}>Connect to your MetaMask Wallet</p>
                         </Button>
                     </Grid>
-                </Grid>
+                </Grid>}
             </Grid>
         </>
     )

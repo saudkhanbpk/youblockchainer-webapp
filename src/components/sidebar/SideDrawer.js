@@ -174,7 +174,7 @@ export default function SideDrawer(props) {
         <>
             <Box sx={{ display: 'flex' }}>
                 <AppBar sx={{ marginLeft: '50px', backgroundColor: 'white', color: '#3770FF', boxShadow: '0px 1px 26px rgba(94, 99, 116, 0.05)' }}>
-                    <Toolbar sx={{ display: 'flex', justifyContent: { xs: 'space-between', md: 'flex-end' } }}>
+                    <Toolbar sx={{ display: 'flex', justifyContent: { xs: 'space-between', sm:'flex-end', md: 'flex-end' } }}>
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"

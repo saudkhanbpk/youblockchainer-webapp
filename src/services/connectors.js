@@ -4,6 +4,7 @@ import Web3 from "web3";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { getUserBrand } from "./brandsApi";
 // import axios from "axios";
+import { baseUrl } from "../Constants";
 
 export const fetchAccount = async (
     user,
@@ -12,7 +13,8 @@ export const fetchAccount = async (
     setAccount,
     token,
     setToken,
-    setUserBrand
+    setUserBrand,
+    initializeWeb3
 ) => {
     try {
         const web3 = window.web3;
@@ -23,7 +25,7 @@ export const fetchAccount = async (
             params: [
                 {
                     chainId: '0x14a33',
-                    chainName: 'Goerli Testnet',
+                    chainName: 'Base Goerli Testnet',
                     nativeCurrency: {
                         name: 'Ether',
                         symbol: 'ETH',
@@ -54,14 +56,15 @@ export const fetchAccount = async (
             )}`,
             accounts[0]
         );
-
         const response = await fetch(
-            `http://app.myreeldream.ai/api/v1/user/login?signature=${signature}&address=${accounts[0]}`
+            `${baseUrl}/user/login?signature=${signature}&address=${accounts[0]}`
         );
 
         const result = await response.json();
 
         if (response.ok) {
+        initializeWeb3()
+
             const { user, token } = result;
 
             localStorage.setItem('ybUser', JSON.stringify(user));
@@ -85,20 +88,20 @@ export const fetchAccount = async (
 
 
 
-export const connectMetaMask = async (user, setUser, account, setAccount, token, setToken, setUserBrand) => {
+export const connectMetaMask = async (user, setUser, account, setAccount, token, setToken, setUserBrand,initializeWeb3) => {
 
     if (window.ethereum) {
         window.web3 = new Web3(window.ethereum)
-        fetchAccount(user, setUser, account, setAccount, token, setToken, setUserBrand);
+        fetchAccount(user, setUser, account, setAccount, token, setToken, setUserBrand,initializeWeb3);
         window.ethereum.on('accountsChanged', async function () {
-            await fetchAccount(user, setUser, account, setAccount, token, setToken, setUserBrand);
+            await fetchAccount(user, setUser, account, setAccount, token, setToken, setUserBrand,initializeWeb3);
         })
     }
     else if (window.web3) {
         window.web3 = new Web3(window.web3.currentProvider.enable());
-        fetchAccount(user, setUser, account, setAccount, token, setToken, setUserBrand);
+        fetchAccount(user, setUser, account, setAccount, token, setToken, setUserBrand,initializeWeb3);
         window.ethereum.on('accountsChanged', function () {
-            fetchAccount(user, setUser, account, setAccount, token, setToken, setUserBrand);
+            fetchAccount(user, setUser, account, setAccount, token, setToken, setUserBrand,initializeWeb3);
         })
     }
     else {

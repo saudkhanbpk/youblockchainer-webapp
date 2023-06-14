@@ -336,46 +336,61 @@ export default function Chat2() {
                     {messages.length === 0 ? <div className='chat-mycont' style={{ ...df_jc_ac, height: '100%', gap: '6%', padding: '0 10%' }}>
                         <Grid container spacing={{ md: 3, xs: 0 }}>
                             <Grid item md={4} sx={{ ...df_jc_ac_fdc, marginTop: { md: '0', xs: '15%' } }}>
-                                <Icon icon="ph:sun-bold" />
-                                <h5 style={bold_name}>Examples</h5>
+                                <Icon icon="eva:bulb-outline" />
+                                <h5 style={bold_name}>Ideation</h5>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Explain quantum computing in simple terms" →</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"From your idea to a one minute pitch"</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Got any creative ideas for a 10 year old’s birthday?" →</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Generate content in minutes</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"How do I make an HTTP request in Javascript?" →</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"From your 1 Minute pitch to your Synopsis"</p>
                                 </div>
-
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Synopis to Full lengh script"</p>
+                                </div>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Story board"</p>
+                                </div>
                             </Grid>
                             <Grid item md={4} sx={{ ...df_jc_ac_fdc, marginTop: { md: '0', xs: '15%' } }}>
-                                <Icon icon="ant-design:thunderbolt-outlined" />
-                                <h5 style={bold_name}>Capabilities</h5>
+                                <Icon icon="mdi:movie-edit" />
+                                <h5 style={bold_name}>Pre-Production</h5>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Remembers what user said earlier in the conversation</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Casting</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Allows user to provide follow-up corrections</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Location scouting</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Trained to decline inappropriate requests</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Production schedule</p>
                                 </div>
-
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Designing sets & Costumes</p>
+                                </div>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Filming on location/Studio</p>
+                                </div>
                             </Grid>
                             <Grid item md={4} sx={{ ...df_jc_ac_fdc, marginTop: { md: '0', xs: '15%' } }}>
-                                <Icon icon="ph:warning" />
-                                <h5 style={bold_name}>Limitations</h5>
+                                <Icon icon="ri:movie-2-line" />
+                                <h5 style={bold_name}>Post-Production & Distribution</h5>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>May occasionally generate incorrect information</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Film Editing</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>May occasionally produce harmful instructions or biased content</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Marketing</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Limited knowledge of world and events after 2021</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Distribution</p>
                                 </div>
-
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Release</p>
+                                </div>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Post-release</p>
+                                </div>
                             </Grid>
                         </Grid>
                     </div> : messages.map((m, i) => <div style={{ display: 'flex' }}>

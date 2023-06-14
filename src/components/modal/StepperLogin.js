@@ -19,6 +19,7 @@ import { updateMe } from '../../services/userServices';
 import { CircularProgress } from '@mui/material';
 import { btn_connect, circularprog } from '../../theme/CssMy';
 import { useState } from 'react';
+import { OnboardingButton } from './OnboardingButton';
 
 const steps = ['Connect your wallet', 'Create 30s video intro', 'Add your email', 'Complete your profile'];
 
@@ -125,9 +126,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                             Disconnect wallet
                         </Button> : ""
                     }
-                    {activeStep === 0 && <Button onClick={() => window.open('https://metamask.io/', '_blank')} sx={{ ...btn_connect, width: 'auto' }}>
-                        {activeStep === 0 ? "Don't have an account" : ''}
-                    </Button>}
+                    {activeStep === 0 && <OnboardingButton/>}
                     <Button onClick={handleSkip}>
                         {activeStep === 0 && 'Back'}
                     </Button>

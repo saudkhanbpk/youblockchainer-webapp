@@ -13,4 +13,6 @@ export const bold_name = { fontFamily: 'Poppins', fontWeight: 'bold' }
 export const btn_connect = { textTransform: 'none', fontSize: '14px', borderRadius: '50px', fontFamily: 'Poppins', color: '#3770FF', border: '2px solid #3770FF', width: '100%' }
 export const btn_hire = { textTransform: 'none', fontSize: '14px', borderRadius: '50px', fontFamily: 'Poppins', color: 'white', border: '2px solid #009946', backgroundColor: '#009946', width: '100%', '&:hover': { backgroundColor: 'transparent', color: '#009946' } }
 export const circularprog = { backgroundColor: '#3770FF', color: 'white', borderRadius: '50%', padding: '5px' }
+export const circularprog_hire = { backgroundColor: '#009946', color: 'white', borderRadius: '50%', padding: '5px' }
+
 

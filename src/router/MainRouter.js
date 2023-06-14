@@ -9,6 +9,7 @@ import DetailsOrgPage from '../pages/DetailsOrgPage';
 import SearchOrg from '../pages/SearchOrg';
 import MyOrg from '../pages/MyOrg';
 import Myprofile from '../pages/Myprofile';
+import AgreementDets from '../pages/AgreementDets';
 // import React, { useContext, useEffect } from 'react'
 // import { Outlet, Navigate } from 'react-router-dom';
 
@@ -39,6 +40,9 @@ export default function MainRouter() {
                 <Route exact path='/organizations-details/:id' element={<DetailsOrgPage />} />
 
                 {/* <Route exact path='/achemyintegration' element={<AlchemyIntegration />} /> */}
+                <Route path='/agreement/details/:id' element={<PrivateRouter />} >
+                    <Route exact path='/agreement/details/:id' element={<AgreementDets/>} />
+                </Route>
                 <Route path='/myorganization' element={<PrivateRouter />} >
                     <Route exact path='/myorganization' element={<MyOrg />} />
                 </Route>

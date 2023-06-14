@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -14,6 +14,13 @@ import { saveAs } from 'file-saver';
 import { updateMe } from '../../services/userServices';
 import { ybcontext } from '../../context/MainContext';
 import successHandler from '../toasts/successHandler';
+import { useNavigate } from 'react-router';
+import { mapAgreementAddress } from '../../services/helper';
+import { getUserAgreementsFromContract } from '../../services/agreement';
+import Web3 from 'web3';
+import Forwarder from '../../abis/Forwarder.json';
+import AskGPT from '../../abis/AskGPT.json';
+import { contractAddress, forwarderAddress } from '../../Constants';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -49,11 +56,41 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs({ details, setDetails }) {
-    const [value, setValue] = React.useState(0);
-    const { setUser } = React.useContext(ybcontext)
+    const navigate = useNavigate()
+    const [value, setValue] = useState(0);
+    const [loading, setLoading] = useState(false)
+    const { setUser,  user } =useContext(ybcontext)
+    const [myAgreements, setMyAgreements] =useState([])
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    let provider = window.ethereum;
+    const web3 = new Web3(provider);
+    let contract1FC = new web3.eth.Contract(Forwarder, forwarderAddress);
+    let contract2MC = new web3.eth.Contract(AskGPT, contractAddress);
+
+    const getAgreements = async () => {
+        setLoading(true);
+        console.log(contract2MC)
+        let res = JSON.parse(localStorage.getItem('ybUser')).agreements;
+        console.log(res)
+        let contractRes = await getUserAgreementsFromContract(
+          contract2MC,
+          user.walletAddress,
+        );
+        console.log(contractRes)
+        let mapped = mapAgreementAddress(res, contractRes);
+    console.log(mapped)
+        setMyAgreements(mapped);
+        setLoading(false);
+      };
+    
+      useEffect(() => {
+        getAgreements();
+      }, []);
+       
+      console.log(details)
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -100,10 +137,10 @@ export default function BasicTabs({ details, setDetails }) {
                 <Box>
                     {/* <Typography sx={{ ...bold_name, color: '#3770FF', paddingBottom: '2%', }}>All agreements</Typography> */}
 
-                    {details.agreements.length !== 0 ? <Grid container rowSpacing={3}>
+                    {myAgreements.length !== 0 ? <Grid container rowSpacing={3} >
                         {
-                            details.agreements.map((agreement) => {
-                                return <Grid item md={12}>
+                            myAgreements.map((agreement) => {
+                                return <Grid item md={12} sx={{cursor:'pointer'}} onClick={() => navigate(`/agreement/details/${agreement._id}`, {state:agreement})}>
                                     <AgreementCard agreement={agreement} />
                                 </Grid>
                             })

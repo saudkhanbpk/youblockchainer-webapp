@@ -14,7 +14,7 @@ export const backendtoChatScope = (message, userId, user, expert) => {
     return temp
 }
 
-export const executeMetaTx = async (data, targetAddress, user, contract1) => {
+export const executeMetaTx = async (data, targetAddress,  contract1) => {
     try {
         let provider = window.ethereum;
         const web3 = new Web3(provider);
@@ -33,25 +33,40 @@ export const executeMetaTx = async (data, targetAddress, user, contract1) => {
             .getDigest(tx.from, tx.to, tx.value, tx.nonce, tx.data)
             .call();
         console.log('---Got digest from Forwarder:- ', digest);
-        await web3.eth.personal.sign(digest, from).then(async (signature) => {
+        let signature = await web3.eth.personal.sign(digest, from)
             console.log('---Transaction Signed');
-            await httpcommon.post(`/user/metatx`, {
+            let res = await httpcommon.post(`/user/metatx`, {
                 tx,
                 signature,
             }, {
                 headers: {
                     Authorization: localStorage.getItem('ybToken')
                 }
-            }).then((res) => {
-                console.log('---Meta Tx Status :- ', res);
+            })
+                console.log('---Meta Tx Status :- ', res.data.success);
                 if (res.data.success) return res.data.data;
                 return res.data.success;
 
-            }).catch((e) => console.log(e))
-
-        }).catch((e) => console.log(e))
     } catch (error) {
         console.log('Meta Tx creation error:- ', error.message);
         //notifyEVMError(error)
     }
 };
+
+export const mapAgreementAddress = (db, contractData) => {
+    return db
+      .filter(
+        i =>
+          !!i.agreementUri && !!contractData.find(j => j[1] === i.agreementUri),
+      )
+      .map(i => {
+        const contract = contractData.find(j => j[1] === i.agreementUri);
+        if (contract) {
+          return {
+            ...i,
+            contractAddress: contract[0],
+          };
+        }
+        return i;
+      });
+  };

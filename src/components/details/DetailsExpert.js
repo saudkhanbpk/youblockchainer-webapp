@@ -78,7 +78,7 @@ export default function DetailsExpert() {
                         </>}
                     </Grid>
                     <Grid container columnSpacing={4}>
-                        <Grid item md={4} xs={12} sx={{ borderRight: { sm: '2px solid #E9E9E9', xs: 'none' }, margin: '0', paddingTop: '2%', width: '100%' }}>
+                        <Grid item md={4} xs={12} sx={{ borderRight: { md: '2px solid #E9E9E9', sm:'none', xs: 'none' }, margin: '0', paddingTop: '2%', width: '100%' }}>
                             <Typography variant='h6' sx={bold_name}>Skills</Typography>
                             {details.skills.length !== 0 ? <Stack direction='row' sx={{ paddingTop: '2%' }} spacing={1} useFlexGap flexWrap="wrap">
                                 {
