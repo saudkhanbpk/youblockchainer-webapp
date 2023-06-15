@@ -46,6 +46,7 @@ export default function ProfileDetails() {
         skills: chips,
         isExpert: checked,
         isActor: act,
+        rate:5,
         age:0,
         profileImage: img,
         bio: (JSON.parse(localStorage.getItem('ybUser')))?.bio,
@@ -214,6 +215,14 @@ export default function ProfileDetails() {
                             />
                         </Grid>
                     </Grid>
+                    {json.isExpert ? <Grid container sx={{ marginTop: '2%' }}>
+                        <Grid item md={2} >
+                            <p style={{ ...df_jfs_ac, height: '100%' }}>Hourly rate</p>
+                        </Grid>
+                        <Grid item md={10}>
+                            <TextField value={json.rate} name='rate' onChange={handleChange} placeholder={details.rate} sx={{ width: '100%' }} />
+                        </Grid>
+                    </Grid> : ""}
                     <Grid container sx={{ marginTop: '2%' }}>
                         <Grid item md={2}>
                             <p style={{ ...df_jfs_ac, height: '100%' }}>Descriptor text</p>

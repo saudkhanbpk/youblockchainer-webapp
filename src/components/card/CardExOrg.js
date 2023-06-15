@@ -40,7 +40,7 @@ export default function CardExOrg({ exp, org }) {
                     </Stack>
                 </Grid>
                 <Grid item xs={4} sx={df_jfe_ac}>
-                    <Chip label="$50.02/h" size="small" sx={{ backgroundColor: '#3770FF', color: 'white' }} />
+                   {!org ?  <Chip label={`$ ${exp?.rate}/h`} size="small" sx={{ backgroundColor: '#3770FF', color: 'white', fontWeight:'bold' }} /> : ""}
                 </Grid>
             </Grid>
         </CardContent>
