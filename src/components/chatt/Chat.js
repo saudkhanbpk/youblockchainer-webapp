@@ -183,7 +183,8 @@ export default function Chat2() {
             case 'Do you have a one minute pitch idea in short ?':
                 // setHasPitchIdea(option);
                 option === "YES" ? setEnableTF(true) : setHasPitchIdea(false)
-                option === "Search on web" && window.open('http://myreeldream.ai/', '_blank')
+                option === "Search on web" && window.open(`https://www.google.com/search?q=Write title, character profiles for a ${contentType} ${genre
+            } with temporality as ${temporality}`, '_blank')
 
                 option === "NO" && setDisableTF(true)
                 option === "NO" && setMessages((prev) => [...prev, {
