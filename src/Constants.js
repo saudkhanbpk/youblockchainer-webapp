@@ -1,4 +1,4 @@
-export const base = 'http://ec2-13-51-105-31.eu-north-1.compute.amazonaws.com';
+export const base = 'https://app.myreeldream.ai';
 export const baseUrl = `${base}/api/v1`;
 
 export const contractAddress = '0xc83589897479A672d9496307E24D16ab1658c4aF';

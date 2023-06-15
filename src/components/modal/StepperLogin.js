@@ -21,7 +21,7 @@ import { btn_connect, circularprog } from '../../theme/CssMy';
 import { useState } from 'react';
 import { OnboardingButton } from './OnboardingButton';
 
-const steps = ['Connect your wallet', 'Create 30s video intro', 'Add your email', 'Complete your profile'];
+const steps = ['Connect Wallet', '30s video intro', 'Basic details', 'Complete your profile'];
 
 export default function HorizontalLinearStepper({ open, setOpen }) {
     const navigate = useNavigate()
