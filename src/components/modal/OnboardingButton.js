@@ -70,7 +70,7 @@ export function OnboardingButton() {
   };
 
   return (
-    <Button sx={btn_connect} disabled={isDisabled} onClick={onClick}>
+    <Button sx={{...btn_connect, width:'auto', marginLeft:'2%'}} disabled={isDisabled} onClick={onClick}>
       {buttonText}
     </Button>
   );

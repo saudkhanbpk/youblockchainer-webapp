@@ -10,11 +10,12 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: { md: 700, sm: 700, xs: 400 },
+    width: { md: 800, sm: 700, xs: 400 },
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    border: 'none',
     boxShadow: 24,
     p: 4,
+    borderRadius:'10px'
 };
 
 export default function LoginModal(props) {

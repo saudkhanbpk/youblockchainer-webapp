@@ -47,7 +47,11 @@ export default function ChatSideMessages({ chat, messages2, setMessages, creator
                                 <Avatar src={creator ? chat.p2.profileImage : chat.p1.profileImage} />
                                 <Typography sx={{ ...bold_name, marginLeft: '2%' }} variant='p'>{creator ? chat.p2.username : chat.p1.username}</Typography>
                             </div>
-                            <Button onClick={() => setOpen(true)} sx={{ ...btn_hire, width: '20%' }}>Hire</Button>
+                            <Button
+                                sx={{ ...btn_hire, cursor: 'none' }}
+
+                            // onClick={() => setOpen(true)}
+                            >Hire</Button>
                         </div>
                     </ConversationHeader.Content>
                 </ConversationHeader>

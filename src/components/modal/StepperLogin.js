@@ -17,11 +17,13 @@ import ModalVideoContent from './ModalVideoContent';
 import { uploadImg } from '../../services/ipfsServicesApi';
 import { updateMe } from '../../services/userServices';
 import { CircularProgress } from '@mui/material';
-import { btn_connect, circularprog } from '../../theme/CssMy';
+import { btn, btn_connect, circularprog } from '../../theme/CssMy';
 import { useState } from 'react';
 import { OnboardingButton } from './OnboardingButton';
+import ModalIntro from './ModalIntro';
+import ModalInModal from './ModalInModal';
 
-const steps = ['Connect Wallet', '30s video intro', 'Basic details', 'Complete your profile'];
+const steps = ['Connect Wallet', '30s video intro', 'Basic details', 'What to expect', 'Complete your profile'];
 
 export default function HorizontalLinearStepper({ open, setOpen }) {
     const navigate = useNavigate()
@@ -31,10 +33,11 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
     const [video, setVideo] = React.useState(null)
     const [load, setLoad] = React.useState(false)
     const [yes, setYes] = useState(false)
+    const [open2, setOpen2] = useState(false)
 
     const { deactivate } = useWeb3React()
     const isStepOptional = (step) => {
-        return step === 3;
+        return step === 4;
     };
 
     const isStepSkipped = (step) => {
@@ -89,15 +92,15 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                     const labelProps = {};
                     if (isStepOptional(index)) {
                         labelProps.optional = (
-                            <Typography variant="caption">Optional</Typography>
+                            <Typography sx={{ fontSize: '12px' }} variant="caption">Optional</Typography>
                         );
                     }
                     if (isStepSkipped(index)) {
                         stepProps.completed = false;
                     }
                     return (
-                        <Step key={label} {...stepProps}>
-                            <StepLabel {...labelProps}>{label}</StepLabel>
+                        <Step key={label}  {...stepProps}>
+                            <StepLabel sx={{ fontSize: '12px' }} {...labelProps}>{label}</StepLabel>
                         </Step>
                     );
                 })}
@@ -107,11 +110,11 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                     activeStep === 0 ? <ModalOneContent setActiveStep={setActiveStep} activeStep={activeStep} />
                         : activeStep === 1 ? <ModalVideoContent setActiveStep={setActiveStep} activeStep={activeStep} video={video} setVideo={setVideo} yes={yes} setYes={setYes} />
                             : activeStep === 2 ? <ModalTwoContent setActiveStep={setActiveStep} activeStep={activeStep} />
-                                : <ModalThreeContent />
+                                : activeStep === 3 ? <ModalIntro /> : <ModalThreeContent />
                 }
                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                     {
-                        activeStep ? <Button
+                        activeStep !== 0 ? <Button
                             color="inherit"
                             disabled={activeStep === 0}
                             onClick={() => {
@@ -126,30 +129,35 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                             Disconnect wallet
                         </Button> : ""
                     }
-                    {activeStep === 0 && <OnboardingButton/>}
-                    <Button onClick={handleSkip}>
+                   {activeStep === 0 && <Button onClick={handleSkip}>
                         {activeStep === 0 && 'Back'}
-                    </Button>
+                    </Button>}
+                    {activeStep === 0 && <OnboardingButton />}
+                    {
+                        activeStep === 0 && <Button onClick={() => setOpen2(true)} sx={{...btn_connect, width:'auto', marginLeft:'2%'}}>New to MetaMask?</Button>
+                    }
                     <Box sx={{ flex: '1 1 auto' }} />
 
                     <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                         {isStepOptional(activeStep) && 'Skip'}
                     </Button>
 
-
                     {
                         activeStep === 1 && load ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={() => videoUplaod()} disabled={!video} >{activeStep === 1 && 'Upload'}</Button>
                     }
-                    <Button onClick={() => {
+                    {
+                        activeStep === 3 && <Button sx={btn} onClick={() => setActiveStep(activeStep + 1)} >Next</Button>
+                    }
+                    {activeStep === steps.length - 1 && <Button onClick={() => {
                         setEdit(true)
                         setOpen(false)
                         navigate('/profile')
                     }}>
                         {activeStep === steps.length - 1 ? 'Complete Your Profile' : ''}
-                    </Button>
+                    </Button>}
                 </Box>
             </React.Fragment>
-
+<ModalInModal open={open2} setOpen={setOpen2} />
         </Box>
     );
 }
