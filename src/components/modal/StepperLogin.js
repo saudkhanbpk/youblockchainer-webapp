@@ -138,9 +138,9 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                     }
                     <Box sx={{ flex: '1 1 auto' }} />
 
-                    <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                   {isStepOptional && <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                         {isStepOptional(activeStep) && 'Skip'}
-                    </Button>
+                    </Button>}
 
                     {
                         activeStep === 1 && load ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={() => videoUplaod()} disabled={!video} >{activeStep === 1 && 'Upload'}</Button>
