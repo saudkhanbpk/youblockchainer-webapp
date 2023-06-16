@@ -5,7 +5,7 @@ export default function ModalIntro() {
     <>
         <iframe width="100%" height="315"
                 allow='autoplay'
-                src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                src="https://www.youtube.com/embed/2zgtEHgQylc">
               </iframe>
     </>
   )
