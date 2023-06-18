@@ -138,23 +138,23 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                     }
                     <Box sx={{ flex: '1 1 auto' }} />
 
-                   {isStepOptional && <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                        {isStepOptional(activeStep) && 'Skip'}
-                    </Button>}
+                   {activeStep === steps.length - 1 ? <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                        Skip
+                    </Button>:""}
 
                     {
-                        activeStep === 1 && load ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={() => videoUplaod()} disabled={!video} >{activeStep === 1 && 'Upload'}</Button>
+                        activeStep === 1 ? load ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={() => videoUplaod()} disabled={!video} >{activeStep === 1 && 'Upload'}</Button>:""
                     }
                     {
-                        activeStep === 3 && <Button sx={btn} onClick={() => setActiveStep(activeStep + 1)} >Next</Button>
+                        activeStep === 3 ? <Button sx={btn} onClick={() => setActiveStep(activeStep + 1)} >Next</Button> : ""
                     }
-                    {activeStep === steps.length - 1 && <Button onClick={() => {
+                    {activeStep === steps.length - 1 ? <Button onClick={() => {
                         setEdit(true)
                         setOpen(false)
                         navigate('/profile')
                     }}>
-                        {activeStep === steps.length - 1 ? 'Complete Your Profile' : ''}
-                    </Button>}
+                        Complete Your Profile
+                    </Button> : ""}
                 </Box>
             </React.Fragment>
 <ModalInModal open={open2} setOpen={setOpen2} />

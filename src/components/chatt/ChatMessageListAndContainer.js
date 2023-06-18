@@ -102,7 +102,7 @@ export default function ChatMessageListAndContainer() {
             </ConversationList>
         </Grid>
         <Grid item md={9} sx={{ borderRadius: '0 10px 10px 0' }}>
-            {id && chat ? <ChatSideMessages chat={chat} messages2={messages} setMessages={setMessages} creator={JSON.parse(localStorage.getItem('ybUser'))._id === chat.p1._id} /> : <ChatOpen />}
+            {id && chat ? <ChatSideMessages chat={chat} messages2={messages} setMessages={setMessages} creator={JSON.parse(localStorage.getItem('ybUser'))._id === chat?.p1._id} /> : <ChatOpen />}
         </Grid>
     </Grid >
 }

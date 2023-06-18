@@ -61,11 +61,11 @@ function ModalTwoContent({ setActiveStep, activeStep, open, setOpen }) {
                 <TextField sx={{ width: '100%' }} name='walletAddress' value={brand.walletAddress} placeholder={user.walletAddress} disabled />
             </Grid>
             <Grid item md={6} sx={{ width: '100%' }}>
-                <p style={{ fontSize: '12px' }}>Enter name for your brand</p>
+                <p style={{ fontSize: '12px' }}>Enter name for your organisation</p>
                 <TextField sx={{ width: '100%' }} name='name' value={brand.name} placeholder='Name' onChange={handleChange} />
             </Grid>
             <Grid item md={6} sx={{ width: '100%' }}>
-                <p style={{ fontSize: '12px' }}>Enter nickname for your brand</p>
+                <p style={{ fontSize: '12px' }}>Enter nickname for your organisation</p>
                 <TextField sx={{ width: '100%' }} name='nickName' value={brand.nickName} placeholder='Nickname' onChange={handleChange} />
             </Grid>
             <Grid item md={12} sx={{ width: '100%' }}>
@@ -120,7 +120,7 @@ function ModalTwoContent({ setActiveStep, activeStep, open, setOpen }) {
                 {
                     loading ? <Box sx={{ display: 'flex', justifyContent: 'center' }}> <CircularProgress size={30} sx={circularprog} /> </Box>
                         : <Button onClick={() => createBrand()} sx={btn_connect}>
-                            Create Brand
+                            Create organisation
                         </Button>
                 }
             </Grid>

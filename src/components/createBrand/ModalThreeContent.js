@@ -11,7 +11,7 @@ function ModalThreeContent() {
             <Grid container spacing={5} sx={{ padding: '5% 0', display: 'flex', alignItems: 'center' }}>
                 <Grid item sx={{ width: '100%' }} md={6}>
                     <h2>Hurrah!</h2>
-                    <p style={{ marginTop: '1%', color: '#8C8C8C', fontSize: '12px' }}>You just created your own brand</p>
+                    <p style={{ marginTop: '1%', color: '#8C8C8C', fontSize: '12px' }}>You just created your own Organisation</p>
                 </Grid>
                 <Grid item sx={{ width: '100%' }} md={6}>
                     <Card>

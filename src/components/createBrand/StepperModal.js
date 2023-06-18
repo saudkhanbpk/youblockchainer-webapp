@@ -10,7 +10,7 @@ import ModalTwoContent from './ModalTwoContent';
 import ModalThreeContent from './ModalThreeContent';
 import { useNavigate } from 'react-router';
 
-const steps = ["Don't Have a Brand?", 'Fill Details and Create'];
+const steps = ["Don't Have an Organisation?", 'Fill Details and Create'];
 
 export default function HorizontalLinearStepper({ open, setOpen }) {
     const navigate = useNavigate()
@@ -71,7 +71,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
 
 
                     {activeStep === 0 ? <Button onClick={() => setActiveStep(activeStep + 1)}>
-                        Create Brand
+                        Create organisation
                     </Button> : ''}
                 </Box>
             </>

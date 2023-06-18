@@ -80,7 +80,7 @@ function ModalTwoContent({ setActiveStep, activeStep }) {
                     <Grid container sx={{ width: '100%' }}>
                         <Grid item md={11} sm={11} xs={11}>
                             <TextField name='email' placeholder={user.email ? user.email : 'Email'} />
-                            <TextField name='country' placeholder={'Enter your country'} />
+                            <TextField name='country' placeholder={'Enter your country'} sx={{marginTop:'2%'}} />
                         </Grid>
                         <Grid item md={1} sm={1} xs={1}>
                             <Button sx={btn} type='submit'>

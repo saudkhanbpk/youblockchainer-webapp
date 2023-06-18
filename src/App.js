@@ -11,6 +11,9 @@ import Web3 from 'web3';
 import Forwarder from './abis/Forwarder.json';
 import AskGPT from './abis/AskGPT.json';
 import { contractAddress, forwarderAddress } from './Constants';
+import { isMobile, isTablet } from 'react-device-detect';
+import NTS from './components/NTS';
+import { Box } from '@mui/material';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -110,11 +113,15 @@ const [web3Provider, setWeb3Provider] = useState(null)
           draggable
           pauseOnHover
         />
-        <Router>
+        {
+          (isMobile || isTablet) ? <Box sx={{padding:'10%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', height:'75vh'}}>
+<NTS/>
+          </Box> : <Router>
           <SideDrawer>
             <MainRouter />
           </SideDrawer>
         </Router>
+        }
       </ybcontext.Provider>
     </>
   );

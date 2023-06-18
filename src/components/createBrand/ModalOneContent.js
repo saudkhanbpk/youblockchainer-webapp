@@ -15,8 +15,9 @@ function ModalOneContent({ activeStep, setActiveStep }) {
         <>
             <Grid sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 <CardMedia sx={{ width: '70px', height: 'auto' }} component='img' image={sad} />
-                <p style={{ marginTop: '1%', color: '#8C8C8C', fontSize: '12px' }}>Don't have a brand?</p>
+                <p style={{ marginTop: '1%', color: '#8C8C8C', fontSize: '12px' }}>Don't have an Organisation?</p>
                 <h1 style={{ color: '#3770FF' }}> Create One Now!</h1>
+                <p style={{ marginTop: '1%', color: '#8C8C8C', fontSize: '12px' }}>By doing so you can hire professionals for your upcoming project</p>
             </Grid>
         </>
     )

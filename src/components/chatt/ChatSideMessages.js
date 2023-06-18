@@ -41,14 +41,14 @@ export default function ChatSideMessages({ chat, messages2, setMessages, creator
         <>
             {messages && <ChatContainer style={{ height: '78vh', paddingBottom: '2%', backgroundColor: 'transparent' }}>
                 <ConversationHeader>
-                    <ConversationHeader.Content userName={creator ? chat.p2.username : chat.p1.username} >
+                    <ConversationHeader.Content userName={creator ? chat?.p2.username : chat?.p1.username} >
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div style={{ ...df_jfs_ac, width: '80%' }}>
-                                <Avatar src={creator ? chat.p2.profileImage : chat.p1.profileImage} />
-                                <Typography sx={{ ...bold_name, marginLeft: '2%' }} variant='p'>{creator ? chat.p2.username : chat.p1.username}</Typography>
+                                <Avatar src={creator ? chat?.p2.profileImage : chat?.p1.profileImage} />
+                                <Typography sx={{ ...bold_name, marginLeft: '2%' }} variant='p'>{creator ? chat?.p2.username : chat?.p1.username}</Typography>
                             </div>
                             <Button
-                                sx={{ ...btn_hire, cursor: 'none' }}
+                                sx={{ ...btn_hire, cursor: 'none', width:'auto' }}
 
                             // onClick={() => setOpen(true)}
                             >Hire</Button>
