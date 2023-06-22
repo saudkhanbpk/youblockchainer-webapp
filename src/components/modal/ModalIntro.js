@@ -1,12 +1,11 @@
 import React from 'react'
 
-export default function ModalIntro() {
+export default function ModalIntro({video}) {
   return (
     <>
-        <iframe width="100%" height="315"
-                allow='autoplay'
-                src="https://www.youtube.com/embed/2zgtEHgQylc">
-              </iframe>
+      <video width="100%" height="315" controls style={{borderRadius:'5px'}} autoPlay>
+            <source src={video?.video3} type="video/mp4"  />
+          </video>
     </>
   )
 }

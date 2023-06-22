@@ -23,6 +23,7 @@ import { OnboardingButton } from './OnboardingButton';
 import ModalIntro from './ModalIntro';
 import ModalInModal from './ModalInModal';
 import { detect } from 'detect-browser';
+import { videoGet } from '../../services/videoService';
 
 const steps = ['Connect Wallet', '30s video intro', 'Basic details', 'What to expect', 'Complete your profile'];
 
@@ -34,9 +35,20 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
     const [video, setVideo] = React.useState(null)
     const [load, setLoad] = React.useState(false)
     const [yes, setYes] = useState(false)
+    const [videosss, setVideosss] = useState(null)
     const [open2, setOpen2] = useState(false)
     const browser = detect()
     const { deactivate } = useWeb3React()
+
+    React.useEffect(() => {
+        const func = async () => {
+            let res = await videoGet()
+            console.log(res)
+            setVideosss(res.data)
+        }
+        func()
+    }, [])
+
     const isStepOptional = (step) => {
         return step === 4;
     };
@@ -108,10 +120,10 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
             </Stepper>
             <React.Fragment>
                 {
-                    activeStep === 0 ? <ModalOneContent setActiveStep={setActiveStep} activeStep={activeStep} />
+                    activeStep === 0 ? <ModalOneContent video={videosss} setActiveStep={setActiveStep} activeStep={activeStep} />
                         : activeStep === 1 ? <ModalVideoContent setActiveStep={setActiveStep} activeStep={activeStep} video={video} setVideo={setVideo} yes={yes} setYes={setYes} />
                             : activeStep === 2 ? <ModalTwoContent setActiveStep={setActiveStep} activeStep={activeStep} />
-                                : activeStep === 3 ? <ModalIntro /> : <ModalThreeContent />
+                                : activeStep === 3 ? <ModalIntro video={videosss} /> : <ModalThreeContent />
                 }
                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                     {
@@ -127,24 +139,24 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                             }}
                             sx={{ mr: 1 }}
                         >
-                            Disconnect wallet
+                            Logout
                         </Button> : ""
                     }
-                   {activeStep === 0 && <Button onClick={handleSkip}>
+                    {activeStep === 0 && <Button onClick={handleSkip}>
                         {activeStep === 0 && 'Back'}
                     </Button>}
-                    {activeStep === 0 && (browser.name === 'chrome' || browser.name === 'opera' || browser.name === 'edge' || browser.name === 'brave' || browser.name === 'firefox' ) && <OnboardingButton />}
+                    {activeStep === 0 && (browser.name.includes('chrome') || browser.name.includes('opera')  || browser.name.includes('edge')  || browser.name.includes('brave') || browser.name.includes('firefox')) && <OnboardingButton />}
                     {
-                        activeStep === 0 && (browser.name === 'chrome' || browser.name === 'opera' || browser.name === 'edge' || browser.name === 'brave' || browser.name === 'firefox') && <Button onClick={() => setOpen2(true)} sx={{...btn_connect, width:'auto', marginLeft:'2%'}}>New to MetaMask?</Button>
+                        activeStep === 0 && (browser.name.includes('chrome') || browser.name.includes('opera')  || browser.name.includes('edge')  || browser.name.includes('brave') || browser.name.includes('firefox')) && <Button onClick={() => setOpen2(true)} sx={{ ...btn_connect, width: 'auto', marginLeft: '2%' }}>New to MetaMask?</Button>
                     }
                     <Box sx={{ flex: '1 1 auto' }} />
 
-                   {activeStep === steps.length - 1 ? <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                    {activeStep === steps.length - 1 ? <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                         Skip
-                    </Button>:""}
+                    </Button> : ""}
 
                     {
-                        activeStep === 1 ? load ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={() => videoUplaod()} disabled={!video} >{activeStep === 1 && 'Upload'}</Button>:""
+                        activeStep === 1 ? load ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={() => videoUplaod()} disabled={!video} >{activeStep === 1 && 'Upload'}</Button> : ""
                     }
                     {
                         activeStep === 3 ? <Button sx={btn} onClick={() => setActiveStep(activeStep + 1)} >Next</Button> : ""
@@ -158,7 +170,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                     </Button> : ""}
                 </Box>
             </React.Fragment>
-<ModalInModal open={open2} setOpen={setOpen2} />
+            <ModalInModal open={open2} setOpen={setOpen2} video={videosss} />
         </Box>
     );
 }

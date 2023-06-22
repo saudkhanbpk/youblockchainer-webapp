@@ -18,7 +18,7 @@ const style = {
     gridContainer: { margin: '5% 0' },
 }
 
-function ModalOneContent({ activeStep, setActiveStep, onboarding }) {
+function ModalOneContent({ activeStep, setActiveStep, onboarding,video }) {
     const { activate } = useWeb3React();
     const { user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3 } = useContext(ybcontext)
     const browser = detect()
@@ -41,7 +41,7 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding }) {
 
     return (
         <>
-            {browser.name === 'chrome' || browser.name === 'opera' || browser.name === 'edge' || browser.name === 'brave' || browser.name === 'firefox' ? 
+            {browser.name.includes('chrome') || browser.name.includes('opera')  || browser.name.includes('edge')  || browser.name.includes('brave') || browser.name.includes('firefox') ? 
             <Grid container sx={style.gridContainer}>
                 {onboarding ? <iframe
                     title="MetaMask Download"
