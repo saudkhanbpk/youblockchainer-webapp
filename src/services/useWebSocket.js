@@ -10,7 +10,7 @@ export const useWebSockets = ({ roomId, enabled, sender, expert }) => {
     const input = 'Input Chat Message';
     const output = 'Output Chat Message';
     const joinRoom = 'Join Room';
-    const user = JSON.parse(sessionStorage.getItem('ybUser'))
+    const user = JSON.parse(localStorage.getItem('ybUser'))
     const params = useParams()
     const id = params.id
     console.log(roomId, enabled, sender)
@@ -49,11 +49,12 @@ export const useWebSockets = ({ roomId, enabled, sender, expert }) => {
 
     const fetchFromDevice = async () => {
         try {
-            let res = sessionStorage.getItem(roomId);
+            let res = localStorage.getItem(roomId);
             // console.log(res, 'res')
             if (res === undefined) {
                 return [];
             }
+
             return JSON.parse(res);
         } catch (error) {
             console.log(error);
@@ -68,10 +69,10 @@ export const useWebSockets = ({ roomId, enabled, sender, expert }) => {
             console.log(prior, 'hey')
             prior = prior
                 .map(i => backendtoChatScope(i, user._id, user, expert))
-                // .sort((a, b) => Date.parse(a.time) - Date.parse(b.time));
+                .sort((a, b) => Date.parse(a.time) - Date.parse(b.time));
             setMessages(prior);
-            // sessionStorage.setItem('roomId', roomId);
-            sessionStorage.setItem(roomId, JSON.stringify(prior));
+            // localStorage.setItem('roomId', roomId);
+            localStorage.setItem(roomId, JSON.stringify(prior));
         } catch (e) {
             console.log('Error in getting previous chats:- ', e.message);
         }

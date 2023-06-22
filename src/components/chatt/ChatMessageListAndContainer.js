@@ -77,9 +77,9 @@ export default function ChatMessageListAndContainer() {
                                         <strong style={{ fontFamily: 'Poppins' }}>
                                             {JSON.parse(localStorage.getItem('ybUser'))._id === room.p1._id ? room.p2.username : room.p1.username}
                                         </strong>
-                                        <p style={ptag}>{JSON.parse(sessionStorage.getItem(room._id))?.[0] ? JSON.parse(sessionStorage.getItem(room._id))?.[0]?.direction === 'outgoing' ?
-                                            `You : ${JSON.parse(sessionStorage.getItem(room._id))?.[JSON.parse(sessionStorage.getItem(room._id)).length - 1].message}` :
-                                            `${JSON.parse(sessionStorage.getItem('ybUser'))._id === room.p1._id ? room.p2.username : room.p1.username} : ${JSON.parse(sessionStorage.getItem(room._id))?.[JSON.parse(sessionStorage.getItem(room._id)).length - 1]?.message}` : 'Say Hi'}</p>
+                                        <p style={ptag}>{JSON.parse(localStorage.getItem(room._id))?.[0] ? JSON.parse(localStorage.getItem(room._id))?.[0]?.direction === 'outgoing' ?
+                                            `You : ${JSON.parse(localStorage.getItem(room._id))?.[JSON.parse(localStorage.getItem(room._id)).length - 1].message}` :
+                                            `${JSON.parse(localStorage.getItem('ybUser'))._id === room.p1._id ? room.p2.username : room.p1.username} : ${JSON.parse(localStorage.getItem(room._id))?.[JSON.parse(localStorage.getItem(room._id)).length - 1]?.message}` : 'Say Hi'}</p>
                                     </Box>
                                 </Box>
                                 {!imgLoad && <Box sx={{ display: 'flex', width: '100%', alignItems: 'center' }}>
