@@ -197,8 +197,8 @@ export default function SideDrawer(props) {
                                     localStorage.setItem('ybUser', null)
                                     localStorage.setItem('ybToken', null)
                                     localStorage.setItem('ybBrand', null)
-                                }} sx={btn}>Disconnect wallet</Button>
-                                    : <Button onClick={() => setOpen(true)} sx={btn}>Connect wallet</Button>
+                                }} sx={btn}>Logout</Button>
+                                    : <Button onClick={() => setOpen(true)} sx={btn}>SignIn/SignUp</Button>
                             }
                         </div>
                     </Toolbar>

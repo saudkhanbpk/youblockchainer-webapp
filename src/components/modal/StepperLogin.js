@@ -22,6 +22,7 @@ import { useState } from 'react';
 import { OnboardingButton } from './OnboardingButton';
 import ModalIntro from './ModalIntro';
 import ModalInModal from './ModalInModal';
+import { detect } from 'detect-browser';
 
 const steps = ['Connect Wallet', '30s video intro', 'Basic details', 'What to expect', 'Complete your profile'];
 
@@ -34,7 +35,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
     const [load, setLoad] = React.useState(false)
     const [yes, setYes] = useState(false)
     const [open2, setOpen2] = useState(false)
-
+    const browser = detect()
     const { deactivate } = useWeb3React()
     const isStepOptional = (step) => {
         return step === 4;
@@ -132,9 +133,9 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                    {activeStep === 0 && <Button onClick={handleSkip}>
                         {activeStep === 0 && 'Back'}
                     </Button>}
-                    {activeStep === 0 && <OnboardingButton />}
+                    {activeStep === 0 && (browser.name === 'chrome' || browser.name === 'opera' || browser.name === 'edge' || browser.name === 'brave' || browser.name === 'firefox' ) && <OnboardingButton />}
                     {
-                        activeStep === 0 && <Button onClick={() => setOpen2(true)} sx={{...btn_connect, width:'auto', marginLeft:'2%'}}>New to MetaMask?</Button>
+                        activeStep === 0 && (browser.name === 'chrome' || browser.name === 'opera' || browser.name === 'edge' || browser.name === 'brave' || browser.name === 'firefox') && <Button onClick={() => setOpen2(true)} sx={{...btn_connect, width:'auto', marginLeft:'2%'}}>New to MetaMask?</Button>
                     }
                     <Box sx={{ flex: '1 1 auto' }} />
 

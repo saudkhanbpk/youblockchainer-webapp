@@ -7,6 +7,7 @@ import { connectMetaMask } from '../../services/connectors'
 import { isMobile } from "react-device-detect";
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { ybcontext } from '../../context/MainContext'
+import { detect } from 'detect-browser'
 
 const style = {
     btn: { display: 'flex', padding: { md: '5px', xs: '0px' }, width: '100%', cursor: 'pointer', borderRadius: '10px', backgroundColor: '#f2f2f2', height: '100%', flexDirection: 'column', alignItems: 'center', textTransform: 'none' },
@@ -20,7 +21,8 @@ const style = {
 function ModalOneContent({ activeStep, setActiveStep, onboarding }) {
     const { activate } = useWeb3React();
     const { user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3 } = useContext(ybcontext)
-
+    const browser = detect()
+    console.log(browser)
     const Injected = new InjectedConnector({
         supportedChainIds: [1, 3, 4, 5, 42]
     });
@@ -39,6 +41,7 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding }) {
 
     return (
         <>
+            {browser.name === 'chrome' || browser.name === 'opera' || browser.name === 'edge' || browser.name === 'brave' || browser.name === 'firefox' ? 
             <Grid container sx={style.gridContainer}>
                 {onboarding ? <iframe
                     title="MetaMask Download"
@@ -60,7 +63,11 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding }) {
                         </Button>
                     </Grid>
                 </Grid>}
-            </Grid>
+            </Grid> : <Box sx={{margin:'4% 15%'}}>
+            <h3 style={{textAlign:'center'}}>
+            Metamask is not supported in this browser, use Chrome, Firefox, Brave, Edge or Opera
+            </h3>
+            </Box>}
         </>
     )
 }

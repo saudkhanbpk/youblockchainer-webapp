@@ -343,9 +343,6 @@ export default function Chat2() {
                                     <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"From your idea to a one minute pitch"</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Generate content in minutes</p>
-                                </div>
-                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
                                     <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"From your 1 Minute pitch to your Synopsis"</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
@@ -353,6 +350,9 @@ export default function Chat2() {
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
                                     <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Story board"</p>
+                                </div>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Script Doctors"</p>
                                 </div>
                             </Grid>
                             <Grid item md={4} sx={{ ...df_jc_ac_fdc, marginTop: { md: '0', xs: '15%' } }}>

@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { btn_connect, df_jfe_ac } from '../../theme/CssMy';
 
 const style = {
     position: 'absolute',
@@ -36,6 +37,9 @@ export default function ModalInModal({open, setOpen}) {
                 style={{borderRadius:'5px'}}
                 src="https://www.youtube.com/embed/elFGTxAuCVA">
               </iframe>
+              <Box sx={df_jfe_ac}>
+              <Button onClick={handleClose} sx={{...btn_connect, width:'auto', marginBottom:'2%', marginTop:'2%'}}>Proceed</Button>
+              </Box>
         </Box>
       </Modal>
     </div>

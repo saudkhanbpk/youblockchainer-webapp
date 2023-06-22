@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 import { btn_connect } from '../../theme/CssMy';
 
 const ONBOARD_TEXT = 'Install MetaMask';
-const CONNECT_TEXT = 'Connect';
+const CONNECT_TEXT = 'Already a Metamask user?';
 const CONNECTED_TEXT = 'Connected';
 
 export function OnboardingButton() {
