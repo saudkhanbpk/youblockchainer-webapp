@@ -54,7 +54,6 @@ export const useWebSockets = ({ roomId, enabled, sender, expert }) => {
             if (res === undefined) {
                 return [];
             }
-
             return JSON.parse(res);
         } catch (error) {
             console.log(error);
@@ -69,7 +68,7 @@ export const useWebSockets = ({ roomId, enabled, sender, expert }) => {
             console.log(prior, 'hey')
             prior = prior
                 .map(i => backendtoChatScope(i, user._id, user, expert))
-                .sort((a, b) => Date.parse(a.time) - Date.parse(b.time));
+                // .sort((a, b) => Date.parse(a.time) - Date.parse(b.time));
             setMessages(prior);
             // localStorage.setItem('roomId', roomId);
             localStorage.setItem(roomId, JSON.stringify(prior));

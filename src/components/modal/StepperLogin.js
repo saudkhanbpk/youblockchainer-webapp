@@ -126,7 +126,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                                 : activeStep === 3 ? <ModalIntro video={videosss} /> : <ModalThreeContent />
                 }
                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                    {
+                    {/* {
                         activeStep !== 0 ? <Button
                             color="inherit"
                             disabled={activeStep === 0}
@@ -141,13 +141,13 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                         >
                             Logout
                         </Button> : ""
-                    }
+                    } */}
                     {activeStep === 0 && <Button onClick={handleSkip}>
                         {activeStep === 0 && 'Back'}
                     </Button>}
-                    {activeStep === 0 && (browser.name.includes('chrome') || browser.name.includes('opera')  || browser.name.includes('edge')  || browser.name.includes('brave') || browser.name.includes('firefox')) && <OnboardingButton />}
+                    {activeStep === 0 &&  <OnboardingButton />}
                     {
-                        activeStep === 0 && (browser.name.includes('chrome') || browser.name.includes('opera')  || browser.name.includes('edge')  || browser.name.includes('brave') || browser.name.includes('firefox')) && <Button onClick={() => setOpen2(true)} sx={{ ...btn_connect, width: 'auto', marginLeft: '2%' }}>New to MetaMask?</Button>
+                        activeStep === 0  && <Button onClick={() => setOpen2(true)} sx={{ ...btn_connect, width: 'auto', marginLeft: '2%' }}>New to MetaMask?</Button>
                     }
                     <Box sx={{ flex: '1 1 auto' }} />
 

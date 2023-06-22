@@ -14,6 +14,7 @@ import { contractAddress, forwarderAddress } from './Constants';
 import { isMobile, isTablet } from 'react-device-detect';
 import NTS from './components/NTS';
 import { Box } from '@mui/material';
+import { detect } from 'detect-browser';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -24,23 +25,24 @@ function App() {
   const [edit, setEdit] = useState(false)
   const [forwarderC, setForwarderC] = useState(null);
   const [mainContract, setMainContract] = useState(null);
-const [web3, setWeb3] = useState(null)
-const [web3Provider, setWeb3Provider] = useState(null)
-  
+  const [web3, setWeb3] = useState(null)
+  const [web3Provider, setWeb3Provider] = useState(null)
+  const browser = detect()
+
 
   const initializeWeb3 = async () => {
     try {
-        
-        let provider = window.ethereum;
-        const web3 = new Web3(provider);
 
-        setWeb3(web3);
-        setWeb3Provider(provider);
-        console.log('---Created Web3');
-      
+      let provider = window.ethereum;
+      const web3 = new Web3(provider);
+
+      setWeb3(web3);
+      setWeb3Provider(provider);
+      console.log('---Created Web3');
+
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts',
-    });
+      });
       console.log('---EthAccounts:-', accounts[0]);
       let contract1 = new web3.eth.Contract(Forwarder, forwarderAddress);
       setForwarderC(contract1);
@@ -114,13 +116,16 @@ const [web3Provider, setWeb3Provider] = useState(null)
           pauseOnHover
         />
         {
-          (isMobile || isTablet) ? <Box sx={{padding:'10%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', height:'75vh'}}>
-<NTS/>
-          </Box> : <Router>
-          <SideDrawer>
-            <MainRouter />
-          </SideDrawer>
-        </Router>
+          (isMobile || isTablet) ? <Box sx={{ padding: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '75vh' }}>
+            <NTS message={"This website is only supported on laptops/desktops. Mobile Apps are coming soon"} />
+          </Box> : (!browser.name.includes('chrome') || browser.name.includes('opera') || browser.name.includes('edge') || browser.name.includes('brave') || browser.name.includes('firefox')) ?
+            <Router>
+              <SideDrawer>
+                <MainRouter />
+              </SideDrawer>
+            </Router> : <Box sx={{ padding: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '75vh' }}>
+              <NTS message={"Metamask is not supported in this browser, use Chrome, Firefox, Brave, Edge or Opera"} />
+            </Box>
         }
       </ybcontext.Provider>
     </>

@@ -34,7 +34,7 @@ export default function ModalInModal({ open, setOpen, video }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <video width="100%" height="315" controls style={{borderRadius:'5px'}} autoPlay>
+          <video width="100%" height="315" style={{borderRadius:'5px'}} autoPlay>
             <source src={video?.video2} type="video/mp4"  />
           </video>
           <Box sx={df_jfe_ac}>

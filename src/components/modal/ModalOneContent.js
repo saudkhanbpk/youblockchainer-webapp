@@ -33,7 +33,7 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding,video }) {
             } else if (!(user.email) || user.email === '' || user.email === null || user.email === undefined) {
                 setActiveStep(activeStep + 2);
             } else {
-                setActiveStep(activeStep + 3);
+                setActiveStep(activeStep + 4);
             }
         }
     }, [user])
@@ -41,7 +41,7 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding,video }) {
 
     return (
         <>
-            {browser.name.includes('chrome') || browser.name.includes('opera')  || browser.name.includes('edge')  || browser.name.includes('brave') || browser.name.includes('firefox') ? 
+           
             <Grid container sx={style.gridContainer}>
                 {onboarding ? <iframe
                     title="MetaMask Download"
@@ -63,11 +63,7 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding,video }) {
                         </Button>
                     </Grid>
                 </Grid>}
-            </Grid> : <Box sx={{margin:'4% 15%'}}>
-            <h3 style={{textAlign:'center'}}>
-            Metamask is not supported in this browser, use Chrome, Firefox, Brave, Edge or Opera
-            </h3>
-            </Box>}
+            </Grid> 
         </>
     )
 }
