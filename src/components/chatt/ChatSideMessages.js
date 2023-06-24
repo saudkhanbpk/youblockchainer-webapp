@@ -48,9 +48,8 @@ export default function ChatSideMessages({ chat, messages2, setMessages, creator
                                 <Typography sx={{ ...bold_name, marginLeft: '2%' }} variant='p'>{creator ? chat?.p2.username : chat?.p1.username}</Typography>
                             </div>
                             <Button
-                                sx={{ ...btn_hire, cursor: 'none', width:'auto' }}
-
-                            // onClick={() => setOpen(true)}
+                                sx={{ ...btn_hire,  width:'auto' }}
+                            onClick={() => setOpen(true)}
                             >Hire</Button>
                         </div>
                     </ConversationHeader.Content>

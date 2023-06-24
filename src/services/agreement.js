@@ -308,6 +308,11 @@ export const getUserAgreementsFromContract = async (contract, address) => {
             Authorization: localStorage.getItem('ybToken')
         }
     });
+    let user =  JSON.parse(localStorage.getItem("ybUser"))
+    let agreements =  JSON.parse(localStorage.getItem("ybUser")).agreements
+    let index = user.agreements.findIndex(agg => agg._id === id)
+    agreements[index] = apiRes.data
+    localStorage.setItem("ybUser", JSON.stringify({...user, agreements:[...agreements]})) 
       // if (setAgreement) setAgreement({...apiRes, contractAddress});
       return true;
     } catch (error) {
@@ -315,7 +320,8 @@ export const getUserAgreementsFromContract = async (contract, address) => {
       return false;
     }
   };
-  
+
+ 
   export const endContract = async (
     agreementContract,
     executeMetaTx,

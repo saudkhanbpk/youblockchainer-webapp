@@ -40,7 +40,7 @@ const clicker = async() =>{
     if(await updateAgreement(id, u1._id === (JSON.parse(localStorage.getItem('ybUser')))._id ?
     {reviewForU2: review, ratingForU2: rate} : 
     {reviewForU1: review, ratingForU1: rate})){
-        navigate('profile')
+        navigate('/profile')
     }
 }
 

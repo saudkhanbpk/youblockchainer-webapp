@@ -24,7 +24,7 @@ export const getMyAgreements = async id => {
             Authorization: localStorage.getItem('ybToken')
         }
     });
-      return res;
+      return res.data;
     } catch (error) {
       console.log('Error in getting My Agreement:-', error.message);
       return [];

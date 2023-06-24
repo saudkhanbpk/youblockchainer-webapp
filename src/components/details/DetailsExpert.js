@@ -73,13 +73,13 @@ export default function DetailsExpert() {
                                 {connectLoad ? <CircularProgress size={30} sx={circularprog} /> : <Button sx={btn_connect} onClick={() => connect()}>Connect</Button>}
                             </Grid>
                             <Grid item md={1.5} sx={df_jc_ac}>
-                            <Tooltip title="Coming Soon">
+                            {/* <Tooltip title="Coming Soon"> */}
                                 <Button 
-                                sx={{...btn_hire, cursor:'none'}} 
+                                sx={{...btn_hire}} 
 
-                                // onClick={() => setOpen(true)}
+                                onClick={() => setOpen(true)}
                                 >Hire</Button>
-                            </Tooltip>
+                            {/* </Tooltip> */}
                             </Grid>
                         </>}
                     </Grid>

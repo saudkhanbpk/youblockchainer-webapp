@@ -11,10 +11,8 @@ export default function AgreementCard({ agreement }) {
 
     useEffect(() => {
         const func = async () => {
-            let user1res = await getExpertById(agreement.user1)
-            setUser1(user1res.data)
-            let user2res = await getExpertById(agreement.user2)
-            setUser2(user2res.data)
+            setUser1(agreement.user1)
+            setUser2(agreement.user2)
         }
         func()
     }, [])

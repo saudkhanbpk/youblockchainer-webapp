@@ -11,7 +11,7 @@ import EmptyState from '../loadingoremptystate/EmptyState';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { saveAs } from 'file-saver';
-import { updateMe } from '../../services/userServices';
+import { getMyAgreements, updateMe } from '../../services/userServices';
 import { ybcontext } from '../../context/MainContext';
 import successHandler from '../toasts/successHandler';
 import { useNavigate } from 'react-router';
@@ -70,23 +70,26 @@ export default function BasicTabs({ details, setDetails }) {
     let contract1FC = new web3.eth.Contract(Forwarder, forwarderAddress);
     let contract2MC = new web3.eth.Contract(AskGPT, contractAddress);
 
-    const getAgreements = async () => {
-        setLoading(true);
-        console.log(contract2MC)
-        let res = JSON.parse(localStorage.getItem('ybUser')).agreements;
-        console.log(res)
-        let contractRes = await getUserAgreementsFromContract(
-          contract2MC,
-          user.walletAddress,
-        );
-        console.log(contractRes)
-        let mapped = mapAgreementAddress(res, contractRes);
-    console.log(mapped)
-        setMyAgreements(mapped);
-        setLoading(false);
-      };
+    
     
       useEffect(() => {
+        const getAgreements = async () => {
+            setLoading(true);
+            console.log(contract2MC)
+            let res = await getMyAgreements(user._id);
+            console.log(res)
+            // let res = JSON.parse(localStorage.getItem('ybUser')).agreements;
+            // console.log(res)
+            let contractRes = await getUserAgreementsFromContract(
+              contract2MC,
+              user.walletAddress,
+            );
+            console.log(contractRes)
+            let mapped = mapAgreementAddress(res, contractRes);
+            console.log(mapped)
+            setMyAgreements(mapped);
+            setLoading(false);
+          };
         getAgreements();
       }, []);
        
