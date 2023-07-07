@@ -214,7 +214,10 @@ export default function Chat2() {
             <div>
                 <p style={{ fontSize: '12px', margin: '0', fontWeight: 'bold' }}>{question}</p>
                 {options.map((option, index) => (
-                    <Button key={index} sx={{ ...btn, marginRight: '10px', marginBottom: '10px' }} onClick={() => handleOptionClick(question, option)}>
+                    <Button key={index} sx={{ ...btn, marginRight: '10px', marginBottom: '10px' }} 
+                    // onClick={() => handleOptionClick(question, option)}
+                    disabled
+                    >
                         {option}
                     </Button>
                 ))}
@@ -436,7 +439,7 @@ export default function Chat2() {
                 </>
 
             }
-            {(enableTF || disableTF) && !generating && <MessageInput placeholder="Something on your mind" disabled={disableTF} onSend={handleSend} onChange={setMsgInputValue} value={msgInputValue} ref={inputRef} />}
+            {(enableTF || disableTF) && !generating && <MessageInput placeholder="Something on your mind" disabled={true} onSend={handleSend} onChange={setMsgInputValue} value={msgInputValue} ref={inputRef} />}
         </div>
     </>
 }
