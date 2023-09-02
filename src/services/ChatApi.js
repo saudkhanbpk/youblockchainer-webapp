@@ -3,7 +3,11 @@ import httpcommon from '../httpcommon';
 
 export const askGPT = async prompt => {
     try {
-        return (await httpcommon.post(ENDPOINTS.ASK_GPT, { prompt })).data;
+        return (await httpcommon.post(ENDPOINTS.ASK_GPT, { prompt }, {
+            headers: {
+                Authorization: localStorage.getItem('ybToken')
+            }
+        })).data;
     } catch (error) {
         console.log('Ask GPT Error:- ', error.message);
         return '';

@@ -36,8 +36,10 @@ export default function Chat2() {
     const [finalScript, setFinalScript] = useState('')
     const [saveLoad, setSaveLoad] = useState(false)
     const [download, setDownload] = useState(false)
+    const [showIdeas, setShowIdeas] = useState([]);
     const navigate = useNavigate()
     const [generating, setGenerating] = useState(false)
+    const [ideasType, setIdeasType] = useState(false);
     const topics = [
         'Opening Image',
         'Theme Stated',
@@ -84,7 +86,7 @@ export default function Chat2() {
     }
 
     const askGPTRecursive = async (index, currentTemplate, currScript) => {
-
+        console.log(currentTemplate, currScript);
 
         setCurrent(topics[index])
         if (index >= topics.length) {
@@ -128,7 +130,6 @@ export default function Chat2() {
         return await askGPTRecursive(index + 1, currentTemplate, tempScript);
 
     };
-    console.log(user)
 
     const handleOptionClick = (question, option) => {
         switch (question) {
@@ -201,12 +202,57 @@ export default function Chat2() {
                     time: new Date()
                 }]
                 );
-                option === "NO" && initialFire(false)
+                // option === "NO" && initialFire(false);
+                option === "NO" && onHandleOptions();
                 break;
+            case "Select Idea":
+              // initialFire(option);
+              onShotIDeas(option);
+              break;
             default:
                 break;
         }
     };
+
+    const onShotIDeas = (option) => {
+        setMsgInputValue(option);
+        setIdeasType(false);
+        setEnableTF(true)
+        setDisableTF(false);
+        setHasPitchIdea(false)
+        // console.log(enableTF, "enableTF");
+        // console.log(disableTF, "disableTF");
+    };
+
+    async function onHandleOptions() {
+    setCurrent("Ideas");
+
+    let template = `Write three ideas of one minute pitch for a ${contentType} ${genre} with temporality as ${temporality}.`;
+    // console.log(template, 'template')
+    let reply = await askGPT(template);
+    const splits = reply
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line !== "");
+
+    // console.log(splits);
+    setMessages((prev) => [
+      ...prev,
+      {
+        message: reply,
+        direction: "incoming",
+        mbold: "Ideas of one Minute Pitch",
+        image: logo,
+        time: new Date(),
+      },
+    ]);
+    setGenerating(false);
+    setIdeasType(true);
+    setShowIdeas(splits);
+    setCurrent("");
+    // setEnableTF(false);
+    // setDisableTF(false);
+  }
 
     const renderOptions = (question) => {
         const options = OptionMap[question].options;
@@ -222,8 +268,21 @@ export default function Chat2() {
         );
     };
 
-    console.log(current)
-
+    const renderIdeasOptions = (question) => {
+        return (
+          <div className="d-grid align-items-center mb-3">
+            <p className="fw-bold mb-1">{question}</p>
+            <div className="d-flex align-items-center gap-2">
+              {showIdeas.map((option, index) => (
+               <Button key={index} sx={{ ...btn, marginRight: '10px', marginBottom: '10px' }} onClick={() => handleOptionClick(question, option)}>
+                    {index+1}
+                </Button>
+              ))}
+            </div>
+          </div>
+        );
+      };
+    
 
     const handleSend = message => {
         setMessages([...messages, {
@@ -413,6 +472,7 @@ export default function Chat2() {
                 {contentType && genre === null && renderOptions('Genre ?')}
                 {contentType && genre && temporality === null && renderOptions('Temporality ?')}
                 {contentType && genre && temporality && !enableTF && hasPitchIdea === null && renderOptions('Do you have a one minute pitch idea in short ?')}
+                {ideasType && renderIdeasOptions("Select Idea")}
             </div>
             {
                 generating && <>
