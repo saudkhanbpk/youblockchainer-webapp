@@ -116,16 +116,17 @@ function App() {
           pauseOnHover
         />
         {
-          (isMobile || isTablet) ? <Box sx={{ padding: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '75vh' }}>
-            <NTS message={"This website is only supported on laptops/desktops. Mobile Apps are coming soon"} />
-          </Box> : (browser.name.includes('chrome') || browser.name.includes('opera') || browser.name.includes('edge') || browser.name.includes('brave') || browser.name.includes('firefox')) ?
+          // (isMobile || isTablet) ? <Box sx={{ padding: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '75vh' }}>
+          //   <NTS message={"This website is only supported on laptops/desktops. Mobile Apps are coming soon"} />
+          // </Box> : (browser.name.includes('chrome') || browser.name.includes('opera') || browser.name.includes('edge') || browser.name.includes('brave') || browser.name.includes('firefox')) ?
             <Router>
               <SideDrawer>
                 <MainRouter />
               </SideDrawer>
-            </Router> : <Box sx={{ padding: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '75vh' }}>
-              <NTS message={"Metamask is not supported in this browser, use Chrome, Firefox, Brave, Edge or Opera"} />
-            </Box>
+            </Router> 
+            // : <Box sx={{ padding: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '75vh' }}>
+            //   <NTS message={"Metamask is not supported in this browser, use Chrome, Firefox, Brave, Edge or Opera"} />
+            // </Box>
         }
       </ybcontext.Provider>
     </>
