@@ -40,9 +40,9 @@ function App() {
       // await auth.connect();
       let provider = window.web3;
       // console.log(provider)
-      // const web3 = new Web3(provider);
+      const web3 = new Web3(provider);
 
-      setWeb3(provider);
+      setWeb3(web3);
       setWeb3Provider(provider);
       console.log('---Created Web3');
 

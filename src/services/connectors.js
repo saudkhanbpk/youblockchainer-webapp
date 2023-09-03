@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 // import UserServices from "./UserServices";
 // import { WalletLinkConnector } from "@web3-react/walletlink-connector";
-import WalletConnectProvider from '@walletconnect/web3-provider';
+// import WalletConnectProvider from '@walletconnect/web3-provider';
 import { getUserBrand } from './brandsApi';
 // import axios from "axios";
 import { baseUrl } from '../Constants';

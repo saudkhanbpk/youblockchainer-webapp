@@ -192,7 +192,7 @@ export default function SideDrawer(props) {
                             }
                             {
                                 user ? <Button onClick={async () => {
-                                    await auth.disconnect();
+                                    await auth.logout();
                                     setUser(null)
                                     setToken(null)
                                     localStorage.setItem('ybUser', null)

@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import ModalOneContent from './ModalOneContent';
 import { useContext } from 'react';
 import ModalTwoContent from './ModalTwoContent';
-import { useWeb3React } from '@web3-react/core';
+// import { useWeb3React } from '@web3-react/core';
 import Web3 from 'web3';
 import ModalThreeContent from './ModalThreeContent';
 import { useNavigate } from 'react-router';
@@ -38,7 +38,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
     const [videosss, setVideosss] = useState(null)
     const [open2, setOpen2] = useState(false)
     const browser = detect()
-    const { deactivate } = useWeb3React()
+    // const { deactivate } = useWeb3React()
 
     React.useEffect(() => {
         const func = async () => {

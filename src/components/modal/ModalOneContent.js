@@ -1,11 +1,11 @@
 import { Button, CardMedia, Grid, Tooltip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import { useWeb3React } from '@web3-react/core'
+// import { useWeb3React } from '@web3-react/core'
 import React, { useContext } from 'react'
 import { useEffect } from 'react'
 import { connectArcana, connectMetaMask } from '../../services/connectors'
 import { isMobile } from "react-device-detect";
-import { InjectedConnector } from '@web3-react/injected-connector'
+// import { InjectedConnector } from '@web3-react/injected-connector'
 import { ybcontext } from '../../context/MainContext'
 import { detect } from 'detect-browser'
 
@@ -19,13 +19,13 @@ const style = {
 }
 
 function ModalOneContent({ activeStep, setActiveStep, onboarding,video }) {
-    const { activate } = useWeb3React();
+    // const { activate } = useWeb3React();
     const { user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3, auth } = useContext(ybcontext)
     const browser = detect()
     console.log(browser)
-    const Injected = new InjectedConnector({
-        supportedChainIds: [1, 3, 4, 5, 42]
-    });
+    // const Injected = new InjectedConnector({
+    //     supportedChainIds: [1, 3, 4, 5, 42]
+    // });
     useEffect(() => {
         if (user !== null && user?.walletAddress) {
             if (!(user.videoIntro) || user.videoIntro === '' || user.videoIntro === null || user.videoIntro === undefined) {
