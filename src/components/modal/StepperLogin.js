@@ -145,10 +145,10 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                     {activeStep === 0 && <Button onClick={handleSkip}>
                         {activeStep === 0 && 'Back'}
                     </Button>}
-                    {activeStep === 0 &&  <OnboardingButton />}
-                    {
+                    {/* {activeStep === 0 &&  <OnboardingButton />} */}
+                    {/* {
                         activeStep === 0  && <Button onClick={() => setOpen2(true)} sx={{ ...btn_connect, width: 'auto', marginLeft: '2%' }}>New to MetaMask?</Button>
-                    }
+                    } */}
                     <Box sx={{ flex: '1 1 auto' }} />
 
                     {activeStep === steps.length - 1 ? <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>

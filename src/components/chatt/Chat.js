@@ -23,7 +23,7 @@ import { Icon } from '@iconify/react';
 export default function Chat2() {
     const inputRef = useRef();
     const user = JSON.parse(localStorage.getItem('ybUser'))
-    const { setUser } = useContext(ybcontext)
+    const { setUser, account } = useContext(ybcontext)
     const [msgInputValue, setMsgInputValue] = useState("");
     const [messages, setMessages] = useState([]);
     const [contentType, setContentType] = useState(null);
@@ -260,7 +260,7 @@ export default function Chat2() {
             <div>
                 <p style={{ fontSize: '12px', margin: '0', fontWeight: 'bold' }}>{question}</p>
                 {options.map((option, index) => (
-                    <Button key={index} sx={{ ...btn, marginRight: '10px', marginBottom: '10px' }} onClick={() => handleOptionClick(question, option)}>
+                    <Button key={index} sx={{ ...btn, marginRight: '10px', marginBottom: '10px' }} onClick={() => handleOptionClick(question, option)} disabled={!account}>
                         {option}
                     </Button>
                 ))}

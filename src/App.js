@@ -15,6 +15,9 @@ import { isMobile, isTablet } from 'react-device-detect';
 import NTS from './components/NTS';
 import { Box } from '@mui/material';
 import { detect } from 'detect-browser';
+import { useAuth } from "@arcana/auth-react";
+import { ethers } from "ethers";
+import { connectArcana } from './services/connectors';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -29,21 +32,27 @@ function App() {
   const [web3Provider, setWeb3Provider] = useState(null)
   const browser = detect()
 
+  const auth = useAuth();
 
   const initializeWeb3 = async () => {
     try {
+      // let provider = window.ethereum;
+      // await auth.connect();
+      let provider = window.web3;
+      // console.log(provider)
+      // const web3 = new Web3(provider);
 
-      let provider = window.ethereum;
-      const web3 = new Web3(provider);
-
-      setWeb3(web3);
+      setWeb3(provider);
       setWeb3Provider(provider);
       console.log('---Created Web3');
 
-      const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts',
-      });
-      console.log('---EthAccounts:-', accounts[0]);
+      const accounts = await provider.request({ method: 'eth_accounts' })
+      console.log(accounts)
+
+      // const accounts = await window.ethereum.request({
+      //   method: 'eth_requestAccounts',
+      // });
+      // console.log('---EthAccounts:-', accounts[0]);
       let contract1 = new web3.eth.Contract(Forwarder, forwarderAddress);
       setForwarderC(contract1);
       console.log('---Forwarder Instance Created', contract1);
@@ -71,7 +80,8 @@ function App() {
     forwarderC, setForwarderC,
     mainContract, setMainContract,
     web3, setWeb3,
-    web3Provider, setWeb3Provider
+    web3Provider, setWeb3Provider,
+    auth
   }
   useEffect(() => {
     if (JSON.parse(localStorage.getItem('ybUser'))?.email && JSON.parse(localStorage.getItem('ybUser'))?.videoIntro) {
@@ -100,6 +110,12 @@ function App() {
       setToken(null)
     }
   }, [])
+
+  useEffect(() => {
+    if(!account) {
+      setOpen(true);
+    }
+  }, [account])
 
   return (
     <>

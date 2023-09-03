@@ -14,27 +14,27 @@ export function OnboardingButton() {
   const [isDisabled, setDisabled] = React.useState(false);
   const [accounts, setAccounts] = React.useState([]);
   const onboarding = React.useRef();
-  const { user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3 } = useContext(ybcontext)
+  const { user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3, auth } = useContext(ybcontext)
 
-  React.useEffect(() => {
-    if (!onboarding.current) {
-      onboarding.current = new MetaMaskOnboarding();
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (!onboarding.current) {
+  //     onboarding.current = new MetaMaskOnboarding();
+  //   }
+  // }, []);
 
-  React.useEffect(() => {
-    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-      if (accounts.length > 0) {
-        setButtonText(CONNECTED_TEXT);
-        setDisabled(true);
-        onboarding.current.stopOnboarding();
-        connectMetaMask(user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3);
-      } else {
-        setButtonText(CONNECT_TEXT);
-        setDisabled(false);
-      }
-    }
-  }, [accounts]);
+  // React.useEffect(() => {
+  //   if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+  //     if (accounts.length > 0) {
+  //       setButtonText(CONNECTED_TEXT);
+  //       setDisabled(true);
+  //       onboarding.current.stopOnboarding();
+  //       connectMetaMask(user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3);
+  //     } else {
+  //       setButtonText(CONNECT_TEXT);
+  //       setDisabled(false);
+  //     }
+  //   }
+  // }, [accounts]);
 
   React.useEffect(() => {
     // function handleNewAccounts(newAccounts) {
@@ -57,16 +57,17 @@ export function OnboardingButton() {
     // window.location.href = 'https://app.myreeldream.ai';
   };
 
-  const onClick = () => {
-    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-      window.ethereum
-        .request({ method: 'eth_requestAccounts' })
-        .then(connectAndNavigate);
-    } else {
-      onboarding.current.startOnboarding(() => {
-        onboarding.startOnboarding();
-      });
-    }
+  const onClick = async () => {
+    // if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+    //   window.ethereum
+    //     .request({ method: 'eth_requestAccounts' })
+    //     .then(connectAndNavigate);
+    // } else {
+    //   onboarding.current.startOnboarding(() => {
+    //     onboarding.startOnboarding();
+    //   });
+    // }
+    await auth.connect();
   };
 
   return (

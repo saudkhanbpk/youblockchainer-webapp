@@ -5,6 +5,8 @@
   "type": "module",
   "dependencies": {
     "@alch/alchemy-web3": "^1.4.2",
+    "@arcana/auth": "^1.0.7",
+    "@arcana/auth-react": "^0.0.3",
     "@chatscope/chat-ui-kit-react": "^1.10.1",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -29,7 +31,7 @@
     "caniuse-lite": "^1.0.30001445",
     "crypto-browserify": "^3.12.0",
     "detect-browser": "^5.3.0",
-    "ethers": "^5.7.0",
+    "ethers": "^5.7.2",
     "file-saver": "^2.0.5",
     "fontkit": "^2.0.2",
     "formik": "^2.2.9",
@@ -100,6 +102,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.22.11",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.22.14",
+    "@babel/preset-react": "^7.22.5",
     "react-error-overlay": "^6.0.11"
   }
 }

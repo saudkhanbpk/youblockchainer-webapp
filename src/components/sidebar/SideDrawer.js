@@ -94,7 +94,7 @@ const gridcon = {
 export default function SideDrawer(props) {
     const { children } = props
     const url = window.location.href.split('/')[3]
-    const { user, setUser, setToken, open, setOpen } = useContext(ybcontext)
+    const { user, setUser, setToken, open, setOpen, auth } = useContext(ybcontext)
     const navigate = useNavigate()
     console.log(url)
     const handleOpen = () => setOpen(true)
@@ -191,7 +191,8 @@ export default function SideDrawer(props) {
                                 </IconButton>
                             }
                             {
-                                user ? <Button onClick={() => {
+                                user ? <Button onClick={async () => {
+                                    await auth.disconnect();
                                     setUser(null)
                                     setToken(null)
                                     localStorage.setItem('ybUser', null)

@@ -3,15 +3,15 @@ import { Box } from '@mui/system'
 import { useWeb3React } from '@web3-react/core'
 import React, { useContext } from 'react'
 import { useEffect } from 'react'
-import { connectMetaMask } from '../../services/connectors'
+import { connectArcana, connectMetaMask } from '../../services/connectors'
 import { isMobile } from "react-device-detect";
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { ybcontext } from '../../context/MainContext'
 import { detect } from 'detect-browser'
 
 const style = {
-    btn: { display: 'flex', padding: { md: '5px', xs: '0px' }, width: '100%', cursor: 'pointer', borderRadius: '10px', backgroundColor: '#f2f2f2', height: '100%', flexDirection: 'column', alignItems: 'center', textTransform: 'none' },
-    img: { width: '50px' },
+    btn: { display: 'flex', padding: { md: '5px', xs: '0px' }, width: '100%', cursor: 'pointer', borderRadius: '10px', backgroundColor: '#808080', height: '100%', flexDirection: 'column', alignItems: 'center', textTransform: 'none' },
+    img: { width: '100px' },
     heading: { fontFamily: 'Poppins', margin: 0, padding: 0, fontWeight: 'bold', color: 'black' },
     ptag: { margin: 0, padding: 0, fontSize: '10px', color: '#4e4e4e' },
     gridItem: { padding: { md: '10px', xs: '5px' }, height: { md: '100%', xs: 'auto' } },
@@ -20,7 +20,7 @@ const style = {
 
 function ModalOneContent({ activeStep, setActiveStep, onboarding,video }) {
     const { activate } = useWeb3React();
-    const { user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3 } = useContext(ybcontext)
+    const { user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3, auth } = useContext(ybcontext)
     const browser = detect()
     console.log(browser)
     const Injected = new InjectedConnector({
@@ -43,23 +43,25 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding,video }) {
         <>
            
             <Grid container sx={style.gridContainer}>
-                {onboarding ? <iframe
-                    title="MetaMask Download"
-                    src="https://metamask.io/download.html"
-                    style={{ display: 'block', height:'60vh', width:'100%' }}
-                /> : <Grid item container md={12}>
+                {
+                // onboarding ? <iframe
+                //     title="MetaMask Download"
+                //     src="https://metamask.io/download.html"
+                //     style={{ display: 'block', height:'60vh', width:'100%' }}
+                // /> : 
+                <Grid item container md={12}>
                     <Grid item md={12} sm={12} xs={12} sx={style.gridItem}>
                         <Button onClick={() => {
                             try {
                                 // activate(Injected)
-                                connectMetaMask(user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3)
+                                connectArcana(user, setUser, account, setAccount, token, setToken, setUserBrand, initializeWeb3, auth)
                             } catch (e) {
                                 console.log(e)
                             }
                         }} sx={style.btn}>
-                            <CardMedia sx={style.img} component='img' image="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/1200px-MetaMask_Fox.svg.png" />
-                            <Typography variant='h6' sx={style.heading}>MetaMask</Typography>
-                            <p style={style.ptag}>Connect to your MetaMask Wallet</p>
+                            <CardMedia sx={style.img} component='img' image="https://dashboard.arcana.network/assets/logo.e5e5689a.svg" />
+                            <Typography variant='h6' sx={style.heading}>Connect Wallet</Typography>
+                            {/* <p style={style.ptag}>Connect Wallet</p> */}
                         </Button>
                     </Grid>
                 </Grid>}
