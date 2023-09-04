@@ -30,6 +30,7 @@ export default function Chat2() {
     const [genre, setGenre] = useState(null);
     const [temporality, setTemporality] = useState(null);
     const [hasPitchIdea, setHasPitchIdea] = useState(null);
+    const [hasSynopsis, setHasSynopsis] = useState(null);
     const [enableTF, setEnableTF] = useState(false)
     const [disableTF, setDisableTF] = useState(false)
     const [current, setCurrent] = useState(undefined)
@@ -37,9 +38,11 @@ export default function Chat2() {
     const [saveLoad, setSaveLoad] = useState(false)
     const [download, setDownload] = useState(false)
     const [showIdeas, setShowIdeas] = useState([]);
+    const [showSynopsis, setShowSynopsis] = useState([]);
     const navigate = useNavigate()
     const [generating, setGenerating] = useState(false)
     const [ideasType, setIdeasType] = useState(false);
+    const [synopsisType, setSynopsisType] = useState(false);
     const topics = [
         'Opening Image',
         'Theme Stated',
@@ -62,11 +65,9 @@ export default function Chat2() {
         setCurrent('title')
 
         let template = `Write title, character profiles for a ${contentType} ${genre
-            } with temporality as ${temporality}. ${!!message ? `The idea is ${message}.` : ''
+            } with temporality as ${temporality}. ${!!message ? `The synopsis is ${message}.` : ''
             } Also give the outline for this story using the Save the cat story structure.`;
-        console.log(template)
         let reply = await askGPT(template);
-        console.log(reply);
         setMessages((prev) => [...prev, {
             message: reply,
             direction: 'incoming',
@@ -81,13 +82,11 @@ export default function Chat2() {
             reply.split('\n')[0],
         );
         setFinalScript(script)
-        console.log(script)
         setGenerating(true)
     }
 
     const askGPTRecursive = async (index, currentTemplate, currScript) => {
-        console.log(currentTemplate, currScript);
-
+      
         setCurrent(topics[index])
         if (index >= topics.length) {
             return currScript;
@@ -101,7 +100,6 @@ export default function Chat2() {
         );
         if (!!r) {
             tempScript += '\n' + r;
-            console.log(r)
             if (!index) {
                 setMessages((prev) => [...prev, {
                     message: r,
@@ -206,9 +204,13 @@ export default function Chat2() {
                 option === "NO" && onHandleOptions();
                 break;
             case "Select Idea":
-              // initialFire(option);
-              onShotIDeas(option);
-              break;
+                // initialFire(option);
+                onShotIDeas(option);
+                break;
+            case "Select Synopsis":
+                // initialFire(option);
+                onShotSynopsis(option);
+                break;
             default:
                 break;
         }
@@ -220,22 +222,25 @@ export default function Chat2() {
         setEnableTF(true)
         setDisableTF(false);
         setHasPitchIdea(false)
-        // console.log(enableTF, "enableTF");
-        // console.log(disableTF, "disableTF");
+    };
+
+    const onShotSynopsis = (option) => {
+        setMsgInputValue(option);
+        setSynopsisType(false);
+        setEnableTF(true)
+        setDisableTF(false);
     };
 
     async function onHandleOptions() {
     setCurrent("Ideas");
 
     let template = `Write three ideas of one minute pitch for a ${contentType} ${genre} with temporality as ${temporality}.`;
-    // console.log(template, 'template')
     let reply = await askGPT(template);
     const splits = reply
       .split("\n")
       .map((line) => line.trim())
       .filter((line) => line !== "");
 
-    // console.log(splits);
     setMessages((prev) => [
       ...prev,
       {
@@ -249,6 +254,34 @@ export default function Chat2() {
     setGenerating(false);
     setIdeasType(true);
     setShowIdeas(splits);
+    setCurrent("");
+    // setEnableTF(false);
+    // setDisableTF(false);
+  }
+
+  async function onHandleSynopsisOptions(message) {
+    setCurrent("Synopsis");
+
+    let template = `Write three synopsis of the one minute pitch ${message} for a ${contentType} ${genre} with temporality as ${temporality}.`;
+    let reply = await askGPT(template);
+    const splits = reply
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line !== "");
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        message: reply,
+        direction: "incoming",
+        mbold: "Synopsis",
+        image: logo,
+        time: new Date(),
+      },
+    ]);
+    setGenerating(false);
+    setSynopsisType(true);
+    setShowSynopsis(splits);
     setCurrent("");
     // setEnableTF(false);
     // setDisableTF(false);
@@ -282,34 +315,48 @@ export default function Chat2() {
           </div>
         );
       };
+
+      const renderSynopsisOptions = (question) => {
+        return (
+          <div className="d-grid align-items-center mb-3">
+            <p className="fw-bold mb-1">{question}</p>
+            <div className="d-flex align-items-center gap-2">
+              {showSynopsis.map((option, index) => (
+               <Button key={index} sx={{ ...btn, marginRight: '10px', marginBottom: '10px' }} onClick={() => handleOptionClick(question, option)}>
+                    {index+1}
+                </Button>
+              ))}
+            </div>
+          </div>
+        );
+      };
     
 
     const handleSend = message => {
         setMessages([...messages, {
-            message: `Idea`,
-            direction: 'incoming',
-            mbold: null,
-            image: logo,
-            time: new Date()
-        }, {
             message: `${message}`,
             direction: 'outgoing',
             mbold: null,
             image: user ? user.profileImage : userImg,
             time: new Date()
         }]);
-        setHasPitchIdea(message)
+        if(showSynopsis && showSynopsis.length === 0) {
+            setHasPitchIdea(message)
+        }
         setMsgInputValue("");
         setEnableTF(false)
 
         setDisableTF(true)
-        initialFire(message)
+        if(showSynopsis && showSynopsis.length > 0) {
+            initialFire(message)
+        } else {
+            onHandleSynopsisOptions(message);
+        }
         inputRef.current.focus();
     };
 
     const saveAndDownload = async () => {
         setDownload(true)
-        console.log('here', FountainParser);
         let options = {
             paginate: true,
             tokens: true,
@@ -319,8 +366,6 @@ export default function Chat2() {
             finalScript,
             options,
         );
-        console.log(screenplay)
-
 
         let html =
             screenplay.title_page_html +
@@ -336,7 +381,6 @@ export default function Chat2() {
 
     const save = async () => {
         setSaveLoad(true)
-        console.log('here', FountainParser);
         let options = {
             paginate: true,
             tokens: true,
@@ -346,8 +390,7 @@ export default function Chat2() {
             finalScript,
             options,
         );
-        console.log(screenplay)
-
+       
         let html =
             screenplay.title_page_html +
             screenplay.script_pages.map(i => i.html).join('');
@@ -359,17 +402,13 @@ export default function Chat2() {
 
         try {
             const pdfBlob = await html2pdf().set(opt).from(html).output('blob');
-            console.log(pdfBlob);
             const pdfFile = new File([pdfBlob], `Script_${shorthash.unique(html)}.pdf`, { type: 'application/pdf' });
-            console.log(pdfFile);
-
+           
             let form2Data = new FormData();
             form2Data.append('files', pdfFile, pdfFile.name);
-            console.log(form2Data);
-
+           
             // Uncomment the following lines to proceed with uploading FormData
             let res = await uploadImg(form2Data);
-            console.log('---Uploaded PDF', res.data.urls);
             let res2 = await updateMe({ scripts: [...user?.scripts, res.data.urls[0]] })
             localStorage.setItem('ybUser', JSON.stringify(res2.data))
             setUser(res2.data)
@@ -384,8 +423,6 @@ export default function Chat2() {
             }
         }
     }
-
-    console.log(Object.keys(OptionMap))
 
     return <>
         <div style={{
@@ -473,6 +510,7 @@ export default function Chat2() {
                 {contentType && genre && temporality === null && renderOptions('Temporality ?')}
                 {contentType && genre && temporality && !enableTF && hasPitchIdea === null && renderOptions('Do you have a one minute pitch idea in short ?')}
                 {ideasType && renderIdeasOptions("Select Idea")}
+                {synopsisType && renderSynopsisOptions("Select Synopsis")}
             </div>
             {
                 generating && <>
