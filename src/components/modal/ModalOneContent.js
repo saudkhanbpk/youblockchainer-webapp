@@ -28,7 +28,10 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding,video }) {
     // });
     useEffect(() => {
         if (user !== null && user?.walletAddress) {
-            if (!(user.videoIntro) || user.videoIntro === '' || user.videoIntro === null || user.videoIntro === undefined) {
+            if(user.videoIntro === '' && (!(user.email) || user.email === '' || user.email === null || user.email === undefined)) {
+                setActiveStep(activeStep + 1);
+            }
+            else if (user.videoIntro === null || user.videoIntro === undefined) {
                 setActiveStep(activeStep + 1);
             } else if (!(user.email) || user.email === '' || user.email === null || user.email === undefined) {
                 setActiveStep(activeStep + 2);
@@ -60,7 +63,7 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding,video }) {
                             }
                         }} sx={style.btn}>
                             <CardMedia sx={style.img} component='img' image="https://dashboard.arcana.network/assets/logo.e5e5689a.svg" />
-                            <Typography variant='h6' sx={style.heading}>Connect Wallet</Typography>
+                            <Typography variant='h6' sx={style.heading}>SignIn/SignUp</Typography>
                             {/* <p style={style.ptag}>Connect Wallet</p> */}
                         </Button>
                     </Grid>

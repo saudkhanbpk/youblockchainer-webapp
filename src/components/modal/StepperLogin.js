@@ -31,7 +31,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
     const navigate = useNavigate()
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
-    const { user, setUser, account, setAccount, edit, setEdit } = useContext(ybcontext)
+    const { user, setUser, account, setAccount, edit, setEdit, auth } = useContext(ybcontext)
     const [video, setVideo] = React.useState(null)
     const [load, setLoad] = React.useState(false)
     const [yes, setYes] = useState(false)
@@ -43,14 +43,13 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
     React.useEffect(() => {
         const func = async () => {
             let res = await videoGet()
-            console.log(res)
-            setVideosss(res.data)
+            setVideosss(res.data);
         }
         func()
     }, [])
 
     const isStepOptional = (step) => {
-        return step === 4;
+        return step === 4 || step === 1;
     };
 
     const isStepSkipped = (step) => {
@@ -88,7 +87,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
         form2Data.append('files', video, video.name);
         console.log(form2Data);
         let res = await uploadImg(form2Data);
-        console.log('---Uploaded PDF', res.data.urls);
+        console.log('---Uploaded Video', res.data.urls);
         let res2 = await updateMe({ videoIntro: res.data.urls[0], videoVisibility: yes })
         localStorage.setItem('ybUser', JSON.stringify(res2.data))
         setUser(res2.data)
@@ -152,6 +151,9 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                     <Box sx={{ flex: '1 1 auto' }} />
 
                     {activeStep === steps.length - 1 ? <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                        Skip
+                    </Button> : ""}
+                    {activeStep === 1 ? <Button color="inherit" onClick={() => setActiveStep((prevActiveStep) => prevActiveStep + 1)} sx={{ mr: 1 }}>
                         Skip
                     </Button> : ""}
 
