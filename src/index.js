@@ -8,7 +8,7 @@ import { AuthProvider } from "@arcana/auth";
 import { ProvideAuth } from "@arcana/auth-react";
 
 const provider = new AuthProvider(
-  "xar_test_68084c1ef9a540f3574311ccc497ac512c7b3faa", //required
+  "xar_test_e8594125dd04911a91d2f3e58e645e3d0ef33f05", //required
 {
   network: "testnet",
   alwaysVisible: true,
