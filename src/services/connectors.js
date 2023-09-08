@@ -52,28 +52,15 @@ export const fetchAccount = async (
     setAccount(accounts[0]);
 
     // Sign message and fetch user data
-    // const signature = await web3.eth.personal.sign(
-    //     `Purpose:\nSign to verify wallet ownership.\n\nWallet address:\n${accounts[0]}\n\nHash:\n${Web3.utils.keccak256(
-    //         accounts[0]
-    //     )}`,
-    //     accounts[0]
-    // );
-    // const message = `Purpose:\nSign to verify wallet ownership.\n\nWallet address:\n${
-    //     accounts[0]
-    //   }\n\nHash:\n${Web3.utils.keccak256(accounts[0])}`;
-    // const message = `Purpose:\nSign to verify wallet ownership.\n\nWallet address:\n${accounts[0]}\n\nHash:\n${ethers.utils.keccak256(
-    // accounts[0]
-    // )}`;
-    // const signature = await web3.request({
-    //   method: 'eth_sign',
-    //   params: [
-    //     accounts[0],
-    //     message,
-    //   ],
-    //   from: accounts[0]
-    // });
-    const response = await fetch(
-      `${baseUrl}/user/login?address=${accounts[0]}`
+    const provider = new Web3(web3);
+    const signature = await provider.eth.personal.sign(
+        `Purpose:\nSign to verify wallet ownership.\n\nWallet address:\n${accounts[0]}\n\nHash:\n${Web3.utils.keccak256(
+            accounts[0]
+        )}`,
+        accounts[0]
+    );
+      const response = await fetch(
+      `${baseUrl}/user/login?address=${accounts[0]}&signature=${signature}`
     );
 
     const result = await response.json();
