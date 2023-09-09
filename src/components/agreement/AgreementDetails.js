@@ -82,7 +82,7 @@ export default function AgreementDetails() {
     const [agreementContract, setAgreementContract] = useState(null)
 
     useEffect(() => {
-        let provider = window.ethereum;
+        let provider = window.web3;
         const web3 = new Web3(provider);
         setcontract1FC(new web3.eth.Contract(Forwarder, forwarderAddress))
         setcontract2MC(new web3.eth.Contract(AskGPT, contractAddress))

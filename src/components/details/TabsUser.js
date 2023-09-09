@@ -65,7 +65,7 @@ export default function BasicTabs({ details, setDetails }) {
         setValue(newValue);
     };
 
-    let provider = window.ethereum;
+    let provider = window.web3;
     const web3 = new Web3(provider);
     let contract1FC = new web3.eth.Contract(Forwarder, forwarderAddress);
     let contract2MC = new web3.eth.Contract(AskGPT, contractAddress);

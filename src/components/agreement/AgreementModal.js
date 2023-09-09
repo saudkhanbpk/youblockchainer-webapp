@@ -33,7 +33,7 @@ export default function AgreementModal({ open, handleClose, user, expert, setDet
     const [name, setName] = useState('')
     const [startsAt, setStartsAt] = useState('')
     const { setUser } = useContext(ybcontext)
-    let provider = window.ethereum;
+    let provider = window.web3;
     const web3 = new Web3(provider);
     let contract1 = new web3.eth.Contract(Forwarder, forwarderAddress);
     let contract2 = new web3.eth.Contract(AskGPT, contractAddress);

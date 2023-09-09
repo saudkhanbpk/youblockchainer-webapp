@@ -16,7 +16,7 @@ export const backendtoChatScope = (message, userId, user, expert) => {
 
 export const executeMetaTx = async (data, targetAddress,  contract1) => {
     try {
-        let provider = window.ethereum;
+        let provider = window.web3;
         const web3 = new Web3(provider);
         let from = (JSON.parse(localStorage.getItem('ybUser'))).walletAddress;
         console.log('---Caller Wallet:- ', from);

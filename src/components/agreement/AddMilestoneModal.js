@@ -31,7 +31,7 @@ export default function AddMilestoneModal({ open,setMsLoading, setOpen, idclicke
     const [amount, setAmount] = useState('')
     const [loading, setLoading] = useState(false)
     const [desc, setDesc] = useState('')
-    let provider = window.ethereum;
+    let provider = window.web3;
     const web3 = new Web3(provider);
     let contract1FC = new web3.eth.Contract(Forwarder, forwarderAddress);
     let contract2MC = new web3.eth.Contract(AskGPT, contractAddress);

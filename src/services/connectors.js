@@ -99,59 +99,59 @@ export const connectMetaMask = async (
   setUserBrand,
   initializeWeb3
 ) => {
-  if (window.ethereum) {
-    window.web3 = new Web3(window.ethereum);
-    fetchAccount(
-      user,
-      setUser,
-      account,
-      setAccount,
-      token,
-      setToken,
-      setUserBrand,
-      initializeWeb3
-    );
-    window.ethereum.on('accountsChanged', async function () {
-      await fetchAccount(
-        user,
-        setUser,
-        account,
-        setAccount,
-        token,
-        setToken,
-        setUserBrand,
-        initializeWeb3
-      );
-    });
-  } else if (window.web3) {
-    window.web3 = new Web3(window.web3.currentProvider.enable());
-    fetchAccount(
-      user,
-      setUser,
-      account,
-      setAccount,
-      token,
-      setToken,
-      setUserBrand,
-      initializeWeb3
-    );
-    window.ethereum.on('accountsChanged', function () {
-      fetchAccount(
-        user,
-        setUser,
-        account,
-        setAccount,
-        token,
-        setToken,
-        setUserBrand,
-        initializeWeb3
-      );
-    });
-  } else {
-    window.alert(
-      'Non-Ethereum browser detected. You should consider trying MetaMask!'
-    );
-  }
+//   if (window.ethereum) {
+//     window.web3 = new Web3(window.ethereum);
+//     fetchAccount(
+//       user,
+//       setUser,
+//       account,
+//       setAccount,
+//       token,
+//       setToken,
+//       setUserBrand,
+//       initializeWeb3
+//     );
+//     window.ethereum.on('accountsChanged', async function () {
+//       await fetchAccount(
+//         user,
+//         setUser,
+//         account,
+//         setAccount,
+//         token,
+//         setToken,
+//         setUserBrand,
+//         initializeWeb3
+//       );
+//     });
+//   } else if (window.web3) {
+//     window.web3 = new Web3(window.web3.currentProvider.enable());
+//     fetchAccount(
+//       user,
+//       setUser,
+//       account,
+//       setAccount,
+//       token,
+//       setToken,
+//       setUserBrand,
+//       initializeWeb3
+//     );
+//     window.ethereum.on('accountsChanged', function () {
+//       fetchAccount(
+//         user,
+//         setUser,
+//         account,
+//         setAccount,
+//         token,
+//         setToken,
+//         setUserBrand,
+//         initializeWeb3
+//       );
+//     });
+//   } else {
+//     window.alert(
+//       'Non-Ethereum browser detected. You should consider trying MetaMask!'
+//     );
+//   }
 };
 
 export const connectArcana = async (
