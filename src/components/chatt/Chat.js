@@ -253,7 +253,7 @@ export default function Chat2() {
     ]);
     setGenerating(false);
     setIdeasType(true);
-    setShowIdeas(splits);
+    setShowIdeas(splits.slice(0,3));
     setCurrent("");
     // setEnableTF(false);
     // setDisableTF(false);
@@ -281,7 +281,7 @@ export default function Chat2() {
     ]);
     setGenerating(false);
     setSynopsisType(true);
-    setShowSynopsis(splits);
+    setShowSynopsis(splits.slice(0,3));
     setCurrent("");
     // setEnableTF(false);
     // setDisableTF(false);
