@@ -436,19 +436,22 @@ export default function Chat2() {
                                 <Icon icon="eva:bulb-outline" />
                                 <h5 style={bold_name}>Ideation</h5>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"From your idea to a one minute pitch"</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Idea to one minute pitch"</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"From your 1 Minute pitch to your Synopsis"</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"One minute pitch to synopsis"</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Synopis to Full lengh script"</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Synopsis to full length script"</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
                                     <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Story board"</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Script Doctors"</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Script doctors"</p>
+                                </div>
+                                <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>"Trailer"</p>
                                 </div>
                             </Grid>
                             <Grid item md={4} sx={{ ...df_jc_ac_fdc, marginTop: { md: '0', xs: '15%' } }}>
@@ -464,17 +467,17 @@ export default function Chat2() {
                                     <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Production schedule</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Designing sets & Costumes</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Designing sets & costumes</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Filming on location/Studio</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Filming on location/studio</p>
                                 </div>
                             </Grid>
                             <Grid item md={4} sx={{ ...df_jc_ac_fdc, marginTop: { md: '0', xs: '15%' } }}>
                                 <Icon icon="ri:movie-2-line" />
                                 <h5 style={bold_name}>Post-Production & Distribution</h5>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
-                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Film Editing</p>
+                                    <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Film editing</p>
                                 </div>
                                 <div style={{ marginTop: '5%', backgroundColor: 'white', borderRadius: '10px', padding: '2%', width: '100%' }}>
                                     <p style={{ ...ptag, textAlign: 'center', padding: '2%', borderRadius: '10px' }}>Marketing</p>
