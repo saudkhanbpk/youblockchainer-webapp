@@ -291,6 +291,9 @@ export default function Chat2() {
         const options = OptionMap[question].options;
         return (
             <div>
+                {
+                    !account && <p style={{ fontSize: '12px', margin: '0', fontWeight: 'bold' }}>Please SignIn/SignUp to use the script generation service</p>
+                }
                 <p style={{ fontSize: '12px', margin: '0', fontWeight: 'bold' }}>{question}</p>
                 {options.map((option, index) => (
                     <Button key={index} sx={{ ...btn, marginRight: '10px', marginBottom: '10px' }} onClick={() => handleOptionClick(question, option)} disabled={!account}>
