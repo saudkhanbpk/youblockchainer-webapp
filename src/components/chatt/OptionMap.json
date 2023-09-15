@@ -4,13 +4,56 @@
     "disabled": true
   },
   "Genre ?": {
-    "options": [
-      "Action/Adventure",
-      "Comedy",
-      "Love story",
-      "Horror/Thriller",
-      "Science Fiction"
-    ],
+    "options": {
+      "Documentary": [
+        "Biographical/Profile",
+        "Historical",
+        "Social and Cultural",
+        "Nature and Wildlife",
+        "Science and Technology",
+        "Political and Current Affairs",
+        "True Crime",
+        "Sports",
+        "Travel and Adventure",
+        "Art and Creativity"
+      ],
+      "Movie": [
+        "Action",
+        "Adventure",
+        "Comedy",
+        "Drama",
+        "Science Fiction",
+        "Fantasy",
+        "Horror",
+        "Thriller/Suspense",
+        "Mystery",
+        "Romance"
+      ],
+      "Series": [
+        "Drama Series",
+        "Comedy Series",
+        "Crime/Police Procedural",
+        "Thriller/Suspense Series",
+        "Mystery Series",
+        "Science Fiction/Fantasy Series",
+        "Horror Series",
+        "Historical Series",
+        "Superhero Series",
+        "Family/Children's Series"
+      ],
+      "Short film": [
+        "Narrative Short Film",
+        "Experimental Short Film",
+        "Animated Short Film",
+        "Documentary Short Film",
+        "Student Short Film",
+        "Comedy Short Film",
+        "Horror Short Film",
+        "Drama Short Film",
+        "Sci-Fi/Fantasy Short Film",
+        "Musical Short Film"
+      ]
+    },
     "disabled": true
   },
   "Temporality ?": {

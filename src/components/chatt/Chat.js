@@ -64,7 +64,7 @@ export default function Chat2() {
     const initialFire = async (message) => {
         setCurrent('title')
 
-        let template = `Write title, character profiles for a ${contentType} ${genre
+        let template = `Write title, character profiles for a ${contentType} on ${genre
             } with temporality as ${temporality}. ${!!message ? `The synopsis is ${message}.` : ''
             } Also give the outline for this story using the Save the cat story structure.`;
         let reply = await askGPT(template);
@@ -234,7 +234,7 @@ export default function Chat2() {
     async function onHandleOptions() {
     setCurrent("Ideas");
 
-    let template = `Write three ideas of one minute pitch for a ${contentType} ${genre} with temporality as ${temporality}.`;
+    let template = `Write three ideas of one minute pitch for a ${contentType} on ${genre} with temporality as ${temporality}.`;
     let reply = await askGPT(template);
     const splits = reply
       .split("\n")
@@ -262,7 +262,7 @@ export default function Chat2() {
   async function onHandleSynopsisOptions(message) {
     setCurrent("Synopsis");
 
-    let template = `Write three synopsis of the one minute pitch ${message} for a ${contentType} ${genre} with temporality as ${temporality}.`;
+    let template = `Write three synopsis of the one minute pitch ${message} for a ${contentType} on ${genre} with temporality as ${temporality}.`;
     let reply = await askGPT(template);
     const splits = reply
       .split("\n")
@@ -288,7 +288,13 @@ export default function Chat2() {
   }
 
     const renderOptions = (question) => {
-        const options = OptionMap[question].options;
+        let options;
+        if(question == "Genre ?") {
+            options = OptionMap[question].options[contentType];
+        } else {
+            options = OptionMap[question].options;
+        }
+        
         return (
             <div>
                 {
