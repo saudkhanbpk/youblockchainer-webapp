@@ -81,6 +81,9 @@ export default function Chat2() {
       !!message ? `The synopsis is ${message}.` : ''
     } Also give the outline for this story using the Save the cat story structure.`;
     let reply = await askGPT(template);
+    if(reply.trim() === '') {
+        errorHandler('Script limit exceeded, buy more to continue')
+    }
     setMessages((prev) => [
       ...prev,
       {
@@ -104,6 +107,7 @@ export default function Chat2() {
   const askGPTRecursive = async (index, currentTemplate, currScript) => {
     setCurrent(topics[index]);
     if (index >= topics.length) {
+      await fetchPendingScripts();
       return currScript;
     }
     let isLast = false;
@@ -280,6 +284,9 @@ export default function Chat2() {
 
     let template = `Write three ideas of one minute pitch for a ${contentType} on ${genre} with temporality as ${temporality}.`;
     let reply = await askGPT(template);
+    if(reply.trim() === '') {
+        errorHandler('Script limit exceeded, buy more to continue')
+    }
     const splits = reply
       .split('\n')
       .map((line) => line.trim())
@@ -308,6 +315,9 @@ export default function Chat2() {
 
     let template = `Write three synopsis of the one minute pitch ${message} for a ${contentType} on ${genre} with temporality as ${temporality}.`;
     let reply = await askGPT(template);
+    if(reply.trim() === '') {
+        errorHandler('Script limit exceeded, buy more to continue')
+    }
     const splits = reply
       .split('\n')
       .map((line) => line.trim())
@@ -509,7 +519,7 @@ export default function Chat2() {
 
   useEffect(() => {
     fetchPendingScripts();
-  }, [open2]);
+  }, [open2, finalScript]);
 
   return (
     <>
@@ -1002,7 +1012,8 @@ export default function Chat2() {
             )}
             <Button
               sx={{ ...btn, marginRight: '10px', marginBottom: '10px' }}
-              onClick={() => {
+              onClick={async () => {
+                await fetchPendingScripts();
                 setGenerating(false);
                 setContentType(null);
                 setGenre(null);
