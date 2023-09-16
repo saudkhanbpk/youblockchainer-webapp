@@ -1,8 +1,8 @@
-// export const base = 'http://localhost:5000';
+// export const base = 'http://localhost:57451';
 export const base = 'https://app.myreeldream.ai';
 export const baseUrl = `${base}/api/v1`;
 
-export const contractAddress = '0xc83589897479A672d9496307E24D16ab1658c4aF';
+export const contractAddress = '0x59aA58454D14869A6924d732df4f1E6db5f642Cd';
 export const forwarderAddress = '0x2604441A291eF0EEba319a4Fd959Fa8e96899e8E';
 //export const contractAddress = '0x81ef6F44ce61652c9240Feca4fb03d5361947261';
 export const rpcConfig = {

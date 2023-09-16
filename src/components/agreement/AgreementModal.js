@@ -43,7 +43,7 @@ export default function AgreementModal({ open, handleClose, user, expert, setDet
         setLoading(true);
         if (startsAt < moment().format('YYYY-MM-DD')) {
             setLoading(false);
-            return errorHandler('"Enter valid date');
+            return errorHandler('Enter valid date');
 
         }
         if (!startsAt || name.length === 0) {
