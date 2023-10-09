@@ -18,13 +18,14 @@ import {
   getScriptPrice,
   purchaseScript,
   getPackages,
+  subscribe,
 } from '../../services/agreement';
 import { useContext } from 'react';
 import { ybcontext } from '../../context/MainContext';
 import successHandler from '../toasts/successHandler';
 import errorHandler from '../toasts/errorHandler';
 import { ethers } from 'ethers';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import CheckIcon from '@mui/icons-material/Check';
 import axios from 'axios';
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos';
@@ -34,7 +35,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: { md: 600, sm: 600, xs: 400 },
+  // width: { md: 1000, sm: 600, xs: 400 },
   bgcolor: 'background.paper',
   border: 'none',
   boxShadow: 24,
@@ -45,14 +46,15 @@ const style = {
 const useStyles = makeStyles((theme) => ({
   content: {
     display: 'grid',
-    [theme.breakpoints.up('sm')]: {
-      gridTemplateColumns: 'repeat(3,1fr)',
-    },
-    gridTemplateColumns: '1fr',
+    // [theme.breakpoints.up('sm')]: {
+    //   gridTemplateColumns: 'repeat(3,1fr)',
+    // },
+    gridTemplateColumns: 'repeat(4,1fr)',
     gridGap: 20,
   },
   card: {
     height: '250px',
+    width: '200px',
     border: '1px solid #000',
     borderRadius: 4,
     display: 'flex',
@@ -104,27 +106,38 @@ const ListItem = ({ text }) => {
   );
 };
 
-const Card = ({ name, price, numOfScripts, packageId, etherPrice, clicker }) => {
+const Card = ({
+  name,
+  price,
+  numOfScripts,
+  packageId,
+  etherPrice,
+  clicker,
+}) => {
   const classes = useStyles();
   return (
     <div className={classes.card}>
       <div className={classes.cardHeader}>
-        <Typography component='h2' variant='h6' align='left'>
+        <Typography component='h3' variant='h6' align='left'>
           {name}
         </Typography>
         <div className={classes.price}>
-          <Typography component='span' variant='h3'>
-            {price} ETH
+          <Typography component='span' variant='h5'>
+            {ethers.utils.formatEther(price)} ETH
           </Typography>
           <Typography component='span' variant='body2'>
-            (${price * etherPrice})
+            (${(ethers.utils.formatEther(price) * etherPrice).toFixed(2)})
           </Typography>
         </div>
       </div>
       <div className={classes.cardContent}>
-        <ListItem text={`${numOfScripts} Scripts`} />
+        <ListItem text={`${parseInt(numOfScripts)} Scripts`} />
         <div className={classes.cardActions}>
-          <Button size='large' className={classes.button} onClick={() => clicker(packageId, price)}>
+          <Button
+            size='large'
+            className={classes.button}
+            onClick={() => clicker(packageId, price)}
+          >
             Subscribe
           </Button>
         </div>
@@ -146,6 +159,8 @@ export default function BuyScriptModal({ open, handleClose, user }) {
   let contract2 = new web3.eth.Contract(AskGPT, contractAddress);
   const [loading, setLoading] = useState(false);
 
+  const classes = useStyles();
+
   function getDollarValues() {
     axios
       .get(
@@ -161,8 +176,7 @@ export default function BuyScriptModal({ open, handleClose, user }) {
     setLoading(true);
     await subscribe(contract2, packageId, price, user.walletAddress)
       .then((res) => {
-        if(res === false) throw Error();
-        setNum(0);
+        if (res === false) throw Error();
         console.log(res);
         handleClose();
         successHandler('Subscribed successfully');
@@ -199,22 +213,22 @@ export default function BuyScriptModal({ open, handleClose, user }) {
       aria-describedby='modal-modal-description'
     >
       <Box sx={style}>
-        <ListItem>
-          <ListItemText primary="Subscription Packages" />
+        {/* <ListItem>
+          <ListItemText primary='Subscription Packages' />
           <ListItemIcon onClick={handleClose}>
             <ArrowBackIos />
           </ListItemIcon>
-        </ListItem>
-        {/* <Typography
+        </ListItem> */}
+        <Typography
           sx={bold_name}
           id='modal-modal-title'
           variant='h6'
           component='h2'
         >
           Subscription Packages
-        </Typography> */}
+        </Typography>
         {packages && packages[0] && packages[0][0] && (
-          <>
+          <div className={classes.content}>
             <Card
               name={packages[0][0]}
               price={packages[0][1]}
@@ -247,7 +261,7 @@ export default function BuyScriptModal({ open, handleClose, user }) {
               etherPrice={etherPrice}
               clicker={clicker}
             />
-          </>
+          </div>
         )}
         {/* <p style={{ ...ptag, marginTop: '5%' }}>Number of Scripts</p>
         <TextField
