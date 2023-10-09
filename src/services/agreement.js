@@ -124,6 +124,15 @@ export const getPendingScripts = async (contract, walletAddress) => {
   }
 };
 
+export const getPackages = async (contract) => {
+  try {
+    let packs = await contract.methods.getPackages().call();
+    return packs;
+  } catch (error) {
+    console.log('Packages fetch from contract Failed:- ', error.message);
+  }
+};
+
 export const addMilestone = async (
   name,
   amount,
@@ -224,6 +233,25 @@ export const purchaseScript = async (
     let hash = await agreementContract.methods.buyScripts(num).send({
       from: walletAddress,
       value: ethers.utils.parseEther(JSON.stringify(value)),
+    });
+    console.log(hash);
+    return true;
+  } catch (error) {
+    console.log('Error in purchasing:- ', error);
+    return false;
+  }
+};
+
+export const subscribe = async (
+  agreementContract,
+  packageId,
+  price,
+  walletAddress
+) => {
+  try {
+    let hash = await agreementContract.methods.buyScripts(packageId).send({
+      from: walletAddress,
+      value: price,
     });
     console.log(hash);
     return true;

@@ -17,6 +17,7 @@ import {
   IconButton,
   Toolbar,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
@@ -30,6 +31,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { isMobile } from 'react-device-detect';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import BuyScriptModal from '../chatt/BuyScriptModal';
+import { useEffect } from 'react';
 
 const drawerWidth = 240;
 
@@ -102,18 +104,17 @@ const gridcon = {
 export default function SideDrawer(props) {
   const { children } = props;
   const url = window.location.href.split('/')[3];
-  const { user, setUser, setToken, open, setOpen, open2, setOpen2, auth } =
+  const { user, setUser, setToken, open, setOpen, open2, setOpen2, auth, pendingScripts } =
     useContext(ybcontext);
   const navigate = useNavigate();
   console.log(url);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleOpen2 = () => setOpen2(true);
+  // const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  console.log(mobileOpen);
-
+ 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -258,6 +259,11 @@ export default function SideDrawer(props) {
               <MenuIcon />
             </IconButton>
             <div>
+            {user && user.walletAddress && (
+                <Button disabled style={{ marginRight: '10px' }}>
+                  Generation Balance: {pendingScripts}
+                </Button>
+              )}
               {user && user.walletAddress && (
                 <Button onClick={() => setOpen2(true)} sx={btn} style={{ marginRight: '10px' }}>
                   Buy
