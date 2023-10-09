@@ -23,7 +23,7 @@ import userImg from '../../images/user.png';
 import logo from '../../images/chatbot.png';
 import { FountainParser } from 'screenplay-js';
 import html2pdf from 'html2pdf.js';
-import { updateMe } from '../../services/userServices';
+import { getHome, updateMe } from '../../services/userServices';
 import { uploadImg } from '../../services/ipfsServicesApi';
 import shorthash from 'shorthash';
 import { useNavigate } from 'react-router';
@@ -73,6 +73,19 @@ export default function Chat2() {
     'Finale',
     'Final Image',
   ];
+  const [ideation, setIdea] = useState([]);
+  const [pre, setPre] = useState([]);
+  const [post, setPost] = useState([]);
+
+  const fetchHomeList = async () => {
+    const res = await getHome();
+    if (res && res.data && res.data.ideation) {
+      const { ideation, pre, post } = res.data;
+      setIdea(ideation);
+      setPre(pre);
+      setPost(post);
+    }
+  };
 
   const initialFire = async (message) => {
     setCurrent('title');
@@ -81,8 +94,8 @@ export default function Chat2() {
       !!message ? `The synopsis is ${message}.` : ''
     } Also give the outline for this story using the Save the cat story structure.`;
     let reply = await askGPT(template);
-    if(reply.trim() === '') {
-        errorHandler('Script limit exceeded, buy more to continue')
+    if (reply.trim() === '') {
+      errorHandler('Script limit exceeded, buy more to continue');
     }
     setMessages((prev) => [
       ...prev,
@@ -284,8 +297,8 @@ export default function Chat2() {
 
     let template = `Write three ideas of one minute pitch for a ${contentType} on ${genre} with temporality as ${temporality}.`;
     let reply = await askGPT(template);
-    if(reply.trim() === '') {
-        errorHandler('Script limit exceeded, buy more to continue')
+    if (reply.trim() === '') {
+      errorHandler('Script limit exceeded, buy more to continue');
     }
     const splits = reply
       .split('\n')
@@ -315,8 +328,8 @@ export default function Chat2() {
 
     let template = `Write three synopsis of the one minute pitch ${message} for a ${contentType} on ${genre} with temporality as ${temporality}.`;
     let reply = await askGPT(template);
-    if(reply.trim() === '') {
-        errorHandler('Script limit exceeded, buy more to continue')
+    if (reply.trim() === '') {
+      errorHandler('Script limit exceeded, buy more to continue');
     }
     const splits = reply
       .split('\n')
@@ -519,6 +532,7 @@ export default function Chat2() {
 
   useEffect(() => {
     fetchPendingScripts();
+    fetchHomeList();
   }, [open2, finalScript]);
 
   return (
@@ -559,126 +573,29 @@ export default function Chat2() {
                   >
                     <Icon icon='eva:bulb-outline' />
                     <h5 style={bold_name}>Ideation</h5>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
+                    {ideation.map((id, index) => (
+                      <div
                         style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
+                          marginTop: '5%',
+                          backgroundColor: 'white',
                           borderRadius: '10px',
-                        }}
-                      >
-                        "Idea to one minute pitch"
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
                           padding: '2%',
-                          borderRadius: '10px',
+                          width: '100%',
                         }}
+                        key={index}
                       >
-                        "One minute pitch to synopsis"
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        "Synopsis to full length script"
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        "Story board"
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        "Script doctors"
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        "Trailer"
-                      </p>
-                    </div>
+                        <p
+                          style={{
+                            ...ptag,
+                            textAlign: 'center',
+                            padding: '2%',
+                            borderRadius: '10px',
+                          }}
+                        >
+                          {id}
+                        </p>
+                      </div>
+                    ))}
                   </Grid>
                   <Grid
                     item
@@ -687,106 +604,29 @@ export default function Chat2() {
                   >
                     <Icon icon='mdi:movie-edit' />
                     <h5 style={bold_name}>Pre-Production</h5>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
+                    {pre.map((id, index) => (
+                      <div
                         style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
+                          marginTop: '5%',
+                          backgroundColor: 'white',
                           borderRadius: '10px',
-                        }}
-                      >
-                        Casting
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
                           padding: '2%',
-                          borderRadius: '10px',
+                          width: '100%',
                         }}
+                        key={index}
                       >
-                        Location scouting
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        Production schedule
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        Designing sets & costumes
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        Filming on location/studio
-                      </p>
-                    </div>
+                        <p
+                          style={{
+                            ...ptag,
+                            textAlign: 'center',
+                            padding: '2%',
+                            borderRadius: '10px',
+                          }}
+                        >
+                          {id}
+                        </p>
+                      </div>
+                    ))}
                   </Grid>
                   <Grid
                     item
@@ -795,106 +635,29 @@ export default function Chat2() {
                   >
                     <Icon icon='ri:movie-2-line' />
                     <h5 style={bold_name}>Post-Production & Distribution</h5>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
+                    {post.map((id, index) => (
+                      <div
                         style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
+                          marginTop: '5%',
+                          backgroundColor: 'white',
                           borderRadius: '10px',
-                        }}
-                      >
-                        Film editing
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
                           padding: '2%',
-                          borderRadius: '10px',
+                          width: '100%',
                         }}
+                        key={index}
                       >
-                        Marketing
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        Distribution
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        Release
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '5%',
-                        backgroundColor: 'white',
-                        borderRadius: '10px',
-                        padding: '2%',
-                        width: '100%',
-                      }}
-                    >
-                      <p
-                        style={{
-                          ...ptag,
-                          textAlign: 'center',
-                          padding: '2%',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        Post-release
-                      </p>
-                    </div>
+                        <p
+                          style={{
+                            ...ptag,
+                            textAlign: 'center',
+                            padding: '2%',
+                            borderRadius: '10px',
+                          }}
+                        >
+                          {id}
+                        </p>
+                      </div>
+                    ))}
                   </Grid>
                 </Grid>
               </div>

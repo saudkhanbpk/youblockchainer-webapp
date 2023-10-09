@@ -12,6 +12,10 @@ export const getUsers = () => {
     return httpcommon.get(`/user/users?expert=yes`)
 }
 
+export const getHome = () => {
+  return httpcommon.get(`/admin/home`)
+}
+
 export const getExpertById = (id) => {
     let res = httpcommon.get(`/user/users/${id}`)
     return res
