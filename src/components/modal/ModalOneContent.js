@@ -97,13 +97,13 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding, video }) {
                 onClick={() => {
                   try {
                     // activate(Injected)
-                    const elements = document.getElementsByClassName(
+                    var elements = document.getElementsByClassName(
                       'MuiBox-root css-lqhh04'
                     );
-                    if (elements.length > 0) {
-                      elements.forEach(element => {
-                        element.removeAttribute('tabIndex');
-                      });
+
+                    for (var i = 0; i < elements.length; i++) {
+                      var element = elements[i];
+                      element.removeAttribute('tabIndex');
                     }
 
                     connectArcana(
