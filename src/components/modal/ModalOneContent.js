@@ -98,7 +98,7 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding, video }) {
                   try {
                     // activate(Injected)
                     const elements = document.getElementsByClassName(
-                      'MuiBox-root.css-lqhh04'
+                      'MuiBox-root css-lqhh04'
                     );
                     if (elements.length > 0) {
                       elements.forEach(element => {
