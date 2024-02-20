@@ -2,8 +2,8 @@
 export const base = 'https://app.myreeldream.ai';
 export const baseUrl = `${base}/api/v1`;
 
-export const contractAddress = '0xBF485F0182A79Bd552286Da777Db39C9c3A31235';
-export const forwarderAddress = '0x2604441A291eF0EEba319a4Fd959Fa8e96899e8E';
+export const contractAddress = '0x1a12B556e3c281B5c4D10aA88B6fCc7ecF34d1b7';
+export const forwarderAddress = '0xc02d277F8DB51bA7628a22c0D8B43fb7d7C05A0d';
 //export const contractAddress = '0x81ef6F44ce61652c9240Feca4fb03d5361947261';
 export const rpcConfig = {
     rpc: {
