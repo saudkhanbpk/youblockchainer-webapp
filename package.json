@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@arcana/auth": "^1.0.7",
+    "@arcana/auth": "^1.0.10",
     "@arcana/auth-react": "^0.0.3",
     "@chatscope/chat-ui-kit-react": "^1.10.1",
     "@emotion/react": "^11.9.0",
