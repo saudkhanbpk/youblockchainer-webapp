@@ -1,5 +1,5 @@
-// export const base = 'http://localhost:58081';
-export const base = 'https://app.myreeldream.ai';
+export const base = 'http://localhost:52377';
+// export const base = 'https://app.myreeldream.ai';
 export const baseUrl = `${base}/api/v1`;
 
 export const contractAddress = '0x1a12B556e3c281B5c4D10aA88B6fCc7ecF34d1b7';

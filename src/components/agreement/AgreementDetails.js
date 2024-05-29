@@ -16,7 +16,7 @@ import { Icon } from '@iconify/react'
 import { endContract, fundMilestone, grantRefundRequest, payMilestone, raiseRefundRequest, requestPayment, updateAgreement, updateRefundRequest } from '../../services/agreement'
 import { executeMetaTx } from '../../services/helper'
 import ReviewModal from './ReviewModal'
-import { userInfo } from 'os'
+// import { userInfo } from 'os'
 import errorHandler from '../toasts/errorHandler'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
