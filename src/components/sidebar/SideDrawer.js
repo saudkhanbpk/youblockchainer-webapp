@@ -32,6 +32,9 @@ import { isMobile } from 'react-device-detect';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import BuyScriptModal from '../chatt/BuyScriptModal';
 import { useEffect } from 'react';
+import BuyModal from '../chatt/BuyModal';
+import { BubbleChartRounded } from '@mui/icons-material';
+import BuyCreditCardModal from '../chatt/BuyCreditCardModal';
 
 const drawerWidth = 240;
 
@@ -102,6 +105,8 @@ const gridcon = {
 };
 
 export default function SideDrawer(props) {
+
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = React.useState(null)
   const { children } = props;
   const url = window.location.href.split('/')[3];
   const { user, setUser, setToken, open, setOpen, open2, setOpen2, auth, pendingScripts } =
@@ -118,6 +123,11 @@ export default function SideDrawer(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+const handleSelectedPayment =(paymentMethod)=>{
+  setSelectedPaymentMethod(paymentMethod)
+  handleClose2()
+}
 
   const drawer = (
     <Box sx={gridcon}>
@@ -299,9 +309,7 @@ export default function SideDrawer(props) {
                 >
                   <Avatar sx={{ backgroundColor: '#7382986c' }}>
                     {' '}
-                    {user.walletAddress.substring(
-                      user.walletAddress.length - 3
-                    )}{' '}
+                    {user.username?.charAt(0).toUpperCase()}{' '}
                   </Avatar>
                 </IconButton>
               )}
@@ -514,7 +522,11 @@ export default function SideDrawer(props) {
         setOpen={setOpen}
         user={user}
       />
-      <BuyScriptModal open={open2} handleClose={handleClose2} user={user} />
+      <BuyModal open={open2} handleSelectedPayment={handleSelectedPayment}  handleClose={handleClose2} user={user} />
+      <BuyScriptModal open={selectedPaymentMethod=== 'crypto'} handleClose={()=>{setSelectedPaymentMethod(null)}} user={user} />
+      <BuyCreditCardModal open={selectedPaymentMethod=== 'card'} handleClose={()=>{setSelectedPaymentMethod(null)}} user={user} />
+
+      
     </>
   );
 }

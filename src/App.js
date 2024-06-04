@@ -157,6 +157,8 @@ function App() {
           draggable
           pauseOnHover
         />
+
+        
         {
           // (isMobile || isTablet) ? <Box sx={{ padding: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '75vh' }}>
           //   <NTS message={"This website is only supported on laptops/desktops. Mobile Apps are coming soon"} />

@@ -1,7 +1,7 @@
 import { Button, CardMedia, Grid, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 // import { useWeb3React } from '@web3-react/core'
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useEffect } from 'react';
 import { connectArcana, connectMetaMask } from '../../services/connectors';
 import { isMobile } from 'react-device-detect';
@@ -56,7 +56,34 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding, video }) {
   // const Injected = new InjectedConnector({
   //     supportedChainIds: [1, 3, 4, 5, 42]
   // });
+
+  const [isCommingFromMovieProfessional, setIsCommingFromMovieProfessional] = useState(false)
+
+
+//   if (activeStep === 0 && isCommingFromMovieProfessional) {
+//     setActiveStep((prevActiveStep) => prevActiveStep + 2);
+// }
+
+
+  React.useEffect(() => {
+    const getTitleFromUrl = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("title");
+    };
+    const title = getTitleFromUrl();
+
+    if (title === 'Movie Professionals') {
+        setIsCommingFromMovieProfessional(true)
+
+    }
+}, []);
+
+
   useEffect(() => {
+    if(activeStep === 0 && isCommingFromMovieProfessional){
+      setActiveStep(2)
+      return
+    }
     if (user !== null && user?.walletAddress) {
       if (
         user.videoIntro === '' &&

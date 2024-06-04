@@ -33,7 +33,7 @@ export default function MainRouter() {
     return (
         <>
             <Routes>
-                <Route exact path='/' element={<HomePage />} />
+                <Route exact path='/:title?' element={<HomePage />} />
                 <Route exact path='/experts' element={<SearchExperts />} />
                 <Route exact path='/experts-details/:id' element={<Details />} />
                 <Route exact path='/organizations' element={<SearchOrg />} />

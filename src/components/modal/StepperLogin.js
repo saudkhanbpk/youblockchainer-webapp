@@ -30,6 +30,7 @@ const steps = ['Connect Wallet', '30s video intro', 'Basic details', 'What to ex
 export default function HorizontalLinearStepper({ open, setOpen }) {
     const navigate = useNavigate()
     const [activeStep, setActiveStep] = React.useState(0);
+    // const [isCommingFromMovieProfessional, setIsCommingFromMovieProfessional] = useState(false)
     const [skipped, setSkipped] = React.useState(new Set());
     const { user, setUser, account, setAccount, edit, setEdit, auth } = useContext(ybcontext)
     const [video, setVideo] = React.useState(null)
@@ -39,6 +40,20 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
     const [open2, setOpen2] = useState(false)
     const browser = detect()
     // const { deactivate } = useWeb3React()
+
+    // React.useEffect(() => {
+    //     const getTitleFromUrl = () => {
+    //         const urlParams = new URLSearchParams(window.location.search);
+    //         return urlParams.get("title");
+    //     };
+    //     const title = getTitleFromUrl();
+
+    //     if (title === 'Movie Professionals') {
+    //         setIsCommingFromMovieProfessional(true)
+
+    //     }
+    // }, []);
+
 
     React.useEffect(() => {
         const func = async () => {
@@ -63,6 +78,9 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
             newSkipped.delete(activeStep);
         }
 
+        // if (activeStep === 0 && isCommingFromMovieProfessional) {
+        //     setActiveStep((prevActiveStep) => prevActiveStep + 2);
+        // }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setSkipped(newSkipped);
     };
