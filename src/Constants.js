@@ -1,4 +1,4 @@
-export const base = 'http://localhost:58831';
+export const base = 'http://localhost:60218';
 // export const base = 'https://app.myreeldream.ai';
 export const baseUrl = `${base}/api/v1`;
 

@@ -29,6 +29,8 @@ import ArrowBackIos from '@mui/icons-material/ArrowBackIos';
 import getStripe from '../../lib/loadStripe';
 import { loadStripe } from '@stripe/stripe-js';
 
+import Stripe from "react-stripe-checkout"
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -132,7 +134,7 @@ const Card = ({
                 </div>
             </div>
             <div className={classes.cardContent}>
-                <ListItem text={`${parseInt(numOfScripts)} Scripts`} />
+                <ListItem text={parseInt(numOfScripts)} />
                 <div className={classes.cardActions}>
                     <Button
                         size='large'
@@ -161,16 +163,53 @@ export default function BuyCreditCardModal({ open, handleClose, user }) {
 
 
 
-    async function handleCheckout() {
-        const stripe = await loadStripe('pk_test_51PNZQSDmMfVWb91lVcKSkfQu6QsaWydE0FMu91wM9TM2OeBFC2hMEjh9sH6ZY3ivqhcATv73ft8ZCDqOwiMh8S0900K9EPNYcd')
+    // async function handleCheckout(totalAmount , token) {
+    //     const stripe = await loadStripe('pk_test_51LM7JVSA51qmlo9uydqsJNP1yAB7xUyjiVPErQAcDY93n2qwzZu22pg1sRPPxTpnFa35ObTQ56nfdv7XDLQPqK8E00PxmgVAb4')
+    //     // const stripe = await loadStripe('pk_test_51PNZQSDmMfVWb91lVcKSkfQu6QsaWydE0FMu91wM9TM2OeBFC2hMEjh9sH6ZY3ivqhcATv73ft8ZCDqOwiMh8S0900K9EPNYcd')
 
-  
-    }
+    //     const result = await stripe.redirectToCheckout({
+    //         sessionId: session.id,
+    //       });
+    // }
+
+    const handleCheckout = async (totalAmount, token) => {
+        const response = await fetch('http://localhost:60218/api/v1/user/checkout', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            stripeToken: {
+              amount: totalAmount,
+              currency: 'usd',
+              source: token,
+              description: 'Payment description',
+              metadata: { integration_check: 'accept_a_payment' }
+            },
+            userId: '12345' // Replace with actual user ID
+          }),
+        });
+      
+        const session = await response.json();
+      
+        if (session.error) {
+          console.error(session.error.message);
+          return;
+        }
+      
+        // Optionally, handle the result after the charge is created
+        console.log('Charge created successfully:', session);
+      };
+
+      const tokenHandler = (token) => {
+        handleCheckout(100, token)
+      } 
 
     const clicker = async (packageId, price) => {
+        console.log("packageId : ",packageId, "price :", price);
         setLoading(true);
         console.log('click')
-        handleCheckout()
+        // handleCheckout()
     };
 
     return (
@@ -191,6 +230,9 @@ export default function BuyCreditCardModal({ open, handleClose, user }) {
                         Subscription Packages
                     </Typography>
                     <div className={classes.content}>
+
+                    <Stripe stripeKey="pk_test_51LM7JVSA51qmlo9uydqsJNP1yAB7xUyjiVPErQAcDY93n2qwzZu22pg1sRPPxTpnFa35ObTQ56nfdv7XDLQPqK8E00PxmgVAb4" token={(token) => tokenHandler(token, 20)} />
+
                         <Card
                             name={"Standard"}
                             price={20}
@@ -199,6 +241,7 @@ export default function BuyCreditCardModal({ open, handleClose, user }) {
                             etherPrice={etherPrice}
                             clicker={clicker}
                         />
+                        <stripe></stripe>
                         <Card
                             name={"Premium"}
                             price={40}
