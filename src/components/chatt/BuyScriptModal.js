@@ -152,7 +152,8 @@ export default function BuyScriptModal({ open, handleClose, user }) {
   const [etherPrice, setEtherPrice] = useState(0);
   const [packages, setPackages] = useState(null);
 
-  const { fetchPendingScripts } = useContext(ybcontext);
+  const { fetchPendingScripts,pendingScripts } = useContext(ybcontext);
+  console.log("🚀 ~ BuyScriptModal ~ pendingScripts:", pendingScripts)
 
   let provider = window.web3;
   const web3 = new Web3(provider);

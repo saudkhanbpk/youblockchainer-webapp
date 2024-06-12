@@ -1,4 +1,4 @@
-export const base = 'http://localhost:60218';
+export const base = 'http://localhost:8888';
 // export const base = 'https://app.myreeldream.ai';
 export const baseUrl = `${base}/api/v1`;
 
@@ -15,3 +15,4 @@ export const rpcConfig = {
 export const etherScanApiToken = 'R782X6XWEFS1N52RK3V47CC3BYP6H43W2P';
 export const alchemyApiToken = '1t7-El0FDwdi9miOxMFUKKd69Fuk0eXT';
 export const etherScanURL = 'https://goerli.etherscan.io';
+export const STRIPE_PUBLISH_KEY='pk_test_51PMPtcEqiwonxz3FrzRWHGQs9oicqwzTQZGOyVjoxblTseNplqUSubZ93vYI1QXwn4Zu3MqNqUl2GmHnv9KTvJcy00aom7bhyS'

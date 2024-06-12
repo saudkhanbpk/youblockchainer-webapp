@@ -35,7 +35,7 @@ import { Icon } from '@iconify/react';
 export default function Chat2() {
   const inputRef = useRef();
   const user = JSON.parse(localStorage.getItem('ybUser'));
-  const { setUser, account, fetchPendingScripts, pendingScripts, open2 } =
+  const { setUser, account, fetchPendingScripts, pendingScripts, open2,creditCardType } =
     useContext(ybcontext);
   const [msgInputValue, setMsgInputValue] = useState('');
   const [messages, setMessages] = useState([]);
@@ -133,7 +133,8 @@ export default function Chat2() {
     let r = await askGPT(
       currentTemplate +
         `\nWrite ${topics[index]} in a screenplay format. The length should be atleast one page`,
-      isLast
+      isLast,
+      creditCardType
     );
     if (!!r) {
       tempScript += '\n' + r;

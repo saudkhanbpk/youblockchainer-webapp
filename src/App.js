@@ -16,7 +16,9 @@ import { ethers } from 'ethers';
 
 function App() {
   const [user, setUser] = useState(null);
+  console.log("🚀 ~ App ~ user:", user)
   const [account, setAccount] = useState(null);
+  console.log("🚀 ~ App ~ account:", account)
   const [token, setToken] = useState(null);
   const [userBrand, setUserBrand] = useState(null);
   const [open, setOpen] = useState(false);
@@ -27,6 +29,8 @@ function App() {
   const [web3, setWeb3] = useState(null);
   const [web3Provider, setWeb3Provider] = useState(null);
   const [pendingScripts, setPendingScripts] = useState(0);
+  const [creditCardType, setCreditCardType] = useState(false)
+
 
   const auth = useAuth();
 
@@ -63,10 +67,16 @@ function App() {
   const fetchPendingScripts = async () => {
     if (account && user && user.walletAddress && mainContract) {
       const p = await getPendingScripts(mainContract, user.walletAddress);
-      console.log(p);
+      console.log("🚀 ~ fetchPendingScripts ~ p:", p)
       setPendingScripts(p);
     }
   };
+  const fetchPendingScriptswithCredit=()=>{
+     if(account && user?.creditPayment==true && user?.creditPaymentId?.scriptCount> 0){
+    setPendingScripts(user?.creditPaymentId?.scriptCount);
+    setCreditCardType(true)
+   }
+  }
 
   const context = {
     user,
@@ -95,9 +105,15 @@ function App() {
     auth,
     pendingScripts,
     fetchPendingScripts,
+    setCreditCardType,
+    fetchPendingScriptswithCredit,
+    creditCardType
   };
 
   useEffect(() => {
+    if(account && user?.creditPayment==true && user?.creditPaymentId?.scriptCount> 0){
+        fetchPendingScriptswithCredit()
+    }else
     if (account && user && user.walletAddress && mainContract) {
       fetchPendingScripts();
     }

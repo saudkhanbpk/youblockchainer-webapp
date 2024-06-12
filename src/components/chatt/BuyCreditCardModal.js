@@ -4,39 +4,22 @@ import {
     Modal,
     Typography,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { bold_name } from '../../theme/CssMy';
 import Web3 from 'web3';
-import AskGPT from '../../abis/AskGPT.json';
-
-
-import { contractAddress } from '../../Constants';
-import {
-    getScriptPrice,
-    purchaseScript,
-    getPackages,
-    subscribe,
-} from '../../services/agreement';
-import { useContext } from 'react';
-import { ybcontext } from '../../context/MainContext';
-import successHandler from '../toasts/successHandler';
-import errorHandler from '../toasts/errorHandler';
-import { ethers } from 'ethers';
 import { makeStyles } from '@mui/styles';
 import CheckIcon from '@mui/icons-material/Check';
-import axios from 'axios';
-import ArrowBackIos from '@mui/icons-material/ArrowBackIos';
-import getStripe from '../../lib/loadStripe';
-import { loadStripe } from '@stripe/stripe-js';
-
-import Stripe from "react-stripe-checkout"
+import StripeCheckout from 'react-stripe-checkout';
+import { ybcontext } from '../../context/MainContext';
+import { toast } from 'react-toastify';
+import { getExpertById } from '../../services/userServices';
+import { STRIPE_PUBLISH_KEY, baseUrl } from '../../Constants';
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    // width: { md: 1000, sm: 600, xs: 400 },
     bgcolor: 'background.paper',
     border: 'none',
     boxShadow: 24,
@@ -47,9 +30,6 @@ const style = {
 const useStyles = makeStyles((theme) => ({
     content: {
         display: 'grid',
-        // [theme.breakpoints.up('sm')]: {
-        //   gridTemplateColumns: 'repeat(3,1fr)',
-        // },
         gridTemplateColumns: 'repeat(4,1fr)',
         gridGap: 20,
     },
@@ -62,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     cardHeader: {
-        // height: 120,
         display: 'flex',
         flexDirection: 'column',
         padding: '16px 32px',
@@ -117,7 +96,6 @@ const Card = ({
 }) => {
     const classes = useStyles();
 
-
     return (
         <div className={classes.card}>
             <div className={classes.cardHeader}>
@@ -128,18 +106,15 @@ const Card = ({
                     <Typography component='span' variant='h5'>
                         {price} $
                     </Typography>
-                    {/* <Typography component='span' variant='body2'>
-              (${(ethers.utils.formatEther(price) * etherPrice).toFixed(2)})
-            </Typography> */}
                 </div>
             </div>
             <div className={classes.cardContent}>
-                <ListItem text={parseInt(numOfScripts)} />
+                <ListItem text={`${parseInt(numOfScripts)} scripts`} />
                 <div className={classes.cardActions}>
                     <Button
                         size='large'
                         className={classes.button}
-                        onClick={() => clicker(packageId, price)}
+                        onClick={() => clicker(packageId, price,parseInt(numOfScripts))}
                     >
                         Subscribe
                     </Button>
@@ -149,67 +124,58 @@ const Card = ({
     );
 };
 
-
-
 export default function BuyCreditCardModal({ open, handleClose, user }) {
-
     const [etherPrice, setEtherPrice] = useState(0);
+    const [selectedPackage, setSelectedPackage] = useState(null);
 
-    let provider = window.web3;
-    const web3 = new Web3(provider);
-    const [loading, setLoading] = useState(false);
+   const {fetchPendingScriptswithCredit,setUser} =useContext(ybcontext)
+
+    const web3 = new Web3(window.web3);
     const classes = useStyles();
 
-
-
-
-    // async function handleCheckout(totalAmount , token) {
-    //     const stripe = await loadStripe('pk_test_51LM7JVSA51qmlo9uydqsJNP1yAB7xUyjiVPErQAcDY93n2qwzZu22pg1sRPPxTpnFa35ObTQ56nfdv7XDLQPqK8E00PxmgVAb4')
-    //     // const stripe = await loadStripe('pk_test_51PNZQSDmMfVWb91lVcKSkfQu6QsaWydE0FMu91wM9TM2OeBFC2hMEjh9sH6ZY3ivqhcATv73ft8ZCDqOwiMh8S0900K9EPNYcd')
-
-    //     const result = await stripe.redirectToCheckout({
-    //         sessionId: session.id,
-    //       });
-    // }
-
     const handleCheckout = async (totalAmount, token) => {
-        const response = await fetch('http://localhost:60218/api/v1/user/checkout', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            stripeToken: {
-              amount: totalAmount,
-              currency: 'usd',
-              source: token,
-              description: 'Payment description',
-              metadata: { integration_check: 'accept_a_payment' }
+        const response = await fetch(`${baseUrl}/user/checkout`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
             },
-            userId: '12345' // Replace with actual user ID
-          }),
+            body: JSON.stringify({
+                stripeToken: {
+                    amount: totalAmount,
+                    currency: 'usd',
+                    source: token,
+                    description: 'Payment description',
+                    metadata: { integration_check: 'accept_a_payment' },
+                    packageId:selectedPackage.packageId,
+                    scripts:selectedPackage.scripts
+                },
+                userId: user?._id 
+            }),
         });
-      
+
         const session = await response.json();
-      
+
         if (session.error) {
-          console.error(session.error.message);
-          return;
+            console.error(session.error.message);
+            return;
         }
-      
-        // Optionally, handle the result after the charge is created
-        console.log('Charge created successfully:', session);
-      };
+        let res = await getExpertById(user._id);
+          localStorage.setItem('ybUser', JSON.stringify(res.data));
+          setUser(res.data);
+          setSelectedPackage(null)
+          fetchPendingScriptswithCredit()
+        toast.success('purchased successfully');
+        handleClose()
+    };
 
-      const tokenHandler = (token) => {
-        handleCheckout(100, token)
-      } 
+    const tokenHandler = (token) => {
+        if (selectedPackage) {
+            handleCheckout(selectedPackage.price * 100, token);  
+        }
+    }
 
-    const clicker = async (packageId, price) => {
-        console.log("packageId : ",packageId, "price :", price);
-        setLoading(true);
-        console.log('click')
-        // handleCheckout()
+    const clicker = (packageId, price,scripts) => {
+        setSelectedPackage({ packageId, price, scripts});
     };
 
     return (
@@ -230,9 +196,6 @@ export default function BuyCreditCardModal({ open, handleClose, user }) {
                         Subscription Packages
                     </Typography>
                     <div className={classes.content}>
-
-                    <Stripe stripeKey="pk_test_51LM7JVSA51qmlo9uydqsJNP1yAB7xUyjiVPErQAcDY93n2qwzZu22pg1sRPPxTpnFa35ObTQ56nfdv7XDLQPqK8E00PxmgVAb4" token={(token) => tokenHandler(token, 20)} />
-
                         <Card
                             name={"Standard"}
                             price={20}
@@ -241,7 +204,6 @@ export default function BuyCreditCardModal({ open, handleClose, user }) {
                             etherPrice={etherPrice}
                             clicker={clicker}
                         />
-                        <stripe></stripe>
                         <Card
                             name={"Premium"}
                             price={40}
@@ -267,6 +229,17 @@ export default function BuyCreditCardModal({ open, handleClose, user }) {
                             clicker={clicker}
                         />
                     </div>
+                    {selectedPackage && (
+                        <StripeCheckout
+                            stripeKey={STRIPE_PUBLISH_KEY}
+                            token={tokenHandler}
+                            amount={selectedPackage.price * 100} // price in cents
+                            name="Subscription Package"
+                            description={`Purchase the ${selectedPackage.packageId} package`}
+                            panelLabel="Pay"
+                            currency="USD"
+                        />
+                    )}
                 </Box>
             </Box>
         </Modal>

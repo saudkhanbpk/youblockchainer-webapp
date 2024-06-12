@@ -1,12 +1,12 @@
 import { ENDPOINTS } from '../api/apiRoutes';
 import httpcommon from '../httpcommon';
 
-export const askGPT = async (prompt, isLast = false) => {
+export const askGPT = async (prompt, isLast = false,creditCardType=false) => {
   try {
     return (
       await httpcommon.post(
         ENDPOINTS.ASK_GPT,
-        { prompt, isLast },
+        { prompt, isLast,creditCardType },
         {
           headers: {
             Authorization: localStorage.getItem('ybToken'),

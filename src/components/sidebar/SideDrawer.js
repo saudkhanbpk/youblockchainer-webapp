@@ -271,7 +271,7 @@ const handleSelectedPayment =(paymentMethod)=>{
             <div>
             {user && user.walletAddress && (
                 <Button disabled style={{ marginRight: '10px' }}>
-                  Generation Balance: {pendingScripts}
+                  Scripts Balance: {pendingScripts}
                 </Button>
               )}
               {user && user.walletAddress && (
