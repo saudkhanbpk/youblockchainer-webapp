@@ -30,7 +30,7 @@ export default function ModalVideoContent({ video, setVideo, yes, setYes }) {
                 isFlipped
                 renderDisconnectedView={() => <div style={{ color: 'black', marginBottom: '2%', padding: '0 15%' }} ><>
                     <Typography variant='h6' sx={{ textAlign: 'center' }}>Welcome to our website!</Typography>
-                    <p style={{ ...ptag, textAlign: 'center' }}>Record a 30 sec video selfie to participate in auditions</p>
+                    <p style={{ ...ptag, textAlign: 'center',fontWeight:'bold' }}>Record a 30 sec video selfie to participate in auditions</p>
                 </></div>}
             />
         </div>
