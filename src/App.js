@@ -53,7 +53,6 @@ function App() {
       setForwarderC(contract1);
 
       let contract2 = new web3.eth.Contract(AskGPT, contractAddress);
-      console.log(await contract2.methods.marketFee().call());
       setMainContract(contract2);
 
       // let cd = await API.get(ENDPOINTS.GET_LATEST_CONTRACTADDRESS);
