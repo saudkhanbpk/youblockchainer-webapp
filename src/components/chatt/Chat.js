@@ -35,27 +35,30 @@ import { Icon } from '@iconify/react';
 export default function Chat2() {
   const inputRef = useRef();
   const user = JSON.parse(localStorage.getItem('ybUser'));
-  const { setUser, account, fetchPendingScripts, pendingScripts, open2,creditCardType } =
+  const { setUser, account, fetchPendingScripts, pendingScripts, open2,creditCardType,
+
+    msgInputValue, setMsgInputValue,
+    messages, setMessages,
+    contentType, setContentType,
+    genre, setGenre,
+    temporality, setTemporality,
+    hasPitchIdea, setHasPitchIdea,
+    hasSynopsis, setHasSynopsis,
+    enableTF, setEnableTF,
+    disableTF, setDisableTF,
+    current, setCurrent,
+    finalScript, setFinalScript,
+    saveLoad, setSaveLoad,
+    download, setDownload,
+    showIdeas, setShowIdeas,
+    showSynopsis, setShowSynopsis,
+    generating, setGenerating,
+    ideasType, setIdeasType,
+    synopsisType, setSynopsisType
+
+   } =
     useContext(ybcontext);
-  const [msgInputValue, setMsgInputValue] = useState('');
-  const [messages, setMessages] = useState([]);
-  const [contentType, setContentType] = useState(null);
-  const [genre, setGenre] = useState(null);
-  const [temporality, setTemporality] = useState(null);
-  const [hasPitchIdea, setHasPitchIdea] = useState(null);
-  const [hasSynopsis, setHasSynopsis] = useState(null);
-  const [enableTF, setEnableTF] = useState(false);
-  const [disableTF, setDisableTF] = useState(false);
-  const [current, setCurrent] = useState(undefined);
-  const [finalScript, setFinalScript] = useState('');
-  const [saveLoad, setSaveLoad] = useState(false);
-  const [download, setDownload] = useState(false);
-  const [showIdeas, setShowIdeas] = useState([]);
-  const [showSynopsis, setShowSynopsis] = useState([]);
   const navigate = useNavigate();
-  const [generating, setGenerating] = useState(false);
-  const [ideasType, setIdeasType] = useState(false);
-  const [synopsisType, setSynopsisType] = useState(false);
   const topics = [
     'Opening Image',
     'Theme Stated',
@@ -355,6 +358,15 @@ export default function Chat2() {
     // setDisableTF(false);
   }
 
+  function checkOption(option) {
+    const cleanedOption = option.toLowerCase();
+    console.log("🚀 ~ checkOption ~ cleanedOption:", cleanedOption)
+    
+  
+    const allowedOptions = ['documentary', 'series','short film'];
+  
+    return allowedOptions.includes(cleanedOption);
+  }
   const renderOptions = (question) => {
     let options;
     if (question == 'Genre ?') {
@@ -383,7 +395,10 @@ export default function Chat2() {
             key={index}
             sx={{ ...btn, marginRight: '10px', marginBottom: '10px' }}
             onClick={() => handleOptionClick(question, option)}
-            disabled={!account || pendingScripts < 1}
+            disabled={!account || pendingScripts < 1 || 
+              checkOption(option)
+            }
+              // option != "Movie" && contentType ==null
           >
             {option}
           </Button>
