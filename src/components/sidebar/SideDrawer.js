@@ -109,7 +109,7 @@ export default function SideDrawer(props) {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = React.useState(null)
   const { children } = props;
   const url = window.location.href.split('/')[3];
-  const { user, setUser, setToken, open, setOpen, open2, setOpen2, auth, pendingScripts } =
+  const { user, setUser, setToken, open, setOpen, open2, setOpen2, auth, pendingScripts,resetChatState } =
     useContext(ybcontext);
   const navigate = useNavigate();
   console.log(url);
@@ -143,7 +143,7 @@ const handleSelectedPayment =(paymentMethod)=>{
           <Tooltip title='Dashboard'>
             <ListItem
               disablePadding
-              onClick={() => navigate('/')}
+              onClick={() =>{ navigate('/');resetChatState()}}
               sx={{ display: 'block', marginTop: '20%' }}
             >
               <ListItemButton sx={listItemBtn}>

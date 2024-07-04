@@ -31,7 +31,29 @@ function App() {
   const [web3Provider, setWeb3Provider] = useState(null);
   const [pendingScripts, setPendingScripts] = useState(0);
   const [creditCardType, setCreditCardType] = useState(false)
+  // const [messages, setMessages] = useState([]);
+
   
+
+  // chat component states 
+  const [msgInputValue, setMsgInputValue] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [contentType, setContentType] = useState(null);
+  const [genre, setGenre] = useState(null);
+  const [temporality, setTemporality] = useState(null);
+  const [hasPitchIdea, setHasPitchIdea] = useState(null);
+  const [hasSynopsis, setHasSynopsis] = useState(null);
+  const [enableTF, setEnableTF] = useState(false);
+  const [disableTF, setDisableTF] = useState(false);
+  const [current, setCurrent] = useState(undefined);
+  const [finalScript, setFinalScript] = useState('');
+  const [saveLoad, setSaveLoad] = useState(false);
+  const [download, setDownload] = useState(false);
+  const [showIdeas, setShowIdeas] = useState([]);
+  const [showSynopsis, setShowSynopsis] = useState([]);
+  const [generating, setGenerating] = useState(false);
+  const [ideasType, setIdeasType] = useState(false);
+  const [synopsisType, setSynopsisType] = useState(false);
 
 
   const auth = useAuth();
@@ -78,6 +100,27 @@ function App() {
    }
   }
 
+  const resetChatState = () => {
+    setMsgInputValue('');
+    setMessages([]);
+    setContentType(null);
+    setGenre(null);
+    setTemporality(null);
+    setHasPitchIdea(null);
+    setHasSynopsis(null);
+    setEnableTF(false);
+    setDisableTF(false);
+    setCurrent(undefined);
+    setFinalScript('');
+    setSaveLoad(false);
+    setDownload(false);
+    setShowIdeas([]);
+    setShowSynopsis([]);
+    setGenerating(false);
+    setIdeasType(false);
+    setSynopsisType(false);
+  };
+
   const context = {
     user,
     setUser,
@@ -107,8 +150,30 @@ function App() {
     fetchPendingScripts,
     setCreditCardType,
     fetchPendingScriptswithCredit,
-    creditCardType
+    creditCardType,
+    msgInputValue, setMsgInputValue,
+  messages, setMessages,
+  contentType, setContentType,
+  genre, setGenre,
+  temporality, setTemporality,
+  hasPitchIdea, setHasPitchIdea,
+  hasSynopsis, setHasSynopsis,
+  enableTF, setEnableTF,
+  disableTF, setDisableTF,
+  current, setCurrent,
+  finalScript, setFinalScript,
+  saveLoad, setSaveLoad,
+  download, setDownload,
+  showIdeas, setShowIdeas,
+  showSynopsis, setShowSynopsis,
+  generating, setGenerating,
+  ideasType, setIdeasType,
+  synopsisType, setSynopsisType,
+  resetChatState
   };
+
+  
+
 
   useEffect(() => {
     if(account && user?.creditPayment==true && user?.creditPaymentId?.scriptCount> 0){
