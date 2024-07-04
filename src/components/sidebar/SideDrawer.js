@@ -232,6 +232,24 @@ const handleSelectedPayment =(paymentMethod)=>{
               </ListItemButton>
             </ListItem>
           </Tooltip>
+          <Tooltip title='Landing Page'>
+            <ListItem
+              disablePadding
+              onClick={() => window.open('https://youblocklandingpage.netlify.app')}
+              sx={{ display: 'block', marginTop: '20%' }}
+            >
+               <ListItemButton sx={listItemBtn}>
+                <ListItemIcon sx={listItemIco}>
+                  <Icon
+                    icon='material-symbols:home-rounded'
+                    color={url === '' ? '#3770FF' : '#6A707F'}
+                    width='26'
+                    height='26'
+                  />
+                </ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+          </Tooltip>
         </List>
       </Box>
       <Box></Box>
