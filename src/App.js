@@ -89,7 +89,7 @@ function App() {
   const fetchPendingScripts = async () => {
     if (account && user && user.walletAddress && mainContract) {
       const p = await getPendingScripts(mainContract, user.walletAddress);
-      console.log("🚀 ~ fetchPendingScripts ~ p:", p)
+      // console.log("🚀 ~ fetchPendingScripts ~ p:", p)
       setPendingScripts(p);
     }
   };
