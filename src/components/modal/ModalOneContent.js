@@ -8,6 +8,7 @@ import { isMobile } from 'react-device-detect';
 // import { InjectedConnector } from '@web3-react/injected-connector'
 import { ybcontext } from '../../context/MainContext';
 import { detect } from 'detect-browser';
+import { useLocation } from 'react-router';
 
 const style = {
   btn: {
@@ -53,6 +54,7 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding, video }) {
   } = useContext(ybcontext);
   const browser = detect();
   console.log(browser);
+  const location= useLocation();
   // const Injected = new InjectedConnector({
   //     supportedChainIds: [1, 3, 4, 5, 42]
   // });
@@ -107,7 +109,6 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding, video }) {
       }
     }
   }, [user]);
-  // console.log(user, account, "modalonek")
 
   return (
     <>

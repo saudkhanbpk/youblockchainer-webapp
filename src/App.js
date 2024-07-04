@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import { ybcontext } from './context/MainContext';
 import MainRouter from './router/MainRouter';
 import SideDrawer from './components/sidebar/SideDrawer';
@@ -13,6 +13,7 @@ import { contractAddress, forwarderAddress } from './Constants';
 import { useAuth } from '@arcana/auth-react';
 import { getPendingScripts } from './services/agreement';
 import { ethers } from 'ethers';
+import { connectArcana } from './services/connectors';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -30,10 +31,11 @@ function App() {
   const [web3Provider, setWeb3Provider] = useState(null);
   const [pendingScripts, setPendingScripts] = useState(0);
   const [creditCardType, setCreditCardType] = useState(false)
+  
 
 
   const auth = useAuth();
-
+  
   const initializeWeb3 = async () => {
     try {
       // let provider = window.ethereum;
@@ -66,7 +68,6 @@ function App() {
   const fetchPendingScripts = async () => {
     if (account && user && user.walletAddress && mainContract) {
       const p = await getPendingScripts(mainContract, user.walletAddress);
-      console.log("🚀 ~ fetchPendingScripts ~ p:", p)
       setPendingScripts(p);
     }
   };
@@ -152,10 +153,46 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    if (!account) {
-      setOpen(true);
+  const handleOpenLogin = async() => {
+    try {
+      var elements = document.getElementsByClassName(
+        'MuiBox-root css-lqhh04'
+      );
+  
+      for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        element.removeAttribute('tabIndex');
+      }
+  
+      connectArcana(
+        user,
+        setUser,
+        account,
+        setAccount,
+        token,
+        setToken,
+        setUserBrand,
+        initializeWeb3,
+        auth
+      );
+    } catch (e) {
+      console.log(e);
     }
+  
+  }
+
+  useEffect(() => {
+  const url = window.location.href;
+    const searchParams = new URLSearchParams(window.location.search);
+    const params = {};
+    searchParams.forEach((value, key) => {
+      params[key] = value;
+    });
+    if(params?.redirectfromlandingforlogin=='true'){
+      handleOpenLogin()
+    } else if  (!account) {
+    setOpen(true);
+  }
   }, [account]);
 
   return (
