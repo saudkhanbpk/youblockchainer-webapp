@@ -1,9 +1,9 @@
 import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import { ybcontext } from './context/MainContext';
 import MainRouter from './router/MainRouter';
 import SideDrawer from './components/sidebar/SideDrawer';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Web3 from 'web3';
@@ -13,6 +13,7 @@ import { contractAddress, forwarderAddress } from './Constants';
 import { useAuth } from '@arcana/auth-react';
 import { getPendingScripts } from './services/agreement';
 import { ethers } from 'ethers';
+import { connectArcana } from './services/connectors';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -32,7 +33,8 @@ function App() {
   const [creditCardType, setCreditCardType] = useState(false)
   // const [messages, setMessages] = useState([]);
 
-
+  const handleMainLoading=useRef(true)
+  console.log("🚀 ~ App ~ handleMainLoading:", handleMainLoading)
 
   // chat component states 
   const [msgInputValue, setMsgInputValue] = useState('');
@@ -56,7 +58,7 @@ function App() {
 
 
   const auth = useAuth();
-
+  
   const initializeWeb3 = async () => {
     try {
       // let provider = window.ethereum;
@@ -89,7 +91,6 @@ function App() {
   const fetchPendingScripts = async () => {
     if (account && user && user.walletAddress && mainContract) {
       const p = await getPendingScripts(mainContract, user.walletAddress);
-      // console.log("🚀 ~ fetchPendingScripts ~ p:", p)
       setPendingScripts(p);
     }
   };
@@ -218,10 +219,50 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    if (!account) {
-      setOpen(true);
+  const handleOpenLogin = async() => {
+    try {
+      var elements = document.getElementsByClassName(
+        'MuiBox-root css-lqhh04'
+      );
+  
+      for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        element.removeAttribute('tabIndex');
+      }
+  
+      connectArcana(
+        user,
+        setUser,
+        account,
+        setAccount,
+        token,
+        setToken,
+        setUserBrand,
+        initializeWeb3,
+        auth,
+        handleMainLoading
+      );
+    } catch (e) {
+      handleMainLoading.current=false
+      console.log(e);
     }
+  
+  }
+
+  useEffect(() => {
+  const url = window.location.href;
+    const searchParams = new URLSearchParams(window.location.search);
+    const params = {};
+    searchParams.forEach((value, key) => {
+      params[key] = value;
+    });
+    console.log("🚀 ~ useEffect ~ account:", account)
+    if(params?.redirectfromlandingforlogin=='true'){
+      handleOpenLogin()
+    } else if  (!account) {
+    setOpen(true);
+    handleMainLoading.current=false
+  }
   }, [account]);
 
   return (
@@ -238,24 +279,30 @@ function App() {
           draggable
           pauseOnHover
         />
-
         
-        {
-          // (isMobile || isTablet) ? <Box sx={{ padding: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '75vh' }}>
-          //   <NTS message={"This website is only supported on laptops/desktops. Mobile Apps are coming soon"} />
-          // </Box> : (browser.name.includes('chrome') || browser.name.includes('opera') || browser.name.includes('edge') || browser.name.includes('brave') || browser.name.includes('firefox')) ?
-          <Router>
-            <SideDrawer>
-              <MainRouter />
-            </SideDrawer>
-          </Router>
-          // : <Box sx={{ padding: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '75vh' }}>
-          //   <NTS message={"Metamask is not supported in this browser, use Chrome, Firefox, Brave, Edge or Opera"} />
-          // </Box>
-        }
+        {/* { (isMobile || isTablet) ? (
+          <Box sx={{ padding: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '75vh' }}>
+            <NTS message={"This website is only supported on laptops/desktops. Mobile Apps are coming soon"} />
+          </Box>
+        ) : (
+          (browser.name.includes('chrome') || browser.name.includes('opera') || browser.name.includes('edge') || browser.name.includes('brave') || browser.name.includes('firefox')) ? ( */}
+            {!handleMainLoading.current ? (
+              <Router>
+                <SideDrawer>
+                  <MainRouter />
+                </SideDrawer>
+              </Router>
+            ): <h1 className='text-center'>Loading ..</h1>}
+          {/* ) : (
+            <Box sx={{ padding: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '75vh' }}>
+              <NTS message={"Metamask is not supported in this browser, use Chrome, Firefox, Brave, Edge or Opera"} />
+            </Box>
+          ) 
+        )} */}
       </ybcontext.Provider>
     </>
   );
+  
 }
 
 export default App;
