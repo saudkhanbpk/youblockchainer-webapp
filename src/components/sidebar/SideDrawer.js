@@ -242,7 +242,7 @@ const handleSelectedPayment =(paymentMethod)=>{
                 <ListItemIcon sx={listItemIco}>
                   <Icon
                     icon='material-symbols:home-rounded'
-                    color={url === '' ? '#3770FF' : '#6A707F'}
+                    // color={url === '' ? '#3770FF' : '#6A707F'}
                     width='26'
                     height='26'
                   />
@@ -288,7 +288,7 @@ const handleSelectedPayment =(paymentMethod)=>{
             </IconButton>
             <div>
             {user && user.walletAddress && (
-                <Button disabled style={{ marginRight: '10px' }}>
+                <Button disabled style={{ marginRight: '10px',fontWeight:"bold",color:'black' }}>
                   Scripts Balance: {pendingScripts}
                 </Button>
               )}
@@ -317,7 +317,8 @@ const handleSelectedPayment =(paymentMethod)=>{
                 </Button>
               )}
               {user && user?.walletAddress && (
-                <IconButton
+               <Tooltip title='profile'>
+               <IconButton
                   onClick={() => navigate('/profile')}
                   sx={{ padding: '0', margin: '0', marginLeft: '10px', ...gridItem }}
                   edge='end'
@@ -330,6 +331,7 @@ const handleSelectedPayment =(paymentMethod)=>{
                     {user.username?.charAt(0).toUpperCase()}{' '}
                   </Avatar>
                 </IconButton>
+                </Tooltip>
               )}
             </div>
           </Toolbar>

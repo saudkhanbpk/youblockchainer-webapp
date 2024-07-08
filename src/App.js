@@ -170,7 +170,8 @@ function App() {
   generating, setGenerating,
   ideasType, setIdeasType,
   synopsisType, setSynopsisType,
-  resetChatState
+  resetChatState,
+  handleMainLoading
   };
 
   
@@ -224,12 +225,13 @@ function App() {
       var elements = document.getElementsByClassName(
         'MuiBox-root css-lqhh04'
       );
-  
+      
       for (var i = 0; i < elements.length; i++) {
         var element = elements[i];
         element.removeAttribute('tabIndex');
       }
-  
+      
+      // handleMainLoading.current=false
       connectArcana(
         user,
         setUser,
@@ -240,7 +242,8 @@ function App() {
         setUserBrand,
         initializeWeb3,
         auth,
-        handleMainLoading
+        handleMainLoading,
+        setOpen
       );
     } catch (e) {
       handleMainLoading.current=false
@@ -256,7 +259,6 @@ function App() {
     searchParams.forEach((value, key) => {
       params[key] = value;
     });
-    console.log("🚀 ~ useEffect ~ account:", account)
     if(params?.redirectfromlandingforlogin=='true'){
       handleOpenLogin()
     } else if  (!account) {

@@ -16,9 +16,16 @@ export const fetchAccount = async (
   setToken,
   setUserBrand,
   initializeWeb3,
-  handleMainLoading
+  handleMainLoading,
+  setOpen
 ) => {
+  
   try {
+
+    if (handleMainLoading) {
+      handleMainLoading.current = false;
+    }
+
     const web3 = window.web3;
 
     // Add Polygon testnet (Mumbai) chain
@@ -46,9 +53,7 @@ export const fetchAccount = async (
     // });
 
     // Request MetaMask accounts
-    if (handleMainLoading) {
-      handleMainLoading.current = false;
-    }
+  
     const accounts = await web3.request({
       method: 'eth_requestAccounts',
     });
@@ -68,11 +73,20 @@ export const fetchAccount = async (
     );
     
     const result = await response.json();
-
     if (response.ok) {
       initializeWeb3();
-
+      
       const { user, token } = result;
+      if (
+        user?.videoIntro === '' &&
+        (!user.email ||
+          user.email === '' ||
+          user.email === null ||
+          user.email === undefined) && handleMainLoading !=undefined
+      ){
+        console.log(" login123 :handle open : ")
+        setOpen(true)
+      }
 
       localStorage.setItem('ybUser', JSON.stringify(user));
       localStorage.setItem('ybToken', token);
@@ -171,7 +185,8 @@ export const connectArcana = async (
   setUserBrand,
   initializeWeb3,
   auth,
-  handleMainLoading
+  handleMainLoading,
+  setOpen
 ) => {
   await auth.connect();
 
@@ -188,7 +203,8 @@ export const connectArcana = async (
     setToken,
     setUserBrand,
     initializeWeb3,
-    handleMainLoading
+    handleMainLoading,
+    setOpen
   );
   provider.on('accountsChanged', async function () {
     await fetchAccount(
@@ -200,7 +216,8 @@ export const connectArcana = async (
       setToken,
       setUserBrand,
       initializeWeb3,
-      handleMainLoading
+      handleMainLoading,
+      setOpen
     );
   });
 };
