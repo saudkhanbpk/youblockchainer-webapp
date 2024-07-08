@@ -1,12 +1,12 @@
 import { ENDPOINTS } from '../api/apiRoutes';
 import httpcommon from '../httpcommon';
 
-export const askGPT = async (prompt, isLast = false,creditCardType=false) => {
+export const askGPT = async (prompt, isLast = false, creditCardType = false) => {
   try {
     return (
       await httpcommon.post(
         ENDPOINTS.ASK_GPT,
-        { prompt, isLast,creditCardType },
+        { prompt, isLast, creditCardType },
         {
           headers: {
             Authorization: localStorage.getItem('ybToken'),
@@ -26,6 +26,18 @@ export const getAllRooms = async (token) => {
       headers: {
         Authorization: token,
       },
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const searchUsers = async (search) => {
+  try {
+    let res = await httpcommon.get(`user/users/search`, {
+      params: {
+        q: search
+      }
     });
     return res;
   } catch (error) {

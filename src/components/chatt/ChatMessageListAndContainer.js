@@ -1,7 +1,7 @@
 import { Avatar, ChatContainer, Conversation, ConversationHeader, ConversationList, Message, MessageInput, MessageList, TypingIndicator, VideoCallButton, VoiceCallButton } from '@chatscope/chat-ui-kit-react';
 import { Box, Grid, InputAdornment, Skeleton, TextField, Typography } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react'
-import { createRoom, getAllRooms, getRoom } from '../../services/ChatApi';
+import { createRoom, getAllRooms, getRoom, searchUsers } from '../../services/ChatApi';
 import userImg from '../../images/user.png'
 import { df_jc_ac, ptag, textField } from '../../theme/CssMy';
 import { Icon } from '@iconify/react';
@@ -22,7 +22,28 @@ export default function ChatMessageListAndContainer() {
     const [search, setSearch] = useState('')
     const [imgLoad, setImgLoad] = useState(false)
     const [creator, setCreator] = useState(false)
-    console.log(id)
+    const [searchResults, setSearchResults] = useState([]);
+    const [searchLoading, setSearchLoading] = useState(false);
+
+    useEffect(() => {
+        const searchUsersAsync = async () => {
+            try {
+                setSearchLoading(true);
+                const results = await searchUsers(search);
+                setSearchResults(results.data);
+                setSearchLoading(false);
+            } catch (error) {
+                console.error('Error searching users:', error);
+                setSearchLoading(false);
+            }
+        };
+
+        if (search.trim() !== '') {
+            searchUsersAsync();
+        } else {
+            setSearchResults([]);
+        }
+    }, [search]);
 
 
     useEffect(() => {
@@ -62,7 +83,7 @@ export default function ChatMessageListAndContainer() {
 
     return <Grid container sx={{ height: '82vh', width: '100%' }}>
         <Grid item md={3} sx={{ backgroundColor: 'white', padding: '1%', borderRadius: '10px 0 0 10px' }}>
-            <ConversationList>
+            {/* <ConversationList>
                 <TextField size='small' sx={textField} value={search} onChange={(e) => setSearch(e.target.value)} placeholder='Search user' InputProps={{
                     endAdornment: <InputAdornment position="end"><Icon icon="ic:round-search" width={22} height={22} /></InputAdornment>,
                 }} />
@@ -99,7 +120,38 @@ export default function ChatMessageListAndContainer() {
                     })
                 }
 
+            </ConversationList> */}
+            <ConversationList>
+                <TextField size='small' sx={textField} value={search} onChange={(e) => setSearch(e.target.value)} placeholder='Search user' InputProps={{
+                    endAdornment: <InputAdornment position="end"><Icon icon="ic:round-search" width={22} height={22} /></InputAdornment>,
+                }} />
+                {
+                    searchLoading ? (
+                        <Skeleton animation="wave" variant="circular" width={45} height={45} />
+                    ) : (
+                        searchResults.map((user, index) => (
+                            <Conversation key={index} >
+                                <Conversation.Content>
+                                    <Avatar src={user.profileImage ? user.profileImage : userImg} style={{ marginRight: '5%' }} name={user.username} />
+                                    <Box>
+                                        <strong style={{ fontFamily: 'Poppins' }}>{user.username}</strong>
+                                        <p style={ptag}>{/* Display last message or placeholder */}</p>
+                                    </Box>
+                                </Conversation.Content>
+                            </Conversation>
+                        ))
+                    )
+                }
+                {
+                    // Render all rooms if search results are empty and not loading
+                    !searchLoading && searchResults.length === 0 && rooms.map((room, index) => (
+                        <Conversation key={index} onClick={() => navigate(`/chat/${room._id}`)}>
+                            {/* Render Conversation content as before */}
+                        </Conversation>
+                    ))
+                }
             </ConversationList>
+
         </Grid>
         <Grid item md={9} sx={{ borderRadius: '0 10px 10px 0' }}>
             {id && chat ? <ChatSideMessages chat={chat} messages2={messages} setMessages={setMessages} creator={JSON.parse(localStorage.getItem('ybUser'))._id === chat?.p1._id} /> : <ChatOpen />}
