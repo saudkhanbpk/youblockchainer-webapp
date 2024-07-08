@@ -11,7 +11,7 @@ import ModalTwoContent from './ModalTwoContent';
 // import { useWeb3React } from '@web3-react/core';
 import Web3 from 'web3';
 import ModalThreeContent from './ModalThreeContent';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { ybcontext } from '../../context/MainContext';
 import ModalVideoContent from './ModalVideoContent';
 import { uploadImg } from '../../services/ipfsServicesApi';
@@ -39,6 +39,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
     const [videosss, setVideosss] = useState(null)
     const [open2, setOpen2] = useState(false)
     const browser = detect()
+
     // const { deactivate } = useWeb3React()
 
     // React.useEffect(() => {
@@ -114,6 +115,7 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
         setLoad(false)
     }
 
+  
     return (
         <Box sx={{ width: '100%' }}>
             <Stepper activeStep={activeStep}>

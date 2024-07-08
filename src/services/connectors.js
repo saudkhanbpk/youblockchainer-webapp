@@ -15,7 +15,8 @@ export const fetchAccount = async (
   token,
   setToken,
   setUserBrand,
-  initializeWeb3
+  initializeWeb3,
+  handleMainLoading
 ) => {
   try {
     const web3 = window.web3;
@@ -45,6 +46,9 @@ export const fetchAccount = async (
     // });
 
     // Request MetaMask accounts
+    if (handleMainLoading) {
+      handleMainLoading.current = false;
+    }
     const accounts = await web3.request({
       method: 'eth_requestAccounts',
     });
@@ -62,7 +66,7 @@ export const fetchAccount = async (
       const response = await fetch(
       `${baseUrl}/user/login?address=${accounts[0]}&signature=${signature}`
     );
-
+    
     const result = await response.json();
 
     if (response.ok) {
@@ -85,6 +89,9 @@ export const fetchAccount = async (
       setUserBrand(userBrand.length ? userBrand[0] : null);
     }
   } catch (error) {
+    if (handleMainLoading) {
+      handleMainLoading.current = false;
+    }
     console.log(error);
   }
 };
@@ -163,11 +170,13 @@ export const connectArcana = async (
   setToken,
   setUserBrand,
   initializeWeb3,
-  auth
+  auth,
+  handleMainLoading
 ) => {
   await auth.connect();
 
   let provider = auth.provider;
+  console.log("🚀 ~ provider:")
   // window.web3 = new Web3(provider)
   window.web3 = provider;
   fetchAccount(
@@ -178,7 +187,8 @@ export const connectArcana = async (
     token,
     setToken,
     setUserBrand,
-    initializeWeb3
+    initializeWeb3,
+    handleMainLoading
   );
   provider.on('accountsChanged', async function () {
     await fetchAccount(
@@ -189,7 +199,8 @@ export const connectArcana = async (
       token,
       setToken,
       setUserBrand,
-      initializeWeb3
+      initializeWeb3,
+      handleMainLoading
     );
   });
 };

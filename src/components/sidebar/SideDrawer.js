@@ -109,7 +109,7 @@ export default function SideDrawer(props) {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = React.useState(null)
   const { children } = props;
   const url = window.location.href.split('/')[3];
-  const { user, setUser, setToken, open, setOpen, open2, setOpen2, auth, pendingScripts } =
+  const { user, setUser, setToken, open, setOpen, open2, setOpen2, auth, pendingScripts,resetChatState } =
     useContext(ybcontext);
   const navigate = useNavigate();
   console.log(url);
@@ -143,7 +143,7 @@ const handleSelectedPayment =(paymentMethod)=>{
           <Tooltip title='Dashboard'>
             <ListItem
               disablePadding
-              onClick={() => navigate('/')}
+              onClick={() =>{ navigate('/');resetChatState()}}
               sx={{ display: 'block', marginTop: '20%' }}
             >
               <ListItemButton sx={listItemBtn}>
@@ -227,6 +227,24 @@ const handleSelectedPayment =(paymentMethod)=>{
                     icon='mdi:briefcase-search'
                     width='24'
                     height='24'
+                  />
+                </ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+          </Tooltip>
+          <Tooltip title='Landing Page'>
+            <ListItem
+              disablePadding
+              onClick={() => window.open('https://youblocklandingpage.netlify.app')}
+              sx={{ display: 'block', marginTop: '20%' }}
+            >
+               <ListItemButton sx={listItemBtn}>
+                <ListItemIcon sx={listItemIco}>
+                  <Icon
+                    icon='material-symbols:home-rounded'
+                    color={url === '' ? '#3770FF' : '#6A707F'}
+                    width='26'
+                    height='26'
                   />
                 </ListItemIcon>
               </ListItemButton>
