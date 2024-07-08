@@ -105,7 +105,7 @@ function ModalOneContent({ activeStep, setActiveStep, onboarding, video }) {
       ) {
         setActiveStep(activeStep + 2);
       } else {
-        setActiveStep(activeStep + 4);
+        setActiveStep(activeStep + 3);
       }
     }
   }, [user]);
