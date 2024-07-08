@@ -7,7 +7,11 @@ import { updateMe } from '../../services/userServices';
 
 
 export default function ModalVideoContent({ video,Confirm, setVideo,setConfirm, yes, setYes }) {
-
+    const boldAndBlack = {
+        fontWeight: 'bold',
+        color: 'black',
+      };
+const combineDesign={...ptag,...boldAndBlack}
 
     return (<>
 
@@ -40,7 +44,7 @@ export default function ModalVideoContent({ video,Confirm, setVideo,setConfirm, 
                 onChange={() => setYes(!yes)}
             />
            {/* <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}> */}
-  <p style={ptag}>Make your introduction video visible on your profile page</p>
+  <p style={combineDesign}>Make your introduction video visible on your profile page</p>
 {/* </div> */}
 
         </Box>
