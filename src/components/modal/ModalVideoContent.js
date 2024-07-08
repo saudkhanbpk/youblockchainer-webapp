@@ -1,4 +1,4 @@
-import { Box, Checkbox, Typography } from '@mui/material'
+import { Box, Button, Checkbox, Typography } from '@mui/material'
 import React from 'react'
 import VideoRecorder from 'react-video-recorder'
 import { df_jfs_ac, ptag } from '../../theme/CssMy'
@@ -6,7 +6,7 @@ import shorthash from 'shorthash';
 import { updateMe } from '../../services/userServices';
 
 
-export default function ModalVideoContent({ video, setVideo, yes, setYes }) {
+export default function ModalVideoContent({ video,Confirm, setVideo,setConfirm, yes, setYes }) {
 
 
     return (<>
@@ -39,8 +39,12 @@ export default function ModalVideoContent({ video, setVideo, yes, setYes }) {
                 checked={yes}
                 onChange={() => setYes(!yes)}
             />
-            <p style={ptag}>Make your introduction video visible on your profile page</p>
+           {/* <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}> */}
+  <p style={ptag}>Make your introduction video visible on your profile page</p>
+{/* </div> */}
+
         </Box>
+        {video && <Button onClick={()=>setConfirm(true)}>Confirm</Button>}
     </>
     )
 }

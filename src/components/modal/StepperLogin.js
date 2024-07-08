@@ -25,19 +25,23 @@ import ModalInModal from './ModalInModal';
 import { detect } from 'detect-browser';
 import { videoGet } from '../../services/videoService';
 
-const steps = ['Connect Wallet', '30s video intro', 'Basic details', 'What to expect', 'Complete your profile'];
+const steps = ['Connect Wallet', '30s video intro', 'Basic details', 'Complete your profile'];
 
 export default function HorizontalLinearStepper({ open, setOpen }) {
     const navigate = useNavigate()
     const [activeStep, setActiveStep] = React.useState(0);
+    console.log("🚀 ~ HorizontalLinearStepper ~ activeStep:", activeStep)
     // const [isCommingFromMovieProfessional, setIsCommingFromMovieProfessional] = useState(false)
     const [skipped, setSkipped] = React.useState(new Set());
     const { user, setUser, account, setAccount, edit, setEdit, auth } = useContext(ybcontext)
     const [video, setVideo] = React.useState(null)
+    console.log("🚀 ~ HorizontalLinearStepper ~ video:", video)
     const [load, setLoad] = React.useState(false)
     const [yes, setYes] = useState(false)
     const [videosss, setVideosss] = useState(null)
     const [open2, setOpen2] = useState(false)
+    const [Confirm, setConfirm] = useState(false)
+    console.log("🚀 ~ HorizontalLinearStepper ~ Confirm:", Confirm)
     const browser = detect()
 
     // const { deactivate } = useWeb3React()
@@ -140,9 +144,9 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
             <React.Fragment>
                 {
                     activeStep === 0 ? <ModalOneContent video={videosss} setActiveStep={setActiveStep} activeStep={activeStep} />
-                        : activeStep === 1 ? <ModalVideoContent setActiveStep={setActiveStep} activeStep={activeStep} video={video} setVideo={setVideo} yes={yes} setYes={setYes} />
+                        : activeStep === 1 ? <ModalVideoContent setActiveStep={setActiveStep} activeStep={activeStep} video={video} setConfirm={setConfirm} Confirm={Confirm} setVideo={setVideo} yes={yes} setYes={setYes} />
                             : activeStep === 2 ? <ModalTwoContent setActiveStep={setActiveStep} activeStep={activeStep} />
-                                : activeStep === 3 ? <ModalIntro video={videosss} /> : <ModalThreeContent />
+                                : <ModalThreeContent />
                 }
                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                     {/* {
@@ -178,11 +182,11 @@ export default function HorizontalLinearStepper({ open, setOpen }) {
                     </Button> : ""}
 
                     {
-                        activeStep === 1 ? load ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={() => videoUplaod()} disabled={!video} >{activeStep === 1 && 'Upload'}</Button> : ""
+                        activeStep === 1 ? load ? <CircularProgress size={30} sx={circularprog} /> : <Button onClick={() => videoUplaod()} disabled={!video || !Confirm} >{activeStep === 1 && 'Upload'}</Button> : ""
                     }
-                    {
+                    {/* {
                         activeStep === 3 ? <Button sx={btn} onClick={() => setActiveStep(activeStep + 1)} >Next</Button> : ""
-                    }
+                    } */}
                     {activeStep === steps.length - 1 ? <Button onClick={() => {
                         setEdit(true)
                         setOpen(false)
