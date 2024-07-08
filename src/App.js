@@ -34,7 +34,6 @@ function App() {
   // const [messages, setMessages] = useState([]);
 
   const handleMainLoading=useRef(true)
-  console.log("🚀 ~ App ~ handleMainLoading:", handleMainLoading)
 
   // chat component states 
   const [msgInputValue, setMsgInputValue] = useState('');
